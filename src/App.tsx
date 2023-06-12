@@ -2,9 +2,10 @@ import { Canvas, extend, useThree } from '@react-three/fiber'
 import './App.css'
 import { useEffect } from 'react'
 import { OrbitControls, TransformControls } from 'three-stdlib'
-import Eaeth from './components/Earth'
+import Earth from './components/Earth'
 import LightColumn from './components/LightColumn'
 import Wave from './components/Wave'
+import FlyLine from './components/FlyLine'
 
 extend({ OrbitControls, TransformControls })
 
@@ -34,9 +35,10 @@ function App() {
         <CameraController />
         <ambientLight intensity={1} />
         <group rotation={[0.4, 2.95, 0.1]}>
-          <Eaeth />
+          <Earth />
           <LightColumn />
           <Wave />
+          <FlyLine />
         </group>
       </Canvas>
     </div>

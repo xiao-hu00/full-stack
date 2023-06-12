@@ -16,6 +16,7 @@ const Component: React.FC = () => {
   let s = 1
   useFrame((state, delta) => {
     s += (delta * 0.4)
+    // console.log(delta)
     waveRef.current.scale.x = s * 0.7
     waveRef.current.scale.y = s * 0.7
     if (s <= 1.5) {
