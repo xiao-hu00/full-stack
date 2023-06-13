@@ -4,19 +4,19 @@ import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 import { getBezierPoint } from '../utils'
 
-const settings = {
-  uSpeed: { value: 20 }, // 飞线飞行速度
-  uTime: { value: 0 }, // 运行时间
-  uRange: { value: 90 }, // 飞行的线的点的个数
-  uNumber: { value: 800 }, // 飞线的点的总数
-  uColor: { value: new THREE.Vector3(1, 1, 0) },
-}
-const indexArray = Array.from({ length: settings.uNumber.value + 1 }, (_, i) => 1 + (i)).reverse()
-
-const Component: React.FC = () => {
+const Component: React.FC<any> = (props) => {
+  const { positions } = props
+  const settings = {
+    uSpeed: { value: 20 }, // 飞线飞行速度
+    uTime: { value: 0 }, // 运行时间
+    uRange: { value: 90 }, // 飞行的线的点的个数
+    uNumber: { value: 800 }, // 飞线的点的总数
+    uColor: { value: new THREE.Vector3(1, 1, 0) },
+  }
+  const indexArray = Array.from({ length: settings.uNumber.value + 1 }, (_, i) => 1 + (i)).reverse()
   const lineRef = useRef<THREE.Line>(null!)
-  const startPoint = lglt2xyz(116.401107, 39.920248)
-  const endPoint = lglt2xyz(146.401107, 29.920248)
+  const startPoint = lglt2xyz(positions[0][0], positions[0][1])
+  const endPoint = lglt2xyz(positions[1][0], positions[1][1])
   const [v1, v2] = getBezierPoint(startPoint, endPoint)
   const line = new THREE.CubicBezierCurve3(
     startPoint,
@@ -28,7 +28,7 @@ const Component: React.FC = () => {
   points.forEach((item: any) => {
     arr.push(item.x, item.y, item.z)
   })
-  const positions = new Float32Array(arr)
+  const pos = new Float32Array(arr)
   const currents = new Float32Array(indexArray)
   useEffect(() => {
     const { current } = lineRef
@@ -41,7 +41,7 @@ const Component: React.FC = () => {
   return (
     <points ref={lineRef as any}>
       <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={positions.length / 3} array={positions} itemSize={3} />
+        <bufferAttribute attach="attributes-position" count={pos.length / 3} array={pos} itemSize={3} />
         <bufferAttribute attach="attributes-current" array={currents} itemSize={1} />
       </bufferGeometry>
       <shaderMaterial

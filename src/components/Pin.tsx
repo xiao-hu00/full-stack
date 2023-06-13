@@ -5,10 +5,11 @@ import { useFrame, useLoader } from '@react-three/fiber'
 import { lglt2xyz } from '../utils/index'
 import * as THREE from 'three'
 
-const Component: React.FC = () => {
+const Component: React.FC<any> = (props) => {
+  const { position } = props
   const coneRef = useRef<any>(null!)
   const sRef = useRef<any>(null!)
-  const centerPos = lglt2xyz(106.401107, 39.920248)
+  const centerPos = lglt2xyz(position[0], position[1])
   const [matcap] = useLoader(TextureLoader, [earthImg]) // 地球
   const rayLine = new THREE.Ray(new THREE.Vector3(0, 0, 0), new THREE.Vector3(centerPos.x, centerPos.y, centerPos.z))
   const top = rayLine.at(1.04, new THREE.Vector3(0, 0, 0))
@@ -19,7 +20,7 @@ const Component: React.FC = () => {
   }, [])
   useFrame((state, delta) => {
     // pin 上下来回运动
-    const n = Math.sin(state.clock.getElapsedTime()) * 0.0008
+    const n = Math.sin(state.clock.getElapsedTime()) * delta * 0.05
     coneRef.current.position.y += n
     sRef.current.position.y += n
   })
