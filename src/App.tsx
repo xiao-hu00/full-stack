@@ -6,6 +6,7 @@ import Earth from './components/Earth'
 import LightColumn from './components/LightColumn'
 import Wave from './components/Wave'
 import FlyLine from './components/FlyLine'
+import Pin from './components/Pin'
 
 extend({ OrbitControls, TransformControls })
 
@@ -26,7 +27,6 @@ const CameraController = () => {
 }
 
 function App() {
-  
   return (
     <div id="canvas-container">
       <Canvas
@@ -39,6 +39,7 @@ function App() {
           <LightColumn />
           <Wave />
           <FlyLine />
+          <Pin />
         </group>
       </Canvas>
     </div>
