@@ -1,17 +1,23 @@
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
 import { lglt2xyz } from '../utils/index'
 import waveImg from '../assets/wave.png'
+import gradientImg from '../assets/gradient.png'
 import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 
-const Component: React.FC = () => {
-  const [waveMap] = useLoader(TextureLoader, [waveImg])
-  const waveRef = useRef<any>()
+const Component: React.FC<any> = (props) => {
+  const { position } = props
+  const pos = lglt2xyz(position[0], position[1])
+  const [waveMap, gradientMap] = useLoader(TextureLoader, [waveImg, gradientImg])
+  const waveRef = useRef<any>(null!)
+  const planeRef = useRef<any>(null!)
+  const torusRef = useRef<any>(null!)
 
   useEffect(() => {
     waveRef.current.lookAt(0, 0, 0)
-    console.log(waveRef.current)
+    planeRef.current.lookAt(0, 0, 0)
+    torusRef.current.lookAt(0, 0, 0)
   }, [])
   let s = 1
   useFrame((state, delta) => {
@@ -29,12 +35,21 @@ const Component: React.FC = () => {
       s = 1
     }
   })
-  const pos = lglt2xyz(116.401107, 39.920248)
   return (
-    <mesh ref={waveRef} position={[pos.x, pos.y, pos.z]}>
-      <planeGeometry args={[0.3, 0.3]} />
-      <meshBasicMaterial depthWrite={false} side={THREE.DoubleSide} map={waveMap} transparent={true} color={'yellow'} />
-    </mesh>
+    <>
+      <mesh ref={planeRef} position={[pos.x, pos.y, pos.z]}>
+        <planeGeometry args={[0.03, 0.03]} />
+        <meshBasicMaterial map={gradientMap} side={THREE.DoubleSide} transparent={true} color={'yellow'} />
+      </mesh>
+      <mesh ref={torusRef} position={[pos.x, pos.y, pos.z]}>
+        <torusGeometry args={[0.025, 0.002, 2, 64]} />
+        <meshBasicMaterial depthWrite={false} color={'yellow'} />
+      </mesh>
+      <mesh ref={waveRef} position={[pos.x, pos.y, pos.z]}>
+        <planeGeometry args={[0.3, 0.3]} />
+        <meshBasicMaterial depthWrite={false} side={THREE.DoubleSide} map={waveMap} transparent={true} color={'yellow'} />
+      </mesh>
+    </>
   )
 }
 

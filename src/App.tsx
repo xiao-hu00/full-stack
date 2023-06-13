@@ -37,7 +37,8 @@ function App() {
         <group rotation={[0.4, 2.95, 0.1]}>
           <Earth />
           <LightColumn />
-          <Wave />
+          <Wave position={[116.401107, 39.920248]} />
+          <Wave position={[146.401107, 29.920248]} />
           <FlyLine />
           <Pin />
         </group>
