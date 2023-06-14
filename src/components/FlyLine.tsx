@@ -5,13 +5,15 @@ import { useFrame } from '@react-three/fiber'
 import { getBezierPoint } from '../utils'
 
 const Component: React.FC<any> = (props) => {
-  const { positions } = props
+  // type=fly 没有轨迹线，直接飞  delay=0 延迟飞线开始的时间，单位是秒
+  const { positions, type = '', delay = 0 } = props
   const settings = {
     uSpeed: { value: 20 }, // 飞线飞行速度
     uTime: { value: 0 }, // 运行时间
-    uRange: { value: 90 }, // 飞行的线的点的个数
+    uRange: { value: type === 'fly' ? 300 : 90 }, // 飞行的线的点的个数
     uNumber: { value: 800 }, // 飞线的点的总数
-    uColor: { value: new THREE.Vector3(1, 1, 0) },
+    uColor: { value: type === 'fly' ? new THREE.Vector3(0, 1, 1) : new THREE.Vector3(1, 1, 0) },
+    isFlyOpacity: { value: type === 'fly' ? 0.0 : 0.5 },
   }
   const indexArray = Array.from({ length: settings.uNumber.value + 1 }, (_, i) => 1 + (i)).reverse()
   const lineRef = useRef<THREE.Line>(null!)
@@ -36,6 +38,9 @@ const Component: React.FC<any> = (props) => {
     current.geometry.computeBoundingSphere()
   }, [lineRef])
   useFrame((state, delta) => {
+    if (delay !== 0 && state.clock.getElapsedTime() < delay) {
+       return
+    }
     settings.uTime.value += delta * 10
   })
   return (
@@ -65,9 +70,10 @@ const Component: React.FC<any> = (props) => {
         fragmentShader={/* glsl */`
           varying float opacity;
           uniform vec3 uColor;
+          uniform float isFlyOpacity;
           void main() {
             float o = step(0.2, opacity);
-            gl_FragColor = vec4(uColor, o + 0.5);
+            gl_FragColor = vec4(uColor, o + isFlyOpacity);
           }
         `}
       />

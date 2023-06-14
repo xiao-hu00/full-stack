@@ -31,7 +31,7 @@ export const getBezierPoint = (v0: THREE.Vector3, v3: THREE.Vector3) => {
   // 法线向量
   const rayLine = new THREE.Ray(p0.clone(), getVCenter(v0.clone(), v3.clone()))
   // 顶点坐标
-  const vtop = rayLine.at(hLen / rayLine.at(1, temp).distanceTo(p0), temp);
+  const vtop = rayLine.at(hLen / rayLine.at(2.5, temp).distanceTo(p0) * 0.7, temp);
   // 控制点坐标
   const v1 = getLenVcetor(v0.clone(), vtop, aLen)
   const v2 = getLenVcetor(v3.clone(), vtop, aLen)

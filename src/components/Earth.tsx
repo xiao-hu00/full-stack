@@ -9,7 +9,7 @@ const Component: React.FC = () => {
   return (
     <>
       <sprite scale={[6, 6, 1]}>
-        <spriteMaterial map={apertureMap} transparent={true} depthWrite={false} />
+        <spriteMaterial map={apertureMap} opacity={0.7} transparent={true} depthWrite={false} />
       </sprite>
       <mesh>
         <sphereGeometry args={[2, 80, 80]} />

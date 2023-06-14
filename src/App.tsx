@@ -1,11 +1,12 @@
 import { Canvas } from '@react-three/fiber'
 import './App.css'
-import CameraController from './components/CameraController'
-import Earth from './components/Earth'
-import LightColumn from './components/LightColumn'
-import Wave from './components/Wave'
-import FlyLine from './components/FlyLine'
-import Pin from './components/Pin'
+import CameraController from './components/CameraController' // control控制器
+import Earth from './components/Earth' // 地球贴图和地球辉光
+import LightColumn from './components/LightColumn' // 光柱
+import Wave from './components/Wave' // 坐标点波纹
+import FlyLine from './components/FlyLine' // 飞线
+import Pin from './components/Pin' // 坐标标记
+import EnergyMask from './components/EnergyMask' // 能量光罩
 
 // 飞线起点坐标，中心点坐标
 const center = [116.401107, 39.920248]
@@ -15,8 +16,8 @@ const pointList = [
   [42.4365, 62.647135],
   [-73.865977, 40.851767],
   [139.771786, 35.696155],
-  [2.336124, 48.869513],
-  [-118.242445, 34.058754],
+  // [2.336124, 48.869513],
+  // [-118.242445, 34.058754],
   // [103.853756, 1.326621],
   // [151.189749, -33.867381],
   // [58.309405, 22.255926],
@@ -64,6 +65,9 @@ function App() {
             <Wave position={item} key={index} />
           ))}
           <Pin position={center} />
+          <FlyLine positions={[[126.982568, 37.585754], [-118.242445, 34.058754]]} type={'fly'} />
+          <FlyLine positions={[[113.694591, 40.430836], [139.771786, 35.696155]]} type={'fly'} delay={1} />
+          <EnergyMask />
         </group>
       </Canvas>
     </div>
