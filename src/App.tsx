@@ -7,6 +7,7 @@ import Wave from './components/Wave' // 坐标点波纹
 import FlyLine from './components/FlyLine' // 飞线
 import Pin from './components/Pin' // 坐标标记
 import EnergyMask from './components/EnergyMask' // 能量光罩
+import Circle from './components/Circle'
 
 // 飞线起点坐标，中心点坐标
 const center = [116.401107, 39.920248]
@@ -44,6 +45,8 @@ const lightCol = [
 
 // 所有波纹动画点的坐标
 const allPoints = [...pointList, center]
+// 所有光点圆圈的坐标
+const allCirclePoints = [...allPoints, ...lightCol]
 
 function App() {
   return (
@@ -57,6 +60,9 @@ function App() {
           <Earth />
           {lightCol.map((item: Array<number>, index: number) => (
             <LightColumn position={item} key={index} />
+          ))}
+          {allCirclePoints.map((item: Array<number>, index: number) => (
+            <Circle position={item} key={index} />
           ))}
           {pointList.map((item: Array<number>, index: number) => (
             <FlyLine positions={[center, item]} key={index} />
