@@ -8,6 +8,8 @@ import FlyLine from './components/FlyLine' // 飞线
 import Pin from './components/Pin' // 坐标标记
 import EnergyMask from './components/EnergyMask' // 能量光罩
 import Circle from './components/Circle'
+import SideForm from './components/SideForm'
+import useBearStore from './store'
 
 // 飞线起点坐标，中心点坐标
 const center = [116.401107, 39.920248]
@@ -49,34 +51,41 @@ const allPoints = [...pointList, center]
 const allCirclePoints = [...allPoints, ...lightCol]
 
 function App() {
+  const color: any = useBearStore((state) => state.markColor)
+  const markColor = typeof color === 'string' ? color : color.toHexString()
+  const color1: any = useBearStore((state) => state.maskColor)
+  const maskColor = typeof color1 === 'string' ? color1 : color1.toHexString()
   return (
-    <div id="canvas-container">
-      <Canvas
-        camera={{ fov: 75, near: 0.1, far: 100, zoom: 1 }}
-      >
-        <CameraController />
-        <ambientLight intensity={1} />
-        <group rotation={[0.4, 2.95, 0.1]}>
-          <Earth />
-          {lightCol.map((item: Array<number>, index: number) => (
-            <LightColumn position={item} key={index} />
-          ))}
-          {allCirclePoints.map((item: Array<number>, index: number) => (
-            <Circle position={item} key={index} />
-          ))}
-          {pointList.map((item: Array<number>, index: number) => (
-            <FlyLine positions={[center, item]} key={index} />
-          ))}
-          {allPoints.map((item: Array<number>, index: number) => (
-            <Wave position={item} key={index} />
-          ))}
-          <Pin position={center} />
-          <FlyLine positions={[[126.982568, 37.585754], [-118.242445, 34.058754]]} type={'fly'} />
-          <FlyLine positions={[[113.694591, 40.430836], [139.771786, 35.696155]]} type={'fly'} delay={1} />
-          <EnergyMask />
-        </group>
-      </Canvas>
-    </div>
+    <>
+      <SideForm />
+      <div id="canvas-container">
+        <Canvas
+          camera={{ fov: 75, near: 0.1, far: 100, zoom: 1 }}
+        >
+          <CameraController />
+          <ambientLight intensity={1} />
+          <group rotation={[0.4, 2.95, 0.1]}>
+            <Earth />
+            {lightCol.map((item: Array<number>, index: number) => (
+              <LightColumn position={item} key={index} />
+            ))}
+            {allCirclePoints.map((item: Array<number>, index: number) => (
+              <Circle position={item} key={index} color={markColor} />
+            ))}
+            {pointList.map((item: Array<number>, index: number) => (
+              <FlyLine positions={[center, item]} key={index} />
+            ))}
+            {allPoints.map((item: Array<number>, index: number) => (
+              <Wave position={item} key={index} />
+            ))}
+            <Pin position={center} />
+            <FlyLine color={maskColor} positions={[[126.982568, 37.585754], [-118.242445, 34.058754]]} type={'fly'} />
+            <FlyLine positions={[[113.694591, 40.430836], [139.771786, 35.696155]]} type={'fly'} delay={1} />
+            <EnergyMask color={maskColor} />
+          </group>
+        </Canvas>
+      </div>
+    </>
   )
 }
 

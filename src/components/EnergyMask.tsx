@@ -1,23 +1,31 @@
-import React from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
 import maskImg from '../assets/repeat.png'
 import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 
-const Component: React.FC = () => {
+const Component: React.FC<any> = (props) => {
+  const { color = 'hotpink' } = props
+  const ref = useRef<any>(null!)
   const [maskMap] = useLoader(TextureLoader, [maskImg])
+  const mColor = new THREE.Color(color)
+  const settings = useMemo(() => ({
+      bgTexture: { value: maskMap },
+      uTime: { value: 0 }, // 运行时间
+      uColor: { value: mColor },
+  }), [])
+  
   maskMap.wrapS = THREE.MirroredRepeatWrapping;
   maskMap.wrapT = THREE.MirroredRepeatWrapping;
-  const settings = {
-    bgTexture: { value: maskMap },
-    uTime: { value: 0 }, // 运行时间
-    uColor: { value: new THREE.Vector3(1, 1, 0) },
-  }
+  useEffect(() => {
+    console.log(ref.current.material.uniforms.uColor.value)
+  }, [])
   useFrame((state, delta) => {
     settings.uTime.value += delta * 5
+    settings.uColor.value = mColor
   })
   return (
-    <mesh>
+    <mesh ref={ref}>
       <sphereGeometry args={[2.3, 80, 80, 0, Math.PI * 2, 0, Math.PI * 2]} />
       <shaderMaterial
         uniforms={settings}
@@ -38,7 +46,7 @@ const Component: React.FC = () => {
             vec2 vUv1 = vUv - vec2(0.5) - 0.5 * vec2(fract(uTime * 0.01));
             vec4 background = texture2D(bgTexture, vUv1);
             float opacity = background.a;
-            gl_FragColor = vec4(background.rgb + uColor, opacity * 0.2);
+            gl_FragColor = vec4(uColor, opacity * 0.2);
           }
         `}
         depthWrite={false}

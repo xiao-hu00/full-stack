@@ -4,6 +4,7 @@ import { lglt2xyz } from '../utils/index'
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
 import lightImg from '../assets/light_column.png'
 import { useLoader } from '@react-three/fiber'
+import useBearStore from '../store'
 
 const Component: React.FC<any> = (props) => {
   const { position } = props
@@ -11,6 +12,8 @@ const Component: React.FC<any> = (props) => {
   // 光柱
   const pos = lglt2xyz(position[0], position[1])
   const groupRef = useRef<any>(null!)
+  const lightColor: any = useBearStore((state) => state.color)
+  const color = typeof lightColor === 'string' ? lightColor : lightColor.toHexString()
 
   useEffect(() => {
     const node1 = groupRef.current.children[0]
@@ -32,7 +35,7 @@ const Component: React.FC<any> = (props) => {
             map={lightMap}
             side={THREE.DoubleSide}
             transparent={true}
-            color={'lightyellow'}
+            color={color}
             depthWrite={false}
           />
         </mesh>

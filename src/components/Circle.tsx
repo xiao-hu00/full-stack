@@ -6,7 +6,7 @@ import { useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 
 const Component: React.FC<any> = (props) => {
-  const { position } = props
+  const { position, color } = props
   const pos = lglt2xyz(position[0], position[1])
   const [gradientMap] = useLoader(TextureLoader, [gradientImg])
   const planeRef = useRef<any>(null!)
@@ -20,11 +20,11 @@ const Component: React.FC<any> = (props) => {
     <>
       <mesh ref={planeRef} position={[pos.x, pos.y, pos.z]}>
         <planeGeometry args={[0.03, 0.03]} />
-        <meshBasicMaterial map={gradientMap} side={THREE.DoubleSide} transparent={true} color={'yellow'} />
+        <meshBasicMaterial map={gradientMap} side={THREE.DoubleSide} transparent={true} color={color} />
       </mesh>
       <mesh ref={torusRef} position={[pos.x, pos.y, pos.z]}>
         <torusGeometry args={[0.025, 0.002, 2, 64]} />
-        <meshBasicMaterial depthWrite={false} color={'yellow'} />
+        <meshBasicMaterial depthWrite={false} color={color} />
       </mesh>
     </>
   )

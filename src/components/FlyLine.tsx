@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useMemo } from 'react'
 import { lglt2xyz } from '../utils/index'
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
@@ -6,15 +6,17 @@ import { getBezierPoint } from '../utils'
 
 const Component: React.FC<any> = (props) => {
   // type=fly 没有轨迹线，直接飞  delay=0 延迟飞线开始的时间，单位是秒
-  const { positions, type = '', delay = 0 } = props
-  const settings = {
+  const { positions, type = '', delay = 0, color = 'yellow' } = props
+  const mColor = new THREE.Color(color)
+
+  const settings = useMemo(() => ({
     uSpeed: { value: 20 }, // 飞线飞行速度
     uTime: { value: 0 }, // 运行时间
     uRange: { value: type === 'fly' ? 300 : 90 }, // 飞行的线的点的个数
     uNumber: { value: 800 }, // 飞线的点的总数
-    uColor: { value: type === 'fly' ? new THREE.Vector3(0, 1, 1) : new THREE.Vector3(1, 1, 0) },
+    uColor: { value: type === 'fly' ? mColor : new THREE.Color('yellow') },
     isFlyOpacity: { value: type === 'fly' ? 0.0 : 0.5 },
-  }
+  }), [])
   const indexArray = Array.from({ length: settings.uNumber.value + 1 }, (_, i) => 1 + (i)).reverse()
   const lineRef = useRef<THREE.Line>(null!)
   const startPoint = lglt2xyz(positions[0][0], positions[0][1])
@@ -42,6 +44,7 @@ const Component: React.FC<any> = (props) => {
        return
     }
     settings.uTime.value += delta * 10
+    // settings.uColor.value = mColor
   })
   return (
     <points ref={lineRef as any}>
