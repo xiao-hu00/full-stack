@@ -1,0 +1,26 @@
+.side {
+  height: 100vh;
+  z-index: 9;
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #FFF;
+  background: #000;
+  max-width: 180px;
+  padding: 0px 10px;
+}
+.side-title {
+  margin: 20px 0 10px;
+}
+.side-item {
+  display: flex;
+  align-items: center;
+}
+.side .ant-color-picker-trigger {
+  width: 20px;
+  height: 20px;
+}
+.side .ant-color-picker-color-block {
+  width: 14px;
+  height: 14px;
+}

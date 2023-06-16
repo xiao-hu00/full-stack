@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import * as d3 from 'd3'
 
 //threejs自带的经纬度转换
 export const lglt2xyz = (lng: any, lat: any) => {
@@ -8,6 +9,13 @@ export const lglt2xyz = (lng: any, lat: any) => {
     new THREE.Spherical(2, phi, theta)
   );
 }
+
+// 墨卡托投影转换
+export const projection = d3
+  .geoMercator()
+  .center([106.713478, 26.578343])
+  .scale(30)
+  .translate([0, 0])
 
 // 获取两个点的中心
 export const getVCenter = (v1: THREE.Vector3, v2: THREE.Vector3) => {

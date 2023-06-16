@@ -1,6 +1,5 @@
 import { Canvas } from '@react-three/fiber'
 import './index.css'
-import CameraController from '@/components/CameraController' // control控制器
 import Earth from '@/components/Earth' // 地球贴图和地球辉光
 import LightColumn from '@/components/LightColumn' // 光柱
 import Wave from '@/components/Wave' // 坐标点波纹
@@ -10,6 +9,7 @@ import EnergyMask from '@/components/EnergyMask' // 能量光罩
 import Circle from '@/components/Circle'
 import SideForm from '@/components/SideForm'
 import useBearStore from '@/store'
+import { OrbitControls } from '@react-three/drei'
 
 // 飞线起点坐标，中心点坐标
 const center = [116.401107, 39.920248]
@@ -51,8 +51,12 @@ const allPoints = [...pointList, center]
 const allCirclePoints = [...allPoints, ...lightCol]
 
 function App() {
-  const color = useBearStore((state) => state.markColor)
-  const markColor = typeof color === 'string' ? color : color.toHexString()
+  const color = useBearStore((state) => {
+    return typeof state.color === 'string' ? state.color : state.color.toHexString()
+  })
+  const markColor = useBearStore((state) => {
+    return typeof state.markColor === 'string' ? state.markColor : state.markColor.toHexString()
+  })
   const maskColor = useBearStore((state) => {
     const color = typeof state.maskColor === 'string' ? state.maskColor : state.maskColor.toHexString()
     return color
@@ -80,12 +84,12 @@ function App() {
         <Canvas
           camera={{ fov: 75, near: 0.1, far: 100, zoom: 1 }}
         >
-          <CameraController />
+          <OrbitControls makeDefault />
           <ambientLight intensity={1} />
           <group rotation={[0.4, 2.95, 0.1]}>
             <Earth />
             {lightCol.map((item: Array<number>, index: number) => (
-              <LightColumn position={item} key={index} />
+              <LightColumn color={color} position={item} key={index} />
             ))}
             {allCirclePoints.map((item: Array<number>, index: number) => (
               <Circle position={item} key={index} color={markColor} />

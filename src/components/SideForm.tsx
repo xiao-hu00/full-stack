@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { ColorPicker } from 'antd'
 import useBearStore from '../store'
+import './SideForm.css'
+
 import type { Color } from 'antd/es/color-picker'
 type colorType = 'color' | 'markColor' | 'maskColor' | 'flyColor' | 'flyColor2' | 'flyColor3' | 'waveColor'
 const Component: React.FC = () => {
@@ -56,39 +58,39 @@ const Component: React.FC = () => {
   }
 
   return (
-    <div style={{ zIndex: 9, position: 'absolute', height: '100vh', left: 0, top: 0, color: '#FFF', background: '#000', maxWidth: 180, padding: '0px 10px' }}>
-      <div style={{ margin: '20px 0 10px' }}>光柱</div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div className='side'>
+      <div className='side-title' style={{ marginTop: 50 }}>光柱</div>
+      <div className='side-item'>
         <div>颜色：</div>
         <ColorPicker value={color} defaultValue={'yellow'} onChange={(value) => onChange(value, 'color')} />
       </div>
-      <div style={{ margin: '20px 0 10px' }}>坐标标记</div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div className='side-title'>坐标标记</div>
+      <div className='side-item'>
         <div>颜色：</div>
         <ColorPicker value={colorMark} defaultValue={'yellow'} onChange={(value) => onChange(value, 'markColor')} />
       </div>
-      <div style={{ margin: '20px 0 10px' }}>波纹动画</div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div className='side-title'>波纹动画</div>
+      <div className='side-item'>
         <div>颜色：</div>
         <ColorPicker value={colorWave} defaultValue={'yellow'} onChange={(value) => onChange(value, 'waveColor')} />
       </div>
-      <div style={{ margin: '20px 0 10px' }}>能量光罩</div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div className='side-title'>能量光罩</div>
+      <div className='side-item'>
         <div>颜色：</div>
         <ColorPicker value={colorMask} defaultValue={'yellow'} onChange={(value) => onChange(value, 'maskColor')} />
       </div>
-      <div style={{ margin: '20px 0 10px' }}>飞线组1</div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div className='side-title'>飞线组1</div>
+      <div className='side-item'>
         <div>颜色：</div>
         <ColorPicker value={colorFly} defaultValue={'yellow'} onChange={(value) => onChange(value, 'flyColor')} />
       </div>
-      <div style={{ margin: '20px 0 10px' }}>飞线组2</div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div className='side-title'>飞线组2</div>
+      <div className='side-item'>
         <div>颜色：</div>
         <ColorPicker value={colorFly2} defaultValue={'yellow'} onChange={(value) => onChange(value, 'flyColor2')} />
       </div>
-      <div style={{ margin: '20px 0 10px' }}>飞线组3</div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div className='side-title'>飞线组3</div>
+      <div className='side-item'>
         <div>颜色：</div>
         <ColorPicker value={colorFly3} defaultValue={'yellow'} onChange={(value) => onChange(value, 'flyColor3')} />
       </div>
