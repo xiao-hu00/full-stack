@@ -6,7 +6,8 @@ import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 
 const Component: React.FC<any> = (props) => {
-  const { position } = props
+  const { position, color = 'yellow' } = props
+  const mColor = new THREE.Color(color)
   const pos = lglt2xyz(position[0], position[1])
   const waveMap = useLoader(TextureLoader, waveImg)
   const waveRef = useRef<any>(null!)
@@ -33,7 +34,7 @@ const Component: React.FC<any> = (props) => {
   return (
     <mesh ref={waveRef} position={[pos.x, pos.y, pos.z]}>
       <planeGeometry args={[0.3, 0.3]} />
-      <meshBasicMaterial depthWrite={false} side={THREE.DoubleSide} map={waveMap} transparent={true} color={'yellow'} />
+      <meshBasicMaterial depthWrite={false} side={THREE.DoubleSide} map={waveMap} transparent={true} color={mColor} />
     </mesh>
   )
 }

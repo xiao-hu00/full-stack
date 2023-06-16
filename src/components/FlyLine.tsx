@@ -14,7 +14,7 @@ const Component: React.FC<any> = (props) => {
     uTime: { value: 0 }, // 运行时间
     uRange: { value: type === 'fly' ? 300 : 90 }, // 飞行的线的点的个数
     uNumber: { value: 800 }, // 飞线的点的总数
-    uColor: { value: type === 'fly' ? mColor : new THREE.Color('yellow') },
+    uColor: { value: mColor },
     isFlyOpacity: { value: type === 'fly' ? 0.0 : 0.5 },
   }), [])
   const indexArray = Array.from({ length: settings.uNumber.value + 1 }, (_, i) => 1 + (i)).reverse()
@@ -44,7 +44,7 @@ const Component: React.FC<any> = (props) => {
        return
     }
     settings.uTime.value += delta * 10
-    // settings.uColor.value = mColor
+    settings.uColor.value = mColor
   })
   return (
     <points ref={lineRef as any}>

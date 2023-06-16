@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
 import maskImg from '../assets/repeat.png'
 import { useFrame, useLoader } from '@react-three/fiber'
@@ -17,9 +17,6 @@ const Component: React.FC<any> = (props) => {
   
   maskMap.wrapS = THREE.MirroredRepeatWrapping;
   maskMap.wrapT = THREE.MirroredRepeatWrapping;
-  useEffect(() => {
-    console.log(ref.current.material.uniforms.uColor.value)
-  }, [])
   useFrame((state, delta) => {
     settings.uTime.value += delta * 5
     settings.uColor.value = mColor
