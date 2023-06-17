@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useMemo } from 'react'
-import { lglt2xyz } from '../utils/index'
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 import { getBezierPoint } from '../utils'
@@ -19,8 +18,8 @@ const Component: React.FC<any> = (props) => {
   }), [])
   const indexArray = Array.from({ length: settings.uNumber.value + 1 }, (_, i) => 1 + (i)).reverse()
   const lineRef = useRef<THREE.Line>(null!)
-  const startPoint = lglt2xyz(positions[0][0], positions[0][1])
-  const endPoint = lglt2xyz(positions[1][0], positions[1][1])
+  const startPoint = positions[0]
+  const endPoint = positions[1]
   const [v1, v2] = getBezierPoint(startPoint, endPoint)
   const line = new THREE.CubicBezierCurve3(
     startPoint,

@@ -1,14 +1,12 @@
 import React, { useEffect, useRef } from 'react'
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
-import { lglt2xyz } from '../utils/index'
-import waveImg from '../assets/wave.png'
+import waveImg from '@/assets/wave.png'
 import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 
 const Component: React.FC<any> = (props) => {
   const { position, color = 'yellow' } = props
   const mColor = new THREE.Color(color)
-  const pos = lglt2xyz(position[0], position[1])
   const waveMap = useLoader(TextureLoader, waveImg)
   const waveRef = useRef<any>(null!)
 
@@ -32,7 +30,7 @@ const Component: React.FC<any> = (props) => {
     }
   })
   return (
-    <mesh ref={waveRef} position={[pos.x, pos.y, pos.z]}>
+    <mesh ref={waveRef} position={[position.x, position.y, position.z]}>
       <planeGeometry args={[0.3, 0.3]} />
       <meshBasicMaterial depthWrite={false} side={THREE.DoubleSide} map={waveMap} transparent={true} color={mColor} />
     </mesh>

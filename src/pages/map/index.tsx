@@ -5,9 +5,12 @@ import gzJson from "@/assets/gzMap.json"
 import './index.css'
 import { projection } from '@/utils'
 import { OrbitControls } from '@react-three/drei'
+import LightColumn from '@/components/LightColumn' // 光柱
+import Wave from '@/components/Wave' // 坐标点波纹
+import Circle from '@/components/Circle'
 
 const Component: React.FC = () => {
-  const [cityInfoList, setCityInfoList] = useState([])
+  const [cityInfoList, setCityInfoList] = useState<any>([])
   const [shapes, setShapes] = useState([])
   const [linePositions, setLinePositions] = useState<any>([])
   useEffect(() => {
@@ -39,52 +42,52 @@ const Component: React.FC = () => {
           cityPoints.push(points)
         });
       });
-      cityInfo.push(m.properties);
+      const [x, y] = projection(m.properties.center) as any
+      cityInfo.push({ x, y: y, z: 0.111 })
     });
     const allCityPoints = cityPoints.map((item: any) => (new Float32Array(item))) // N个市，循环，转化为Float32Array数组
     setLinePositions(allCityPoints)
     setShapes(cityShape)
     setCityInfoList(cityInfo)
-  };
-  useEffect(() => {
-    if (cityInfoList.length === 0) return;
-    // 市中心 点
-    const arr = cityInfoList.map((m: any) => {
-      const [x, y] = projection(m.center) as any
-      return { x, y: -y, z: 0.12 }
-    })
-  }, [cityInfoList]);
+  }
   return (
-    <>
-    <div style={{ height: '100vh', width: '100%', backgroundColor: '#000' }}>
-      <Canvas camera={{ fov: 45, near: 0.1, far: 100, zoom: 1 }}>
-        <OrbitControls makeDefault />
-        <group rotation={[-0.8, 0, 0]}>
-          <mesh>
-            <extrudeGeometry args={[shapes, { depth: 0.1, bevelEnabled: false }]}/>
-            <meshBasicMaterial color={'#1968ff'} transparent={true} opacity={0.9} />
-          </mesh>
-          {linePositions.map((item: any, index: number) => (
-            <group key={index}>
-              <group position={[0, 0, -0.13]}>
+      <>
+      <div style={{ height: '100vh', width: '100%', backgroundColor: '#000' }}>
+        <Canvas camera={{ fov: 75, near: 0.1, far: 100, zoom: 2.5 }}>
+          <OrbitControls makeDefault position={[0, 0, 2.5]}/>
+          <ambientLight intensity={1.5} />
+          <group rotation={[- Math.PI * 0.28, 0, 0]}>
+            <mesh>
+              <extrudeGeometry args={[shapes, { depth: 0.1, bevelEnabled: false }]}/>
+              <meshBasicMaterial color={'#1968ff'} opacity={0.9} transparent={true} />
+            </mesh>
+            {linePositions.map((item: any, index: number) => (
+              <group key={index}>
+                <group position={[0, 0, -0.111]}>
+                  <line>
+                    <bufferGeometry>
+                      <bufferAttribute attach="attributes-position" count={item.length / 3} array={item} itemSize={3} />
+                    </bufferGeometry>
+                    <lineBasicMaterial color={'#FFFFFF'} />
+                  </line>
+                </group>
                 <line>
                   <bufferGeometry>
                     <bufferAttribute attach="attributes-position" count={item.length / 3} array={item} itemSize={3} />
                   </bufferGeometry>
-                  <lineBasicMaterial color={'#ffffff'} />
+                  <lineBasicMaterial color={'#FFFFFF'} />
                 </line>
               </group>
-              <line>
-                <bufferGeometry>
-                  <bufferAttribute attach="attributes-position" count={item.length / 3} array={item} itemSize={3} />
-                </bufferGeometry>
-                <lineBasicMaterial color={'#ffffff'} />
-              </line>
-            </group>
-          ))}
-        </group>
-      </Canvas>
-    </div>
+            ))}
+            {cityInfoList.map((item: any, index: number) => (
+              <group key={index}>
+                <LightColumn color={'yellow'} position={item} flat={true} />
+                <Circle color={'#31EA12'} position={item} flat={true} />
+              </group>
+            ))}
+          </group>
+        </Canvas>
+      </div>
     </>
   )
 }

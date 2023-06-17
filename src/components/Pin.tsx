@@ -2,16 +2,14 @@ import React, { useEffect, useRef } from 'react'
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
 import earthImg from '../assets/matcap1-64px.png'
 import { useFrame, useLoader } from '@react-three/fiber'
-import { lglt2xyz } from '../utils/index'
 import * as THREE from 'three'
 
 const Component: React.FC<any> = (props) => {
   const { position } = props
   const coneRef = useRef<any>(null!)
   const sRef = useRef<any>(null!)
-  const centerPos = lglt2xyz(position[0], position[1])
   const [matcap] = useLoader(TextureLoader, [earthImg]) // 地球
-  const rayLine = new THREE.Ray(new THREE.Vector3(0, 0, 0), new THREE.Vector3(centerPos.x, centerPos.y, centerPos.z))
+  const rayLine = new THREE.Ray(new THREE.Vector3(0, 0, 0), new THREE.Vector3(position.x, position.y, position.z))
   const top = rayLine.at(1.04, new THREE.Vector3(0, 0, 0))
   const top1 = rayLine.at(1.08, new THREE.Vector3(0, 0, 0))
   useEffect(() => {

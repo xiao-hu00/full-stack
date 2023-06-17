@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import * as d3 from 'd3'
 
 //threejs自带的经纬度转换
-export const lglt2xyz = (lng: any, lat: any) => {
+export const lglt2xyz = (lng: number, lat: number): THREE.Vector3 => {
   const theta = (90 + lng) * (Math.PI / 180);
   const phi = (90 - lat) * (Math.PI / 180);
   return new THREE.Vector3().setFromSpherical(

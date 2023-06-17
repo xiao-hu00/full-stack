@@ -2,17 +2,21 @@ import { Canvas } from '@react-three/fiber'
 import './index.css'
 import Earth from '@/components/Earth' // 地球贴图和地球辉光
 import LightColumn from '@/components/LightColumn' // 光柱
+import Circle from '@/components/Circle'
 import Wave from '@/components/Wave' // 坐标点波纹
 import FlyLine from '@/components/FlyLine' // 飞线
 import Pin from '@/components/Pin' // 坐标标记
 import EnergyMask from '@/components/EnergyMask' // 能量光罩
-import Circle from '@/components/Circle'
 import SideForm from '@/components/SideForm'
 import useBearStore from '@/store'
+import { lglt2xyz } from '@/utils'
 import { OrbitControls } from '@react-three/drei'
+import { Vector3 } from 'three'
 
 // 飞线起点坐标，中心点坐标
-const center = [116.401107, 39.920248]
+const center = [
+  [116.401107, 39.920248]
+].map((item: any) => lglt2xyz(item[0], item[1]))
 // 飞线终点坐标
 const pointList = [
   [53.916413, 31.439865],
@@ -33,7 +37,7 @@ const pointList = [
   // [-99.137807, 19.441335],
   // [96.681106, 3.144205],
   // [126.982568, 37.585754],
-]
+].map((item: any) => lglt2xyz(item[0], item[1]))
 // 光柱坐标
 const lightCol = [
   [116.401107, 46.920248],
@@ -43,10 +47,10 @@ const lightCol = [
   [76.401107, 32.920248],
   [56.401107, 29.920248],
   [46.401107, 66.920248],
-]
+].map((item: any) => lglt2xyz(item[0], item[1]))
 
 // 所有波纹动画点的坐标
-const allPoints = [...pointList, center]
+const allPoints = pointList.concat(center)
 // 所有光点圆圈的坐标
 const allCirclePoints = [...allPoints, ...lightCol]
 
@@ -88,21 +92,21 @@ function App() {
           <ambientLight intensity={1} />
           <group rotation={[0.4, 2.95, 0.1]}>
             <Earth />
-            {lightCol.map((item: Array<number>, index: number) => (
+            {lightCol.map((item: Vector3, index: number) => (
               <LightColumn color={color} position={item} key={index} />
             ))}
-            {allCirclePoints.map((item: Array<number>, index: number) => (
+            {allCirclePoints.map((item: Vector3, index: number) => (
               <Circle position={item} key={index} color={markColor} />
             ))}
-            {pointList.map((item: Array<number>, index: number) => (
-              <FlyLine color={flyColor} positions={[center, item]} key={index} />
+            {pointList.map((item: Vector3, index: number) => (
+              <FlyLine color={flyColor} positions={[center[0], item]} key={index} />
             ))}
-            {allPoints.map((item: Array<number>, index: number) => (
+            {allPoints.map((item: Vector3, index: number) => (
               <Wave color={waveColor} position={item} key={index} />
             ))}
-            <Pin position={center} />
-            <FlyLine color={flyColor2} positions={[[126.982568, 37.585754], [-118.242445, 34.058754]]} type={'fly'} />
-            <FlyLine color={flyColor3} positions={[[113.694591, 40.430836], [139.771786, 35.696155]]} type={'fly'} delay={1} />
+            <Pin position={center[0]} />
+            <FlyLine color={flyColor2} positions={[pointList[0], pointList[1]]} type={'fly'} />
+            <FlyLine color={flyColor3} positions={[pointList[0], pointList[2]]} type={'fly'} delay={1} />
             <EnergyMask color={maskColor} />
           </group>
         </Canvas>
