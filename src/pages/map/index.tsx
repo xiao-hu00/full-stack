@@ -56,7 +56,7 @@ const Component: React.FC = () => {
     setCityInfoList(cityInfo)
   }
   const perfVisible = useControls({
-    'perf': {
+    'performance': {
       value: false
     }
   })
@@ -75,7 +75,7 @@ const Component: React.FC = () => {
     <>
       <div style={{ height: '100vh', width: '100%', backgroundColor: '#000' }}>
         <Canvas camera={{ fov: 75, near: 0.1, far: 100, zoom: 2.5 }}>
-          <Perf visible={perfVisible.perf} />
+          <Perf visible={perfVisible.performance} />
           <OrbitControls makeDefault position={[0, 0, 2]}/>
           <ambientLight intensity={1.5} />
           <group rotation={[- Math.PI * 0.28, 0, 0]}>

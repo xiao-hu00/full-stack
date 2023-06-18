@@ -56,7 +56,7 @@ const allCirclePoints = [...allPoints, ...lightCol]
 
 function App() {
   const perfVisible = useControls({
-    'perf': {
+    'performance': {
       value: false
     }
   })
@@ -83,7 +83,7 @@ function App() {
         <Canvas
           camera={{ fov: 75, near: 0.1, far: 100, zoom: 1 }}
         >
-          <Perf visible={perfVisible.perf} />
+          <Perf visible={perfVisible.performance} />
           <OrbitControls makeDefault />
           <ambientLight intensity={1} />
           <group rotation={[0.4, 2.95, 0.1]}>
