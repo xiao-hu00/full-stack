@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import * as THREE from 'three'
 import { projection } from '@/utils'
-import { OrbitControls, TransformControls } from '@react-three/drei'
+import { OrbitControls } from '@react-three/drei'
 import { useControls } from 'leva'
 import gzJson from "@/assets/gzMap.json"
 import './index.css'
@@ -12,6 +12,7 @@ import Wave from '@/components/Wave' // 坐标点波纹
 import PontPlane from '@/components/PointPlane'
 import UpLine from '@/components/UpLine'
 import MapCircle from '@/components/MapCircle'
+import Perf from '@/components/Perf'
 
 const Component: React.FC = () => {
   const [cityInfoList, setCityInfoList] = useState<any>([])
@@ -54,6 +55,11 @@ const Component: React.FC = () => {
     setShapes(cityShape)
     setCityInfoList(cityInfo)
   }
+  const perfVisible = useControls({
+    'perf': {
+      value: false
+    }
+  })
   const color = useControls('设置颜色', {
     'lightColumn': {
       value: 'yellow'
@@ -69,6 +75,7 @@ const Component: React.FC = () => {
     <>
       <div style={{ height: '100vh', width: '100%', backgroundColor: '#000' }}>
         <Canvas camera={{ fov: 75, near: 0.1, far: 100, zoom: 2.5 }}>
+          <Perf visible={perfVisible.perf} />
           <OrbitControls makeDefault position={[0, 0, 2]}/>
           <ambientLight intensity={1.5} />
           <group rotation={[- Math.PI * 0.28, 0, 0]}>
@@ -76,11 +83,6 @@ const Component: React.FC = () => {
               <extrudeGeometry args={[shapes, { depth: 0.1, bevelEnabled: false }]}/>
               <meshBasicMaterial color={color.map} opacity={0.9} transparent={true} />
             </mesh>
-            <MapCircle color={color.circle} />
-            <PontPlane />
-            <UpLine color={'white'} />
-            <UpLine color={'white'} />
-            <UpLine color={'hotpink'} />
             {linePositions.map((item: any, index: number) => (
               <group key={index}>
                 <group position={[0, 0, -0.111]}>
@@ -106,6 +108,11 @@ const Component: React.FC = () => {
                 <Wave color={color.lightColumn} position={item} flat={true} width={0.15} />
               </group>
             ))}
+            <PontPlane />
+            <UpLine color={'white'} />
+            <UpLine color={'white'} />
+            <MapCircle color={color.circle} />
+            <UpLine color={'hotpink'} />
           </group>
         </Canvas>
       </div>

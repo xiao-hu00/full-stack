@@ -11,6 +11,7 @@ import { lglt2xyz } from '@/utils'
 import { OrbitControls } from '@react-three/drei'
 import { Vector3 } from 'three'
 import { useControls } from 'leva'
+import Perf from '@/components/Perf'
 
 // 飞线起点坐标，中心点坐标
 const center = [
@@ -54,6 +55,11 @@ const allPoints = pointList.concat(center)
 const allCirclePoints = [...allPoints, ...lightCol]
 
 function App() {
+  const perfVisible = useControls({
+    'perf': {
+      value: false
+    }
+  })
   const color = useControls('设置颜色', {
     'lightColumn': {
       value: 'yellow'
@@ -77,6 +83,7 @@ function App() {
         <Canvas
           camera={{ fov: 75, near: 0.1, far: 100, zoom: 1 }}
         >
+          <Perf visible={perfVisible.perf} />
           <OrbitControls makeDefault />
           <ambientLight intensity={1} />
           <group rotation={[0.4, 2.95, 0.1]}>
