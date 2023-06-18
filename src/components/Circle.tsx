@@ -9,10 +9,6 @@ const Component: React.FC<any> = (props) => {
   const [gradientMap] = useLoader(TextureLoader, [gradientImg])
   const planeRef = useRef<any>(null!)
   const torusRef = useRef<any>(null!)
-  const pos = {
-    ...position,
-    y: flat ? -position.y : position.y
-  }
   useEffect(() => {
     if (flat) {
 
@@ -23,11 +19,11 @@ const Component: React.FC<any> = (props) => {
   }, [])
   return (
     <>
-      <mesh ref={planeRef} position={[pos.x, pos.y, pos.z]}>
+      <mesh ref={planeRef} position={[position.x, position.y, position.z]}>
         <planeGeometry args={[0.03, 0.03]} />
         <meshBasicMaterial map={gradientMap} depthTest={false} depthWrite={false} side={THREE.DoubleSide} transparent={true} color={color} />
       </mesh>
-      <mesh ref={torusRef} position={[pos.x, pos.y, pos.z]}>
+      <mesh ref={torusRef} position={[position.x, position.y, position.z]}>
         <torusGeometry args={[0.025, 0.002, 2, 64]} />
         <meshBasicMaterial color={color} />
       </mesh>

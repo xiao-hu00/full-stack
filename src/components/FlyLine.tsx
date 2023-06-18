@@ -16,6 +16,9 @@ const Component: React.FC<any> = (props) => {
     uColor: { value: mColor },
     isFlyOpacity: { value: type === 'fly' ? 0.0 : 0.5 },
   }), [])
+  useEffect(() => {
+    settings.uColor.value = mColor
+  }, [mColor])
   const indexArray = Array.from({ length: settings.uNumber.value + 1 }, (_, i) => 1 + (i)).reverse()
   const lineRef = useRef<THREE.Line>(null!)
   const startPoint = positions[0]
@@ -43,7 +46,6 @@ const Component: React.FC<any> = (props) => {
        return
     }
     settings.uTime.value += delta * 10
-    settings.uColor.value = mColor
   })
   return (
     <points ref={lineRef as any}>

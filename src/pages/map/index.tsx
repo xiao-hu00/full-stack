@@ -8,6 +8,7 @@ import { OrbitControls } from '@react-three/drei'
 import LightColumn from '@/components/LightColumn' // 光柱
 import Wave from '@/components/Wave' // 坐标点波纹
 import Circle from '@/components/Circle'
+import { useControls } from 'leva'
 
 const Component: React.FC = () => {
   const [cityInfoList, setCityInfoList] = useState<any>([])
@@ -43,13 +44,21 @@ const Component: React.FC = () => {
         });
       });
       const [x, y] = projection(m.properties.center) as any
-      cityInfo.push({ x, y: y, z: 0.111 })
+      cityInfo.push({ x, y: -y, z: 0.111 })
     });
     const allCityPoints = cityPoints.map((item: any) => (new Float32Array(item))) // N个市，循环，转化为Float32Array数组
     setLinePositions(allCityPoints)
     setShapes(cityShape)
     setCityInfoList(cityInfo)
   }
+  const color = useControls('设置颜色', {
+    'lightColumn': {
+      value: 'yellow'
+    },
+    'map': {
+      value: 'green'
+    },
+  })
   return (
       <>
       <div style={{ height: '100vh', width: '100%', backgroundColor: '#000' }}>
@@ -59,7 +68,7 @@ const Component: React.FC = () => {
           <group rotation={[- Math.PI * 0.28, 0, 0]}>
             <mesh>
               <extrudeGeometry args={[shapes, { depth: 0.1, bevelEnabled: false }]}/>
-              <meshBasicMaterial color={'#1968ff'} opacity={0.9} transparent={true} />
+              <meshBasicMaterial color={color.map} opacity={0.9} transparent={true} />
             </mesh>
             {linePositions.map((item: any, index: number) => (
               <group key={index}>
@@ -81,8 +90,9 @@ const Component: React.FC = () => {
             ))}
             {cityInfoList.map((item: any, index: number) => (
               <group key={index}>
-                <LightColumn color={'yellow'} position={item} flat={true} />
-                <Circle color={'#31EA12'} position={item} flat={true} />
+                <LightColumn color={color.lightColumn} position={item} flat={true} />
+                <Circle color={color.lightColumn} position={item} flat={true} />
+                <Wave color={color.lightColumn} position={item} flat={true} width={0.15} />
               </group>
             ))}
           </group>

@@ -6,13 +6,12 @@ const Component: React.FC = () => {
       width: '100%',
       height: '100vh',
       textAlign: 'center',
-      marginTop: '150px',
       fontSize: '30px',
       color: '#FFF',
       backgroundColor: '#000',
       zIndex: '10',
     }}>
-      加载中...
+      <div style={{ paddingTop: 150 }}>加载中...</div>
     </div>
   )
 }

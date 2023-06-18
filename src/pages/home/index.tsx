@@ -7,11 +7,10 @@ import Wave from '@/components/Wave' // 坐标点波纹
 import FlyLine from '@/components/FlyLine' // 飞线
 import Pin from '@/components/Pin' // 坐标标记
 import EnergyMask from '@/components/EnergyMask' // 能量光罩
-import SideForm from '@/components/SideForm'
-import useBearStore from '@/store'
 import { lglt2xyz } from '@/utils'
 import { OrbitControls } from '@react-three/drei'
 import { Vector3 } from 'three'
+import { useControls } from 'leva'
 
 // 飞线起点坐标，中心点坐标
 const center = [
@@ -55,35 +54,25 @@ const allPoints = pointList.concat(center)
 const allCirclePoints = [...allPoints, ...lightCol]
 
 function App() {
-  const color = useBearStore((state) => {
-    return typeof state.color === 'string' ? state.color : state.color.toHexString()
-  })
-  const markColor = useBearStore((state) => {
-    return typeof state.markColor === 'string' ? state.markColor : state.markColor.toHexString()
-  })
-  const maskColor = useBearStore((state) => {
-    const color = typeof state.maskColor === 'string' ? state.maskColor : state.maskColor.toHexString()
-    return color
-  })
-  const waveColor = useBearStore((state) => {
-    const color = typeof state.waveColor === 'string' ? state.waveColor : state.waveColor.toHexString()
-    return color
-  })
-  const flyColor = useBearStore((state) => {
-    const color = typeof state.flyColor === 'string' ? state.flyColor : state.flyColor.toHexString()
-    return color
-  })
-  const flyColor2 = useBearStore((state) => {
-    const color = typeof state.flyColor2 === 'string' ? state.flyColor2 : state.flyColor2.toHexString()
-    return color
-  })
-  const flyColor3 = useBearStore((state) => {
-    const color = typeof state.flyColor3 === 'string' ? state.flyColor3 : state.flyColor3.toHexString()
-    return color
+  const color = useControls('设置颜色', {
+    'lightColumn': {
+      value: 'yellow'
+    },
+    'flyLine1': {
+      value: 'yellow'
+    },
+    'flyLine2': {
+      value: 'yellow'
+    },
+    'flyLine3': {
+      value: 'yellow'
+    },
+    'mask': {
+      value: 'yellow'
+    },
   })
   return (
     <>
-      <SideForm />
       <div id="canvas-container">
         <Canvas
           camera={{ fov: 75, near: 0.1, far: 100, zoom: 1 }}
@@ -93,21 +82,21 @@ function App() {
           <group rotation={[0.4, 2.95, 0.1]}>
             <Earth />
             {lightCol.map((item: Vector3, index: number) => (
-              <LightColumn color={color} position={item} key={index} />
+              <LightColumn color={color.lightColumn} position={item} key={index} />
             ))}
             {allCirclePoints.map((item: Vector3, index: number) => (
-              <Circle position={item} key={index} color={markColor} />
+              <Circle position={item} key={index} color={color.lightColumn} />
             ))}
             {pointList.map((item: Vector3, index: number) => (
-              <FlyLine color={flyColor} positions={[center[0], item]} key={index} />
+              <FlyLine color={color.flyLine1} positions={[center[0], item]} key={index} />
             ))}
             {allPoints.map((item: Vector3, index: number) => (
-              <Wave color={waveColor} position={item} key={index} />
+              <Wave color={color.lightColumn} position={item} key={index} />
             ))}
-            <Pin position={center[0]} />
-            <FlyLine color={flyColor2} positions={[pointList[0], pointList[1]]} type={'fly'} />
-            <FlyLine color={flyColor3} positions={[pointList[0], pointList[2]]} type={'fly'} delay={1} />
-            <EnergyMask color={maskColor} />
+            <Pin position={center} />
+            <FlyLine color={color.flyLine2} positions={[pointList[0], pointList[1]]} type={'fly'} />
+            <FlyLine color={color.flyLine3} positions={[pointList[0], pointList[2]]} type={'fly'} delay={1} />
+            <EnergyMask color={color.mask} />
           </group>
         </Canvas>
       </div>

@@ -5,13 +5,13 @@ import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 
 const Component: React.FC<any> = (props) => {
-  const { position, color = 'yellow' } = props
+  const { position, color = 'yellow', flat = false, width = 0.3 } = props
   const mColor = new THREE.Color(color)
   const waveMap = useLoader(TextureLoader, waveImg)
   const waveRef = useRef<any>(null!)
 
   useEffect(() => {
-    waveRef.current.lookAt(0, 0, 0)
+    !flat && waveRef.current.lookAt(0, 0, 0)
   }, [])
   let s = 1
   useFrame((state, delta) => {
@@ -31,7 +31,7 @@ const Component: React.FC<any> = (props) => {
   })
   return (
     <mesh ref={waveRef} position={[position.x, position.y, position.z]}>
-      <planeGeometry args={[0.3, 0.3]} />
+      <planeGeometry args={[width, width]} />
       <meshBasicMaterial depthWrite={false} side={THREE.DoubleSide} map={waveMap} transparent={true} color={mColor} />
     </mesh>
   )

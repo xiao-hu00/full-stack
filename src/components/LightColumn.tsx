@@ -16,12 +16,11 @@ const Component: React.FC<any> = (props) => {
     const node2 = groupRef.current.children[1]
     if (flat) {
       // 平面地图
-      groupRef.current.rotateX(Math.PI)
-      node1.rotateX(- Math.PI * 0.5)
-      node1.translateY(0.421)
-      node2.rotateX(- Math.PI * 0.5)
+      node1.rotateX(Math.PI * 0.5)
+      node1.translateY(0.2)
+      node2.rotateX(Math.PI * 0.5)
       node2.rotateY(Math.PI * 0.5)
-      node2.translateY(0.421)
+      node2.translateY(0.2)
     } else {
       // 地球
       node1.lookAt(0, 0, 0)

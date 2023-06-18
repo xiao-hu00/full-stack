@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useMemo, useRef, useEffect } from 'react'
 import { TextureLoader } from 'three/src/loaders/TextureLoader.js'
 import maskImg from '../assets/repeat.png'
 import { useFrame, useLoader } from '@react-three/fiber'
@@ -14,12 +14,13 @@ const Component: React.FC<any> = (props) => {
       uTime: { value: 0 }, // 运行时间
       uColor: { value: mColor },
   }), [])
-  
+  useEffect(() => {
+    settings.uColor.value = mColor
+  }, [mColor])
   maskMap.wrapS = THREE.MirroredRepeatWrapping;
   maskMap.wrapT = THREE.MirroredRepeatWrapping;
   useFrame((state, delta) => {
     settings.uTime.value += delta * 5
-    settings.uColor.value = mColor
   })
   return (
     <mesh ref={ref}>

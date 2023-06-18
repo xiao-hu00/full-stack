@@ -5,8 +5,13 @@
   background: #000;
   display: flex;
   z-index: 10;
-  margin-left: 220px;
+  margin-left: 50px;
+  padding-top: 20px;
 }
 .nav a {
   color: #FFF;
+  padding: 5px 15px;
+}
+.nav a:hover {
+  color: hotpink;
 }
