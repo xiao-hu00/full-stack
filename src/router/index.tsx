@@ -4,6 +4,7 @@ import Loading from '@/components/Loading'
 import Home from '@/pages/home'
 import Layout from '@/pages/layout'
 import Map from '@/pages/map'
+import Glb from '@/pages/glb'
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,12 @@ const router = createBrowserRouter([
         path: "/map",
         element: <React.Suspense fallback={<Loading />}>
           <Map />
+        </React.Suspense>
+      },
+      {
+        path: "/glb",
+        element: <React.Suspense fallback={<Loading />}>
+          <Glb />
         </React.Suspense>
       }
     ],

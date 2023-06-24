@@ -8,6 +8,7 @@ const Component: React.FC = () => {
       <nav className='nav'>
         <Link to="/">地球</Link>
         <Link to="/map">地图</Link>
+        <Link to="/glb">模型</Link>
       </nav>
       <Outlet />
     </>

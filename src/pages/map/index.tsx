@@ -70,6 +70,9 @@ const Component: React.FC = () => {
     'circle': {
       value: 'white'
     },
+    'upLine': {
+      value: 'white'
+    }
   })
   return (
     <>
@@ -109,10 +112,10 @@ const Component: React.FC = () => {
               </group>
             ))}
             <PontPlane />
-            <UpLine color={'white'} />
-            <UpLine color={'white'} />
+            <UpLine color={color.upLine} />
+            <UpLine color={color.upLine} />
+            <UpLine color={color.upLine} />
             <MapCircle color={color.circle} />
-            <UpLine color={'hotpink'} />
           </group>
         </Canvas>
       </div>
