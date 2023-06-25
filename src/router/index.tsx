@@ -5,6 +5,7 @@ import Home from '@/pages/home'
 import Layout from '@/pages/layout'
 import Map from '@/pages/map'
 import Glb from '@/pages/glb'
+import Animate from '@/pages/animate'
 
 const router = createBrowserRouter([
   {
@@ -25,9 +26,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/glb",
-        element: <React.Suspense fallback={<Loading />}>
-          <Glb />
-        </React.Suspense>
+        element: <Glb />
+      },
+      {
+        path: "/animate",
+        element: <Animate />
       }
     ],
     errorElement: <>错误页面</>,

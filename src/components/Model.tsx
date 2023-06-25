@@ -13,7 +13,7 @@ export default function Model(props: any) {
   const pointMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5 })
   const material = new THREE.MeshBasicMaterial({ map: bakedMap })
   return (
-    <group {...props} dispose={null}>
+    <group {...props} dispose={null} rotation={[Math.PI * 0.2, - 0.2, 0]}>
       <group>
         {Object.keys(nodes).map((item, index) => {
           if (!nodes[item].geometry) return null
