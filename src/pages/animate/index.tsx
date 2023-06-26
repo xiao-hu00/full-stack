@@ -18,8 +18,7 @@ const Page: React.FC = () => {
   const [springs, api] = useSpring(() => ({ opacity: 0, y: 60 }))
   if (scroll?.top < 200) {
     api.start({ opacity: 0, y: 60 })
-  }
-  if (scroll?.top >= 200) {
+  } else {
     api.start({ opacity: 1, y: 0 })
   }
   const list = Array.from({ length: 20 }, (_, i) => 1 + (i))
@@ -38,20 +37,19 @@ const Page: React.FC = () => {
       duration: 2000
     }
   })
-  const [animateList] = useSprings(7, i => ({
+  const [animateList, api2] = useSprings(7, i => ({
     // ref: boxApi,
-    from: {
-      scale: 0,
-    },
-    to: {
-      scale: 1,
-    },
-    delay: i * 200,
+    scale: 1,
     config: {
       mass: 2,
       tension: 220,
     },
   }))
+  if (scroll?.top < 100) {
+    api2.start((i) => ({ scale: 0, delay: i * 200, }))
+  } else {
+    api2.start((i) => ({ scale: 1, delay: i * 200, }))
+  }
   return (
     <>
       <animated.div
