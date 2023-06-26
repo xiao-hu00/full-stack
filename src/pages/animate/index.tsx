@@ -39,16 +39,17 @@ const Page: React.FC = () => {
   })
   const [animateList, api2] = useSprings(7, i => ({
     // ref: boxApi,
-    scale: 1,
+    scale: 0,
+    opacity: 0,
     config: {
       mass: 2,
       tension: 220,
     },
   }))
   if (scroll?.top < 100) {
-    api2.start((i) => ({ scale: 0, delay: i * 200, }))
+    api2.start((i) => ({ scale: 0, opacity: 0, delay: (6 - i) * 200, }))
   } else {
-    api2.start((i) => ({ scale: 1, delay: i * 200, }))
+    api2.start((i) => ({ scale: 1, opacity: 1, delay: i * 200, }))
   }
   return (
     <>
@@ -61,12 +62,13 @@ const Page: React.FC = () => {
         test animate
       </animated.div>
       <div style={{ position: 'absolute', right: 100, top: 100 }}>
-        {animateList.map(({ scale }, index) => (
+        {animateList.map(({ scale, opacity }, index) => (
           <animated.div
             key={index}
             style={{
               transform: `translate(0px, ${index * 10}px)`,
               scale,
+              opacity,
             }}
           >animate{index}</animated.div>
         ))}
