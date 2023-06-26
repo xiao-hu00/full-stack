@@ -37,7 +37,7 @@ const Page: React.FC = () => {
       duration: 2000
     }
   })
-  const [animateList, api2] = useSprings(7, i => ({
+  const [animateList, api2] = useSprings(7, () => ({
     // ref: boxApi,
     scale: 0,
     opacity: 0,
