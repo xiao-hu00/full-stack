@@ -73,9 +73,9 @@ const Page: React.FC = () => {
           >animate{index}</animated.div>
         ))}
       </div>
-      {/* <animated.div style={{ position: 'absolute', left: 200, top: scrollY, fontSize }}>
-        Hello World
-      </animated.div> */}
+      <animated.div style={{ position: 'absolute', left: 200, top: scrollY, fontSize }}>
+        Hello Animate
+      </animated.div>
       <animated.div style={{ height: 200, background: 'hotpink', position: 'absolute', left: 200, top: 400, ...springs }}>
         this is an animate
       </animated.div>

@@ -1,11 +1,10 @@
 import React, { useRef, useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
-import { projection } from '@/utils'
 
 const Component: React.FC<any> = (props) => {
   // type=fly 没有轨迹线，直接飞  delay=0 延迟飞线开始的时间，单位是秒
-  const { positions, color = 'yellow' } = props
+  const { color = 'yellow' } = props
   const mColor = new THREE.Color(color)
 
   const settings = useMemo(() => ({
@@ -38,7 +37,7 @@ const Component: React.FC<any> = (props) => {
     current.geometry.attributes.position.needsUpdate = true
     current.geometry.computeBoundingSphere()
   }, [lineRef])
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     settings.uTime.value += delta
   })
   return (

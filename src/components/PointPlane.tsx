@@ -14,7 +14,7 @@ const Component: React.FC<any> = (props) => {
   useEffect(() => {
     settings.uColor.value = mColor
   }, [mColor])
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     settings.uTime.value += delta * 10
   })
   return (

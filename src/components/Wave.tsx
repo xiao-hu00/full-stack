@@ -14,7 +14,7 @@ const Component: React.FC<any> = (props) => {
     !flat && waveRef.current.lookAt(0, 0, 0)
   }, [])
   let s = 1
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     s += (delta * 0.4)
     // console.log(delta)
     waveRef.current.scale.x = s * 0.7

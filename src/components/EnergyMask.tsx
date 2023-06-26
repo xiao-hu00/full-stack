@@ -19,7 +19,7 @@ const Component: React.FC<any> = (props) => {
   }, [mColor])
   maskMap.wrapS = THREE.MirroredRepeatWrapping;
   maskMap.wrapT = THREE.MirroredRepeatWrapping;
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     settings.uTime.value += delta * 5
   })
   return (
