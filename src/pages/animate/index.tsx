@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react'
-import { useSpring, animated, useScroll, useSpringValue } from '@react-spring/web'
+import React, { useRef } from 'react'
+import { useSpring, animated, useScroll, useSpringValue, useSprings } from '@react-spring/web'
 import { useScroll as useScrollHooks } from 'ahooks'
 
 const Page: React.FC = () => {
   const { scrollY } = useScroll()
-  const ref = useRef<any>(null!)
+  const ref = useRef<any>(null)
   const scroll = useScrollHooks(document) as {
     top: number
     left: number
@@ -15,7 +15,14 @@ const Page: React.FC = () => {
   } else {
     fontSize.start(12)
   }
-  const list = Array.from({ length: 100 }, (_, i) => 1 + (i))
+  const [springs, api] = useSpring(() => ({ opacity: 0, y: 60 }))
+  if (scroll?.top < 200) {
+    api.start({ opacity: 0, y: 60 })
+  }
+  if (scroll?.top >= 200) {
+    api.start({ opacity: 1, y: 0 })
+  }
+  const list = Array.from({ length: 20 }, (_, i) => 1 + (i))
   const styles = useSpring({
     from: {
       opacity: 0,
@@ -31,6 +38,20 @@ const Page: React.FC = () => {
       duration: 2000
     }
   })
+  const [animateList] = useSprings(7, i => ({
+    // ref: boxApi,
+    from: {
+      scale: 0,
+    },
+    to: {
+      scale: 1,
+    },
+    delay: i * 200,
+    config: {
+      mass: 2,
+      tension: 220,
+    },
+  }))
   return (
     <>
       <animated.div
@@ -41,12 +62,26 @@ const Page: React.FC = () => {
       >
         test animate
       </animated.div>
-      <animated.div style={{ position: 'absolute', left: 200, top: scrollY, fontSize }}>
+      <div style={{ position: 'absolute', right: 100, top: 100 }}>
+        {animateList.map(({ scale }, index) => (
+          <animated.div
+            key={index}
+            style={{
+              transform: `translate(0px, ${index * 10}px)`,
+              scale,
+            }}
+          >animate{index}</animated.div>
+        ))}
+      </div>
+      {/* <animated.div style={{ position: 'absolute', left: 200, top: scrollY, fontSize }}>
         Hello World
+      </animated.div> */}
+      <animated.div style={{ height: 200, background: 'hotpink', position: 'absolute', left: 200, top: 400, ...springs }}>
+        this is an animate
       </animated.div>
       <div style={{ position: 'fixed', top: 0, left: 300 }}>{JSON.stringify(scroll)}</div>
       <div ref={ref}>
-        {list.map((item) => (<div key={item}>item: {item}</div>))}
+        {list.map((item) => (<div style={{ height: 100 }} key={item}>item: {item}</div>))}
       </div>
     </>
   )
