@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import Model from '@/components/Model'
 import LoadProgress from '@/components/LoadProgress'
+import Stars from '@/components/Stars'
 
 const Component: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const Component: React.FC = () => {
           <Suspense fallback={<LoadProgress />}>
             <OrbitControls makeDefault position={[0, 0, 1.5]}/>
             <Model />
+            <Stars />
           </Suspense>
         </Canvas>
       </div>

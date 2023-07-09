@@ -45,3 +45,7 @@ export const getBezierPoint = (v0: THREE.Vector3, v3: THREE.Vector3) => {
   const v2 = getLenVcetor(v3.clone(), vtop, aLen)
   return [v1, v2]
 }
+// 得到一个两数之间的随机数
+export const range = (min: number, max: number) => {
+  return Math.random() * (max - min) + min
+}

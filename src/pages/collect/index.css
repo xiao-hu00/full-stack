@@ -1,0 +1,50 @@
+.collect-main {
+  display: flex;
+}
+.collect-side {
+  width: 250px;
+  border-right: 1px solid #CCC;
+  box-sizing: border-box;
+  height: calc(100vh - 60px);
+  overflow: auto;
+}
+.side-list {
+  padding: 25px;
+}
+.side-list button {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 20px;
+}
+.side-title {
+  color: rgba(0, 0, 0, 0.45);
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  padding-left: 15px;
+}
+.side-item {
+  padding: 0 15px;
+  cursor: pointer;
+  height: 32px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.side-item:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+  color: #000;
+}
+.side-item-active {
+  color: #1677ff;
+  background-color: #e6f4ff;
+}
+.collect-content {
+  flex: 1;
+  background-color: rgb(240, 242, 245);
+}
+.content-main {
+  padding: 25px;
+}

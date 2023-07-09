@@ -1,6 +1,8 @@
 import React, { useRef } from 'react'
 import { useSpring, animated, useScroll, useSpringValue, useSprings } from '@react-spring/web'
 import { useScroll as useScrollHooks } from 'ahooks'
+import { Canvas } from '@react-three/fiber'
+import TestAni from './TestAni'
 
 const Page: React.FC = () => {
   const { scrollY } = useScroll()
@@ -53,14 +55,19 @@ const Page: React.FC = () => {
   }
   return (
     <>
-      <animated.div
+      <div style={{ width: 200, height: 200 }}>
+        <Canvas>
+          <TestAni />
+        </Canvas>
+      </div>
+      {/* <animated.div
         style={{
           position: 'absolute',
           ...styles
         }}
       >
         test animate
-      </animated.div>
+      </animated.div> */}
       <div style={{ position: 'absolute', right: 100, top: 100 }}>
         {animateList.map(({ scale, opacity }, index) => (
           <animated.div
@@ -73,13 +80,13 @@ const Page: React.FC = () => {
           >animate{index}</animated.div>
         ))}
       </div>
-      <animated.div style={{ position: 'absolute', left: 200, top: scrollY, fontSize }}>
+      {/* <animated.div style={{ position: 'absolute', left: 200, top: scrollY, fontSize }}>
         Hello Animate
-      </animated.div>
+      </animated.div> */}
       <animated.div style={{ height: 200, background: 'hotpink', position: 'absolute', left: 200, top: 400, ...springs }}>
         this is an animate
       </animated.div>
-      <div style={{ position: 'fixed', top: 0, left: 300 }}>{JSON.stringify(scroll)}</div>
+      {/* <div style={{ position: 'fixed', top: 0, left: 300 }}>{JSON.stringify(scroll)}</div> */}
       <div ref={ref}>
         {list.map((item) => (<div style={{ height: 100 }} key={item}>item: {item}</div>))}
       </div>

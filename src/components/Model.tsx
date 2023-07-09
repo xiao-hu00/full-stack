@@ -6,7 +6,7 @@ import * as THREE from 'three'
 
 export default function Model(props: any) {
   const { nodes }: any = useGLTF('/study.glb')
-  console.log('nodes:',nodes)
+  // console.log('nodes:',nodes)
   const bakedMap: THREE.Texture = useLoader(TextureLoader, bakedImg) // 地球
   bakedMap.flipY = false
   bakedMap.colorSpace = THREE.SRGBColorSpace

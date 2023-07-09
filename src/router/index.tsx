@@ -6,6 +6,7 @@ import Layout from '@/pages/layout'
 import Map from '@/pages/map'
 import Glb from '@/pages/glb'
 import Animate from '@/pages/animate'
+import Collect from '@/pages/collect'
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/glb",
         element: <Glb />
+      },
+      {
+        path: "/collect",
+        element: <Collect />
       },
       {
         path: "/animate",
