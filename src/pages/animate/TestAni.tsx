@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react'
-import * as THREE from 'three'
 import { range } from '@/utils'
 import { useFrame } from '@react-three/fiber'
 
-const Component: React.FC<any> = (props) => {
+const Component: React.FC = () => {
   const count = 1000
   const positions = new Float32Array(count * 3)
   const sizes = new Float32Array(count)
@@ -11,18 +10,18 @@ const Component: React.FC<any> = (props) => {
   const distance = new Float32Array(count)
 
   for (let i = 0; i < count; i++) {
-    let i3 = i * 3
+    const i3 = i * 3
     positions[i3 + 0] = 0
-    positions[i3 + 1] = 5 * (Math.random() - 0.5)
+    positions[i3 + 1] = 2 * (Math.random() - 0.5)
     positions[i3 + 2] = 0
-    sizes[i] = range(1, 20)
+    sizes[i] = range(1, 10)
     velocity[i] = range(0.1, 1)
-    distance[i] = range(0.1, 1)
+    distance[i] = range(0.1, 0.5)
   }
   const settings = useMemo(() => ({
     uTime: { value: 0 }, // 运行时间
   }), [])
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     settings.uTime.value += delta * 2
   })
   return (
@@ -47,7 +46,7 @@ const Component: React.FC<any> = (props) => {
                 vec3 pos = position;
                 pos.x = mod(0.4*uTime*aVelocity, aDistance);
                 vec4 mvPosition = modelViewMatrix * vec4(pos, 1.);
-                gl_PointSize = aSize * (1. / - mvPosition.z);
+                gl_PointSize = aSize * (1. / - mvPosition.z) * 0.5;
                 gl_Position = projectionMatrix * mvPosition;
               }
           `}
