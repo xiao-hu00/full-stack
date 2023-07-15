@@ -1,51 +1,36 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react"
 import {
   useSpring,
   animated,
   useScroll,
   useSpringValue,
   useSprings,
-} from "@react-spring/web";
-import { useScroll as useScrollHooks } from "ahooks";
-import { Canvas } from "@react-three/fiber";
-import TestAni from "./TestAni";
-import { OrthographicCamera } from "@react-three/drei";
+} from "@react-spring/web"
+import { useScroll as useScrollHooks } from "ahooks"
+import { Canvas } from "@react-three/fiber"
+import TestAni from "./TestAni"
+import { OrthographicCamera } from "@react-three/drei"
 
 const Page: React.FC = () => {
-  const { scrollY } = useScroll();
-  const ref = useRef<any>(null);
+  const ref = useRef<any>(null)
+  const scrollContent = useRef<any>(null)
   const scroll = useScrollHooks(document) as {
-    top: number;
-    left: number;
-  };
-  const fontSize = useSpringValue(12);
+    top: number
+    left: number
+  }
+  const fontSize = useSpringValue(12)
   if (scroll?.top > 200) {
-    fontSize.start(20);
+    fontSize.start(20)
   } else {
-    fontSize.start(12);
+    fontSize.start(12)
   }
-  const [springs, api] = useSpring(() => ({ opacity: 0, y: 60 }));
+  const [springs, api] = useSpring(() => ({ opacity: 0, y: 60 }))
   if (scroll?.top < 200) {
-    api.start({ opacity: 0, y: 60 });
+    api.start({ opacity: 0, y: 60 })
   } else {
-    api.start({ opacity: 1, y: 0 });
+    api.start({ opacity: 1, y: 0 })
   }
-  const list = Array.from({ length: 20 }, (_, i) => 1 + i);
-  const styles = useSpring({
-    from: {
-      opacity: 0,
-      x: 0,
-      y: 15,
-    },
-    to: {
-      opacity: 1,
-      x: 120,
-      y: 120,
-    },
-    config: {
-      duration: 2000,
-    },
-  });
+  const list = Array.from({ length: 20 }, (_, i) => 1 + i)
   const [animateList, api2] = useSprings(
     7,
     () => ({
@@ -58,28 +43,13 @@ const Page: React.FC = () => {
       },
     }),
     []
-  );
+  )
   if (scroll?.top < 100) {
-    api2.start((i) => ({ scale: 0, opacity: 0, delay: (6 - i) * 200 }));
+    api2.start((i) => ({ scale: 0, opacity: 0, delay: (6 - i) * 200 }))
   } else {
-    api2.start((i) => ({ scale: 1, opacity: 1, delay: i * 200 }));
+    api2.start((i) => ({ scale: 1, opacity: 1, delay: i * 200 }))
   }
-  const [slider, api3] = useSprings(
-    8,
-    () => ({
-      x: 0,
-    }),
-    []
-  );
-  const goStart = () => {
-    api3.start((i) => {
-      console.log(i)
-      return {
-        x: 10 * i,
-        config: { duration: 1000 }
-      }
-    });
-  }
+
   return (
     <>
       <div
@@ -104,41 +74,6 @@ const Page: React.FC = () => {
           />
           {/* <TestAni /> */}
         </Canvas>
-      </div>
-      <div
-        style={{
-          width: "100vw",
-          height: 120,
-          position: "absolute",
-          top: 300,
-          overflow: "hidden",
-        }}
-      >
-        <button onClick={goStart}>开始</button>
-        <div
-          style={{
-            width: 1800,
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          {slider.map(({ x }, index) => {
-            return (
-              <animated.div
-                key={index}
-                style={{
-                  border: "1px solid hotpink",
-                  width: 200,
-                  height: 50,
-                  background: '#ccc',
-                  transform: `translate(${-index * 10}px, 0px)`,
-                }}
-              >
-                content + {index}
-              </animated.div>
-            );
-          })}
-        </div>
       </div>
       {/* <animated.div
         style={{
@@ -186,7 +121,7 @@ const Page: React.FC = () => {
         ))}
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

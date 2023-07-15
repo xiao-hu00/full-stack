@@ -76,26 +76,19 @@ const Component: React.FC = () => {
   })
   return (
     <>
-      <div style={{ height: '100vh', width: '100%', backgroundColor: '#000' }}>
-        <Canvas camera={{ fov: 75, near: 0.1, far: 100, zoom: 2.5 }}>
-          <Perf visible={perfVisible.performance} />
-          <OrbitControls makeDefault position={[0, 0, 2]}/>
-          <ambientLight intensity={1.5} />
-          <group rotation={[- Math.PI * 0.28, 0, 0]}>
-            <mesh>
-              <extrudeGeometry args={[shapes, { depth: 0.1, bevelEnabled: false }]}/>
-              <meshBasicMaterial color={color.map} opacity={0.9} transparent={true} />
-            </mesh>
-            {linePositions.map((item: any, index: number) => (
-              <group key={index}>
-                <group position={[0, 0, -0.111]}>
-                  <line>
-                    <bufferGeometry>
-                      <bufferAttribute attach="attributes-position" count={item.length / 3} array={item} itemSize={3} />
-                    </bufferGeometry>
-                    <lineBasicMaterial color={'#FFFFFF'} />
-                  </line>
-                </group>
+      <Canvas camera={{ fov: 75, near: 0.1, far: 100, zoom: 2.5 }}>
+        <color attach={'background'} args={['#000']} />
+        <Perf visible={perfVisible.performance} />
+        <OrbitControls makeDefault position={[0, 0, 2]}/>
+        <ambientLight intensity={1.5} />
+        <group rotation={[- Math.PI * 0.28, 0, 0]}>
+          <mesh>
+            <extrudeGeometry args={[shapes, { depth: 0.1, bevelEnabled: false }]}/>
+            <meshBasicMaterial color={color.map} opacity={0.9} transparent={true} />
+          </mesh>
+          {linePositions.map((item: any, index: number) => (
+            <group key={index}>
+              <group position={[0, 0, -0.111]}>
                 <line>
                   <bufferGeometry>
                     <bufferAttribute attach="attributes-position" count={item.length / 3} array={item} itemSize={3} />
@@ -103,22 +96,28 @@ const Component: React.FC = () => {
                   <lineBasicMaterial color={'#FFFFFF'} />
                 </line>
               </group>
-            ))}
-            {cityInfoList.map((item: any, index: number) => (
-              <group key={index}>
-                <LightColumn color={color.lightColumn} position={item} flat={true} />
-                <Circle color={color.lightColumn} position={item} flat={true} />
-                <Wave color={color.lightColumn} position={item} flat={true} width={0.15} />
-              </group>
-            ))}
-            <PontPlane />
-            <UpLine color={color.upLine} />
-            <UpLine color={color.upLine} />
-            <UpLine color={color.upLine} />
-            <MapCircle color={color.circle} />
-          </group>
-        </Canvas>
-      </div>
+              <line>
+                <bufferGeometry>
+                  <bufferAttribute attach="attributes-position" count={item.length / 3} array={item} itemSize={3} />
+                </bufferGeometry>
+                <lineBasicMaterial color={'#FFFFFF'} />
+              </line>
+            </group>
+          ))}
+          {cityInfoList.map((item: any, index: number) => (
+            <group key={index}>
+              <LightColumn color={color.lightColumn} position={item} flat={true} />
+              <Circle color={color.lightColumn} position={item} flat={true} />
+              <Wave color={color.lightColumn} position={item} flat={true} width={0.15} />
+            </group>
+          ))}
+          <PontPlane />
+          <UpLine color={color.upLine} />
+          <UpLine color={color.upLine} />
+          <UpLine color={color.upLine} />
+          <MapCircle color={color.circle} />
+        </group>
+      </Canvas>
     </>
   )
 }

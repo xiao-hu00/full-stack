@@ -79,34 +79,33 @@ function App() {
   })
   return (
     <>
-      <div id="canvas-container">
-        <Canvas
-          camera={{ fov: 75, near: 0.1, far: 100, zoom: 1 }}
-        >
-          <Perf visible={perfVisible.performance} />
-          <OrbitControls makeDefault />
-          <ambientLight intensity={1} />
-          <group rotation={[0.4, 2.95, 0.1]}>
-            <Earth />
-            {lightCol.map((item: Vector3, index: number) => (
-              <LightColumn color={color.lightColumn} position={item} key={index} />
-            ))}
-            {allCirclePoints.map((item: Vector3, index: number) => (
-              <Circle position={item} key={index} color={color.lightColumn} />
-            ))}
-            {pointList.map((item: Vector3, index: number) => (
-              <FlyLine color={color.flyLine1} positions={[center[0], item]} key={index} />
-            ))}
-            {allPoints.map((item: Vector3, index: number) => (
-              <Wave color={color.lightColumn} position={item} key={index} />
-            ))}
-            <Pin position={center} />
-            <FlyLine color={color.flyLine2} positions={[pointList[0], pointList[1]]} type={'fly'} />
-            <FlyLine color={color.flyLine3} positions={[pointList[0], pointList[2]]} type={'fly'} delay={1} />
-            <EnergyMask color={color.mask} />
-          </group>
-        </Canvas>
-      </div>
+      <Canvas
+        camera={{ fov: 75, near: 0.1, far: 100, zoom: 1 }}
+      >
+        <color attach={'background'} args={['#000']} />
+        <Perf visible={perfVisible.performance} />
+        <OrbitControls makeDefault />
+        <ambientLight intensity={1} />
+        <group rotation={[0.4, 2.95, 0.1]}>
+          <Earth />
+          {lightCol.map((item: Vector3, index: number) => (
+            <LightColumn color={color.lightColumn} position={item} key={index} />
+          ))}
+          {allCirclePoints.map((item: Vector3, index: number) => (
+            <Circle position={item} key={index} color={color.lightColumn} />
+          ))}
+          {pointList.map((item: Vector3, index: number) => (
+            <FlyLine color={color.flyLine1} positions={[center[0], item]} key={index} />
+          ))}
+          {allPoints.map((item: Vector3, index: number) => (
+            <Wave color={color.lightColumn} position={item} key={index} />
+          ))}
+          <Pin position={center} />
+          <FlyLine color={color.flyLine2} positions={[pointList[0], pointList[1]]} type={'fly'} />
+          <FlyLine color={color.flyLine3} positions={[pointList[0], pointList[2]]} type={'fly'} delay={1} />
+          <EnergyMask color={color.mask} />
+        </group>
+      </Canvas>
     </>
   )
 }

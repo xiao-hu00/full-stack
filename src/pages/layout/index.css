@@ -1,3 +1,12 @@
+.root-main {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.root-content {
+  flex: 1;
+}
 .nav-main {
   width: 100%;
   background: #000;
