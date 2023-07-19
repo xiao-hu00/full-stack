@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import './index.css'
-import { Row, Col } from 'antd'
-import { FileTextOutlined, GithubOutlined, HeartOutlined } from '@ant-design/icons'
 import {
   Card,
   // CardContent,
@@ -52,12 +50,12 @@ const list = [
     url: 'https://thebookofshaders.com/',
   },
   {
-    title: '3D开发需要的一些资源，纹理贴图、模型等',
+    title: '3D开发需要的一些资源，纹理贴图、模型',
     description: 'Make better renders, faster - Textures, Models and HDRIs for 3D rendering',
     url: 'https://www.poliigon.com/',
   },
   {
-    title: '3D开发，基于物理渲染的纹理贴图等',
+    title: '3D开发，基于物理渲染的纹理贴图',
     description: 'Free seamless PBR textures with Diffuse, Normal, Displacement, Occlusion and Roughness Maps.',
     url: 'https://3dtextures.me/',
   },
@@ -69,7 +67,7 @@ const list = [
 ]
 const otherList = [
   {
-    title: '格式转换-视频、音频、文档、图片等',
+    title: '格式转换-视频、音频、文档、图片',
     description: 'File conversion made easy',
     url: 'https://www.zamzar.com/',
   },
@@ -172,27 +170,23 @@ const Component: React.FC = () => {
         </div>
       </div>
       <div className='collect-content'>
-        <div className='content-main'>
-          <div className='w-[200px]'>test</div>
-          <Row gutter={[25, 25]}>
-            {dataList.map((item: any) => {
-              const act = item.github ? <GithubOutlined key="info" onClick={() => goWebsite(item.github)} /> : <HeartOutlined />
-              const doc = <FileTextOutlined key="link" onClick={() => goWebsite(item.url)} />
-              return (
-                <Col span={8} key={item.url}>
-                  <Card className='bg-white'>
-                    <CardHeader>
-                      <CardTitle>{item.title}</CardTitle>
-                      <CardDescription>{item.description}</CardDescription>
-                    </CardHeader>
-                    <CardFooter>
-                      <Button>{doc}文档地址</Button>
-                    </CardFooter>
-                  </Card>
-                </Col>
-              )
-            })}
-          </Row>
+        <div className='content-main grid lg:grid-cols-3 md:grid-cols-2 gap-4 sm:grid-cols-1'>
+          {dataList.map((item, index: number) => {
+            const act = item.github ? <Button key="info" onClick={() => goWebsite(item.github)}>github</Button> : null
+            const doc = <Button key="link" onClick={() => goWebsite(item.url)}>跳转</Button>
+            return (
+              <Card className='bg-white flex flex-col justify-between' key={index}>
+                <CardHeader>
+                  <CardTitle>{item.title}</CardTitle>
+                  <CardDescription>{item.description}</CardDescription>
+                </CardHeader>
+                <CardFooter className="flex justify-between">
+                  {doc}
+                  {act}
+                </CardFooter>
+              </Card>
+            )
+          })}
         </div>
       </div>
     </div>
