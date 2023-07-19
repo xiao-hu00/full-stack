@@ -1,7 +1,16 @@
 import React, { useState } from 'react'
 import './index.css'
-import { Row, Col, Card } from 'antd'
+import { Row, Col } from 'antd'
 import { FileTextOutlined, GithubOutlined, HeartOutlined } from '@ant-design/icons'
+import {
+  Card,
+  // CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 
 const list = [
   {
@@ -164,17 +173,21 @@ const Component: React.FC = () => {
       </div>
       <div className='collect-content'>
         <div className='content-main'>
+          <div className='w-[200px]'>test</div>
           <Row gutter={[25, 25]}>
             {dataList.map((item: any) => {
               const act = item.github ? <GithubOutlined key="info" onClick={() => goWebsite(item.github)} /> : <HeartOutlined />
               const doc = <FileTextOutlined key="link" onClick={() => goWebsite(item.url)} />
               return (
                 <Col span={8} key={item.url}>
-                  <Card
-                    bordered={false}
-                    actions={[doc, act]}
-                  >
-                    <Card.Meta title={item.title} description={item.description} />
+                  <Card className='bg-white'>
+                    <CardHeader>
+                      <CardTitle>{item.title}</CardTitle>
+                      <CardDescription>{item.description}</CardDescription>
+                    </CardHeader>
+                    <CardFooter>
+                      <Button>{doc}文档地址</Button>
+                    </CardFooter>
                   </Card>
                 </Col>
               )
