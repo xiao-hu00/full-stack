@@ -23,20 +23,6 @@ const Component: React.FC = () => {
     setList(list)
   }
   return (
-<<<<<<< HEAD
-    <div className='root-main'>
-      <div className='nav-main'>
-        <nav className='nav'>
-          <Link to='/'>地球</Link>
-          <Link to='/map'>地图</Link>
-          <Link to='/glb'>模型</Link>
-          <Link to='/animate'>动画</Link>
-          <Link to='/collect'>收藏</Link>
-          <Link to='/about'>关于</Link>
-        </nav>
-      </div>
-      <div className='root-content'>
-=======
     <div className="flex h-[100vh] w-[100%] flex-col">
       <div className='flex z-2 bg-black'>
         <nav className='nav h-12 flex items-center justify-center w-[100%]'>
@@ -48,7 +34,6 @@ const Component: React.FC = () => {
         </nav>
       </div>
       <div className="flex-1">
->>>>>>> c191745576ff40bf3b9bf36174ddeb1c69a32e4b
         <Outlet />
       </div>
     </div>
