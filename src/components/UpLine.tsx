@@ -2,23 +2,29 @@ import React, { useRef, useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 
-const Component: React.FC<any> = (props) => {
+const Component: React.FC<any> = props => {
   // type=fly 没有轨迹线，直接飞  delay=0 延迟飞线开始的时间，单位是秒
   const { color = 'yellow' } = props
   const mColor = new THREE.Color(color)
 
-  const settings = useMemo(() => ({
-    uSpeed: { value: 20 }, // 飞线飞行速度
-    uTime: { value: 0 }, // 运行时间
-    uRange: { value: 90 }, // 飞行的线的点的个数
-    uNumber: { value: 800 }, // 飞线的点的总数
-    uColor: { value: mColor },
-    isFlyOpacity: { value: 0.0 },
-  }), [])
+  const settings = useMemo(
+    () => ({
+      uSpeed: { value: 20 }, // 飞线飞行速度
+      uTime: { value: 0 }, // 运行时间
+      uRange: { value: 90 }, // 飞行的线的点的个数
+      uNumber: { value: 800 }, // 飞线的点的总数
+      uColor: { value: mColor },
+      isFlyOpacity: { value: 0.0 },
+    }),
+    []
+  )
   useEffect(() => {
     settings.uColor.value = mColor
   }, [mColor])
-  const indexArray = Array.from({ length: settings.uNumber.value + 1 }, (_, i) => 1 + (i)).reverse()
+  const indexArray = Array.from(
+    { length: settings.uNumber.value + 1 },
+    (_, i) => 1 + i
+  ).reverse()
   const lineRef = useRef<THREE.Line>(null!)
   const x = THREE.MathUtils.randFloatSpread(3) - 0.5
   const y = THREE.MathUtils.randFloatSpread(3) - 0.5
@@ -43,13 +49,24 @@ const Component: React.FC<any> = (props) => {
   return (
     <points ref={lineRef as any}>
       <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={pos.length / 3} array={pos} itemSize={3} />
-        <bufferAttribute attach="attributes-current" array={currents} itemSize={1} />
+        <bufferAttribute
+          attach='attributes-position'
+          count={pos.length / 3}
+          array={pos}
+          itemSize={3}
+        />
+        <bufferAttribute
+          attach='attributes-current'
+          array={currents}
+          itemSize={1}
+        />
       </bufferGeometry>
       <shaderMaterial
         transparent={true}
         uniforms={settings}
-        vertexShader={/* glsl */`
+        depthWrite={false}
+        vertexShader={
+          /* glsl */ `
             varying float opacity;
             uniform float uTime;
             uniform float uRange;
@@ -63,15 +80,18 @@ const Component: React.FC<any> = (props) => {
               gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.);
               gl_PointSize = clamp(3. - m / uRange * 2., 1., 5.);
             }
-        `}
-        fragmentShader={/* glsl */`
+        `
+        }
+        fragmentShader={
+          /* glsl */ `
           varying float opacity;
           uniform vec3 uColor;
           void main() {
             float o = step(0.2, opacity);
             gl_FragColor = vec4(uColor, o);
           }
-        `}
+        `
+        }
       />
     </points>
   )

@@ -18,9 +18,12 @@
   margin: 0 auto;
 }
 .nav a {
-  color: #FFF;
+  color: #fff;
   padding: 5px 15px;
 }
 .nav a:hover {
   color: hotpink;
+}
+canvas {
+  touch-action: none;
 }
