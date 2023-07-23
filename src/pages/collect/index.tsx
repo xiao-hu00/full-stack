@@ -1,7 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './index.css'
-import { Row, Col, Card } from 'antd'
-import { FileTextOutlined, GithubOutlined, HeartOutlined } from '@ant-design/icons'
+import {
+  Card,
+  // CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import classnames from 'classnames'
 
 const list = [
   {
@@ -43,12 +51,12 @@ const list = [
     url: 'https://thebookofshaders.com/',
   },
   {
-    title: '3D开发需要的一些资源，纹理贴图、模型等',
+    title: '3D开发需要的一些资源，纹理贴图、模型',
     description: 'Make better renders, faster - Textures, Models and HDRIs for 3D rendering',
     url: 'https://www.poliigon.com/',
   },
   {
-    title: '3D开发，基于物理渲染的纹理贴图等',
+    title: '3D开发，基于物理渲染的纹理贴图',
     description: 'Free seamless PBR textures with Diffuse, Normal, Displacement, Occlusion and Roughness Maps.',
     url: 'https://3dtextures.me/',
   },
@@ -60,7 +68,7 @@ const list = [
 ]
 const otherList = [
   {
-    title: '格式转换-视频、音频、文档、图片等',
+    title: '格式转换-视频、音频、文档、图片',
     description: 'File conversion made easy',
     url: 'https://www.zamzar.com/',
   },
@@ -90,24 +98,25 @@ const otherList = [
     url: 'https://games-cn.org/',
   },
 ]
-const menuList = [
-  {
-    title: '收藏夹的网站',
-    children: [
-      { title: '3D开发推荐库和资料', active: true },
-      { title: '其他', active: false },
-    ]
-  },
-  {
-    title: '文字总结',
-    children: [
-      { title: '前端学习', active: false },
-      { title: '22222', active: false },
-    ]
-  },
-]
+
 const allDataList = [list, otherList, [], []]
 const Component: React.FC = () => {
+  const menuList = [
+    {
+      title: '收藏夹的网站',
+      children: [
+        { title: '3D开发推荐库和资料', active: true },
+        { title: '其他', active: false },
+      ]
+    },
+    {
+      title: '文字总结',
+      children: [
+        { title: '前端学习', active: false },
+        { title: '22222', active: false },
+      ]
+    },
+  ]
   const [dataList, setDataList] = useState(list)
   const [navList, setNavList] = useState<any>(menuList)
   const goWebsite = (url: string) => {
@@ -143,16 +152,18 @@ const Component: React.FC = () => {
     setDataList(data)
   }
   return (
-    <div className='collect-main'>
-      <div className='collect-side'>
-        <div className='side-list'>
+    <div className='flex'>
+      <div className='w-[250px] box-border h-[calc(100vh-3rem)] overflow-auto'>
+        <div className='p-6'>
           {navList.map((item: any, index: number) => (
             <div key={index}>
-              <div className='side-title'>{item.title}</div>
+              <div className='text-slate-400 mb-4 pl-4 h-10 border-b border-slate-10'>{item.title}</div>
               {item.children.map((child: any, i: number) => (
                 <div
                   key={i}
-                  className={`side-item ${child.active ? 'side-item-active' : ''}`}
+                  className={
+                    `cursor-pointer rounded-md mb-4 flex items-center h-10 pl-4 text-slate-500  ease-in duration-200 hover:bg-indigo-50 ${classnames({'bg-indigo-50 text-slate-700' : child.active})}`
+                  }
                   onClick={() => setData(index, i)}
                 >
                   {child.title}
@@ -162,24 +173,24 @@ const Component: React.FC = () => {
           ))}
         </div>
       </div>
-      <div className='collect-content'>
-        <div className='content-main'>
-          <Row gutter={[25, 25]}>
-            {dataList.map((item: any) => {
-              const act = item.github ? <GithubOutlined key="info" onClick={() => goWebsite(item.github)} /> : <HeartOutlined />
-              const doc = <FileTextOutlined key="link" onClick={() => goWebsite(item.url)} />
-              return (
-                <Col span={8} key={item.url}>
-                  <Card
-                    bordered={false}
-                    actions={[doc, act]}
-                  >
-                    <Card.Meta title={item.title} description={item.description} />
-                  </Card>
-                </Col>
-              )
-            })}
-          </Row>
+      <div className='flex-1 bg-slate-50 border-l border-slate-10'>
+        <div className='p-4 grid lg:grid-cols-3 md:grid-cols-2 gap-4 sm:grid-cols-1'>
+          {dataList.map((item, index: number) => {
+            const act = item.github ? <Button key="info" onClick={() => goWebsite(item.github)}>github</Button> : null
+            const doc = <Button key="link" onClick={() => goWebsite(item.url)}>跳转</Button>
+            return (
+              <Card className='bg-white flex flex-col justify-between' key={index}>
+                <CardHeader>
+                  <CardTitle>{item.title}</CardTitle>
+                  <CardDescription>{item.description}</CardDescription>
+                </CardHeader>
+                <CardFooter className="flex justify-between">
+                  {doc}
+                  {act}
+                </CardFooter>
+              </Card>
+            )
+          })}
         </div>
       </div>
     </div>
