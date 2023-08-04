@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo } from 'react'
 import * as THREE from 'three'
-import { useFrame } from '@react-three/fiber'
 
 const Component: React.FC<any> = (props) => {
   // type=fly 没有轨迹线，直接飞  delay=0 延迟飞线开始的时间，单位是秒

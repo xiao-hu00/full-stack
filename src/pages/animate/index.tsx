@@ -2,18 +2,18 @@ import React, { useRef } from "react"
 import {
   useSpring,
   animated,
-  useScroll,
+  // useScroll,
   useSpringValue,
   useSprings,
 } from "@react-spring/web"
 import { useScroll as useScrollHooks } from "ahooks"
 import { Canvas } from "@react-three/fiber"
-import TestAni from "./TestAni"
+// import TestAni from "./TestAni"
 import { OrthographicCamera } from "@react-three/drei"
 
 const Page: React.FC = () => {
   const ref = useRef<any>(null)
-  const scrollContent = useRef<any>(null)
+  // const scrollContent = useRef<any>(null)
   const scroll = useScrollHooks(document) as {
     top: number
     left: number
