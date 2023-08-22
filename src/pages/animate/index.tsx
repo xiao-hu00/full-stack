@@ -13,8 +13,8 @@ import { OrthographicCamera } from "@react-three/drei"
 
 const Page: React.FC = () => {
   const ref = useRef<any>(null)
-  // const scrollContent = useRef<any>(null)
-  const scroll = useScrollHooks(document) as {
+  const sRef = useRef<any>(null)
+  const scroll = useScrollHooks(sRef) as {
     top: number
     left: number
   }
@@ -51,7 +51,7 @@ const Page: React.FC = () => {
   }
 
   return (
-    <>
+    <div ref={sRef} style={{ height: '100%', overflow: 'scroll' }}>
       <div
         style={{
           width: 200,
@@ -120,7 +120,7 @@ const Page: React.FC = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

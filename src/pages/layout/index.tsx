@@ -4,12 +4,12 @@ import './index.css'
 import classnames from 'classnames'
 
 const navList = [
-  { itle: '地球', path: '/', active: true },
-  { itle: '地图', path: '/map', active: false },
-  { itle: '模型', path: '/glb', active: false },
-  { itle: '动画', path: '/animate', active: false },
-  { itle: '收藏', path: '/collect', active: false },
-  { itle: '关于', path: '/about', active: false },
+  { title: '地球', path: '/', active: true },
+  { title: '地图', path: '/map', active: false },
+  { title: '模型', path: '/glb', active: false },
+  { title: '动画', path: '/animate', active: false },
+  { title: '收藏', path: '/collect', active: false },
+  { title: '关于', path: '/about', active: false },
 ]
 
 const Component: React.FC = () => {
@@ -28,12 +28,12 @@ const Component: React.FC = () => {
         <nav className='nav h-12 flex items-center justify-center w-[100%]'>
           {list.map((item, i: number) => (
             <Link to={item.path} key={i} onClick={() => navClick(i)} className={`nav-link ${classnames({'text-red-400': item.active})}`}>
-              {item.itle}
+              {item.title}
             </Link>
           ))}
         </nav>
       </div>
-      <div className="flex-1">
+      <div className="flex-1 overflow-scroll" style={{ height: 'calc(100vh - 42px)' }}>
         <Outlet />
       </div>
     </div>

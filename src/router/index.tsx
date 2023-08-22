@@ -7,7 +7,7 @@ import Map from '@/pages/map'
 import Glb from '@/pages/glb'
 import Animate from '@/pages/animate'
 import Collect from '@/pages/collect'
-import About from '@/pages/ablout'
+import About from '@/pages/about'
 
 const router = createBrowserRouter([
   {
@@ -40,7 +40,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <About />
+        element: <React.Suspense fallback={<Loading />}>
+          <About />
+        </React.Suspense>
       },
     ],
     errorElement: <>错误页面</>,
