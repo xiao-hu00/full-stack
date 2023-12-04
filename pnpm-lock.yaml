@@ -127,7 +127,7 @@ importers:
         specifier: ^23.0.80
         version: 23.0.80
 
-  packages/nest-app:
+  packages/nest-study:
     dependencies:
       '@nestjs/common':
         specifier: ^10.0.0
