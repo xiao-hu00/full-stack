@@ -73,10 +73,12 @@ async function main() {
     for (const file of list) {
       console.log(file);
       const outputName = file.replace('.json', '.ts')
+      let typeName = file.replace('.json', '')
+      typeName = typeName[0].toUpperCase() + typeName.substring(1)
       // await exec('quicktype ./json/' + file + ' -o ./type/' + outputName +' --just-types')
       const filePath = path.resolve('./json/' + file)
       const jsonString = fs.readFileSync(filePath)
-      const { lines: typescriptPerson } = await quicktypeJSON("typescript", "Person", jsonString);
+      const { lines: typescriptPerson } = await quicktypeJSON("typescript", typeName, jsonString);
       // console.log(typescriptPerson.join("\n"));
       console.log('writing files: ', outputName)
       // write file

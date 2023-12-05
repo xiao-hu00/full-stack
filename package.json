@@ -10,7 +10,6 @@
     "@react-three/drei": "9.75.0",
     "@react-three/fiber": "^8.15.11",
     "ahooks": "^3.7.8",
-    "antd": "^5.11.5",
     "class-variance-authority": "^0.7.0",
     "classnames": "^2.3.2",
     "clsx": "^2.0.0",

@@ -1,4 +1,4 @@
-export interface Person {
+export interface Test {
     test: string;
     name: string;
     list: List[];
