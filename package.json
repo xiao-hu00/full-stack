@@ -3,44 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "dependencies": {
-    "@ant-design/icons": "^5.2.6",
-    "@radix-ui/react-slot": "^1.0.2",
-    "@react-spring/web": "^9.7.3",
-    "@react-three/drei": "9.75.0",
-    "@react-three/fiber": "^8.15.11",
-    "ahooks": "^3.7.8",
-    "class-variance-authority": "^0.7.0",
-    "classnames": "^2.3.2",
-    "clsx": "^2.0.0",
-    "d3": "^7.8.5",
-    "leva": "^0.9.35",
-    "lucide-react": "^0.261.0",
-    "r3f-perf": "^7.1.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.20.0",
-    "tailwind-merge": "^1.14.0",
-    "tailwindcss-animate": "^1.0.7",
-    "three": "^0.153.0",
-    "three-stdlib": "^2.28.7"
-  },
-  "devDependencies": {
-    "@types/d3": "^7.4.3",
-    "@types/node": "^20.10.1",
-    "@types/react": "^18.2.39",
-    "@types/react-dom": "^18.2.17",
-    "@types/three": "^0.152.1",
-    "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
-    "@vitejs/plugin-react": "^4.2.0",
-    "autoprefixer": "^10.4.16",
-    "eslint": "^8.54.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.3.5",
-    "postcss": "^8.4.31",
-    "tailwindcss": "^3.3.5",
-    "typescript": "^5.3.2",
-    "vite": "^4.5.0"
+  "scripts": {
+    "fdev": "pnpm --filter=./packages/three-study run dev",
+    "bdev": "pnpm --filter=./packages/nest-study run start"
   }
 }
