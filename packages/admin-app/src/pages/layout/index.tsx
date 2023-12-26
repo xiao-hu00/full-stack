@@ -1,10 +1,11 @@
 import SideMenu from './sideMenu'
 import Header from './header'
+import './layout.css'
 
 const Layout = () => {
   return (
     <div className="flex">
-      <div className="w-60 p-3">
+      <div className="w-60 border-r-gray-200 border dark:border-r-gray-600">
         <SideMenu />
       </div>
       <div className="flex-1 flex flex-col min-h-[100vh]">
