@@ -31,3 +31,13 @@
   color: hotpink;
   background-color: #000;
 }
+.dark .rc-menu-item {
+  color: #fff;
+}
+.dark .rc-menu-item-selected {
+  color: hotpink;
+  background-color: #fff;
+}
+.dark .rc-menu-item-active {
+  color: red;
+}
