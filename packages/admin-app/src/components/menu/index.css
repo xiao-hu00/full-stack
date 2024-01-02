@@ -1,0 +1,33 @@
+.rc-menu-sub {
+  max-height: 200px;
+  transition: all 300ms;
+}
+.rc-menu-hidden {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+.rc-menu-item, .rc-menu-submenu-title {
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 0.4rem;
+}
+.rc-menu-submenu-active {
+  color: peru;
+}
+.rc-menu-item {
+  color: #333;
+}
+.rc-menu-item-active {
+  color: red;
+  background-color: #f1f1f1;
+}
+.rc-menu-submenu-selected .rc-menu-submenu-title {
+  color: peru;
+}
+.rc-menu-item-selected {
+  color: hotpink;
+  background-color: #000;
+}

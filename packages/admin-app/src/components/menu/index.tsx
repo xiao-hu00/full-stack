@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Menu, { SubMenu, Item as MenuItem } from 'rc-menu'
+import './index.css'
 interface ItemType {
   key: string
   label: string
@@ -14,40 +16,43 @@ interface PropType {
 
 type MenuPropType = PropType[]
 
-const Menu = (props: { items: MenuPropType }) => {
-  console.log('items: ', props.items)
-  const clickMenu = (e: React.MouseEvent<HTMLElement>) => {
-    const doms = document.querySelectorAll('.__menu__child')
-    doms.forEach((item) => {
-      item?.setAttribute('style', 'height: 0px; opacity: 0;')
-    })
-    const dom = e.currentTarget.nextElementSibling
-    const domC = e.currentTarget.nextElementSibling?.children[0]
-    const h = dom?.clientHeight ? 0 : (dom?.childElementCount || 0) * ((domC?.clientHeight || 0) + 16 * 0.5)
-    console.log(h)
-    const opacity = h ? 1 : 0
-    dom?.setAttribute('style', `height: ${h}px; opacity: ${opacity};`)
+const MyMenu = (props: { items: MenuPropType }) => {
+  console.log('items: ', props.items.length)
+  const [openKeys, setOpenKeys] = useState<string[]>([])
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([])
+  useEffect(() => {
+    setOpenKeys(["1", '1-1'])
+    setSelectedKeys(['1-1'])
+  }, [])
+  const onOpenChange = (openKeys: string[]) => {
+    console.log('onOpenChange', openKeys);
+    setOpenKeys(openKeys)
+  }
+  const onClick = (info) => {
+    console.log('click ', info);
+    setSelectedKeys([info.key])
   }
   return (
-    <div className="p-3 dark:bg-slate-900 h-[100vh] overflow-y-auto">
-      <div>
-        <div onClick={clickMenu} className="w-[100%] py-2 pl-2 rounded cursor-pointer dark:hover:bg-slate-700 hover:bg-gray-100 mb-2">111</div>
-        <div className="__menu__child overflow-hidden h-0" style={{ overflow: 'hidden' }}>
-          <div className="w-[100%] py-2 pl-4 rounded cursor-pointer dark:hover:bg-slate-700 hover:bg-gray-100 mb-2">111-111</div>
-          <div className="w-[100%] py-2 pl-4 rounded cursor-pointer dark:hover:bg-slate-700 hover:bg-gray-100 mb-2">111-222</div>
-        </div>
-      </div>
-      <div>
-        <div onClick={clickMenu} className="w-[100%] py-2 pl-2 rounded cursor-pointer dark:hover:bg-slate-700 hover:bg-gray-100 mb-2">222</div>
-        <div className="__menu__child overflow-hidden h-0" style={{ overflow: 'hidden' }}>
-          <div className="w-[100%] py-2 pl-4 rounded cursor-pointer dark:hover:bg-slate-700 hover:bg-gray-100 mb-2">222-111</div>
-          <div className="w-[100%] py-2 pl-4 rounded cursor-pointer dark:hover:bg-slate-700 hover:bg-gray-100 mb-2">222-222</div>
-          <div className="w-[100%] py-2 pl-4 rounded cursor-pointer dark:hover:bg-slate-700 hover:bg-gray-100 mb-2">222-333</div>
-        </div>
-      </div>
-      <div>333</div>
-    </div>
+    <>
+      <Menu
+        onClick={onClick}
+        mode="inline"
+        onOpenChange={onOpenChange}
+        openKeys={openKeys}
+        selectedKeys={selectedKeys}
+      >
+        <SubMenu key="1" title="submenu1">
+          <MenuItem key="1-1">item1-1</MenuItem>
+          <MenuItem key="1-2">item1-2</MenuItem>
+        </SubMenu>
+        <SubMenu key="2" title="submenu2">
+          <MenuItem key="2-1">item2-1</MenuItem>
+          <MenuItem key="2-2">item2-2</MenuItem>
+        </SubMenu>
+        <MenuItem key="3">item3</MenuItem>
+      </Menu>
+    </>
   )
 }
 
-export default Menu
+export default MyMenu
