@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Menu, { SubMenu, Item as MenuItem } from 'rc-menu'
+import type { MenuProps } from 'rc-menu'
+
 import './index.css'
 interface ItemType {
   key: string
@@ -28,7 +30,7 @@ const MyMenu = (props: { items: MenuPropType }) => {
     console.log('onOpenChange', openKeys);
     setOpenKeys(openKeys)
   }
-  const onClick = (info) => {
+  const onClick: MenuProps['onClick'] = (info) => {
     console.log('click ', info);
     setSelectedKeys([info.key])
   }
