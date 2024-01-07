@@ -2,7 +2,7 @@ function App() {
 
   return (
     <div>
-      <span>home</span>
+      <span>setting</span>
     </div>
   )
 }

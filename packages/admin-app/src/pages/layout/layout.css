@@ -1,4 +1,0 @@
-.__menu__child {
-  transition: height 500ms, opacity 700ms;
-  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
-}

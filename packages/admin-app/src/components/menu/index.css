@@ -20,6 +20,12 @@
 .rc-menu-item {
   color: #333;
 }
+.rc-menu-item a {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
 .rc-menu-item-active {
   color: red;
   background-color: #f1f1f1;
@@ -31,6 +37,25 @@
   color: hotpink;
   background-color: #000;
 }
+.rc-menu-submenu-placement-rightTop {
+  position: absolute;
+}
+.rc-menu-submenu-placement-rightTop ul {
+  margin-left: 10px;
+  border: 1px solid #ddd;
+  background: #FFF;
+  border-top: none;
+}
+.rc-menu-submenu-placement-rightTop ul li {
+  padding: 12px 8px;
+  margin-top: 0;
+  border-top: 1px solid #ddd;
+}
+.rc-menu-submenu-hidden {
+  display: none;
+}
+
+
 .dark .rc-menu-item {
   color: #fff;
 }
@@ -40,4 +65,7 @@
 }
 .dark .rc-menu-item-active {
   color: red;
+}
+.dark .rc-menu-submenu-placement-rightTop ul {
+  background: #000;
 }

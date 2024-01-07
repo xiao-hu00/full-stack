@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import Menu, { SubMenu, Item as MenuItem } from 'rc-menu'
 import type { MenuProps } from 'rc-menu'
-
+import { useMenuStore } from '@/store'
 import './index.css'
+import { Link  } from 'react-router-dom'
+
 interface ItemType {
   key: string
   label: string
+  link?: string
   disable?: boolean
 }
 interface PropType {
   key: string
   label: string
+  link?: string
   icon?: React.ReactNode
   disable?: boolean
   children?: ItemType[]
@@ -19,7 +23,9 @@ interface PropType {
 type MenuPropType = PropType[]
 
 const MyMenu = (props: { items: MenuPropType }) => {
-  console.log('items: ', props.items.length)
+  const { items } = props
+  const collpase = useMenuStore((state) => state.collapse)
+  console.log('collpase: ', collpase)
   const [openKeys, setOpenKeys] = useState<string[]>([])
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   useEffect(() => {
@@ -38,20 +44,27 @@ const MyMenu = (props: { items: MenuPropType }) => {
     <>
       <Menu
         onClick={onClick}
-        mode="inline"
+        mode={!collpase ? 'inline' : 'vertical'}
         onOpenChange={onOpenChange}
         openKeys={openKeys}
         selectedKeys={selectedKeys}
       >
-        <SubMenu key="1" title="submenu1">
-          <MenuItem key="1-1">item1-1</MenuItem>
-          <MenuItem key="1-2">item1-2</MenuItem>
-        </SubMenu>
-        <SubMenu key="2" title="submenu2">
-          <MenuItem key="2-1">item2-1</MenuItem>
-          <MenuItem key="2-2">item2-2</MenuItem>
-        </SubMenu>
-        <MenuItem key="3">item3</MenuItem>
+        {items?.map((m) => {
+          if (m.children) {
+            return (
+              <SubMenu key={m.key} title={m.label}>
+                {m?.children?.map((child) => (
+                  <MenuItem key={child.key}>
+                    <Link to={child.link || '/'}>{child.label}</Link>
+                  </MenuItem>
+                ))}
+              </SubMenu>
+            )
+          }
+          return <MenuItem key={m.key}>
+            <Link to={m.link || '/'}>{m.label}</Link>
+          </MenuItem>
+        })}
       </Menu>
     </>
   )
