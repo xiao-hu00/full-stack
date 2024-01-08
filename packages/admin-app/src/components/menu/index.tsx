@@ -1,30 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Menu, { SubMenu, Item as MenuItem } from 'rc-menu'
 import type { MenuProps } from 'rc-menu'
 import { useMenuStore } from '@/store'
 import './index.css'
 import { Link  } from 'react-router-dom'
 import { CaretRightIcon } from '@radix-ui/react-icons'
+import { menuList } from '@/router/routerList'
 
-interface ItemType {
-  key: string
-  label: string
-  link?: string
-  disable?: boolean
-}
-interface PropType {
-  key: string
-  label: string
-  link?: string
-  icon?: React.ReactNode
-  disable?: boolean
-  children?: ItemType[]
-}
-
-type MenuPropType = PropType[]
-
-const MyMenu = (props: { items: MenuPropType }) => {
-  const { items } = props
+const MyMenu = () => {
   const collapse = useMenuStore((state) => state.collapse)
   console.log('collapse: ', collapse)
   const [openKeys, setOpenKeys] = useState<string[]>([])
@@ -67,20 +50,20 @@ const MyMenu = (props: { items: MenuPropType }) => {
         openKeys={openKeys}
         selectedKeys={selectedKeys}
       >
-        {items?.map((m) => {
+        {menuList?.map((m) => {
           if (m.children) {
             return (
               <SubMenu popupOffset={[10, 15]} key={m.key} title={m.label} expandIcon={<CaretRightIcon />}>
                 {m?.children?.map((child) => (
                   <MenuItem key={child.key}>
-                    <Link to={child.link || '/'}>{child.label}</Link>
+                    <Link to={child.path || '/'}>{child.label}</Link>
                   </MenuItem>
                 ))}
               </SubMenu>
             )
           }
           return <MenuItem key={m.key}>
-            <Link to={m.link || '/'}>{m.label}</Link>
+            <Link to={m.path || '/'}>{m.label}</Link>
           </MenuItem>
         })}
       </Menu>

@@ -1,35 +1,26 @@
 import React from 'react'
 import { createBrowserRouter } from 'react-router-dom'
-import Home from '@/pages/home'
 import Layout from '@/pages/layout'
-import Setting from '@/pages/user/setting'
-import Role from '@/pages/user/role'
+
+import { routerList } from './routerList'
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    children: [
-      {
-        path: '/home',
-        index: true,
-        element: <React.Suspense fallback={<>加载中</>}>
-          <Home />
-        </React.Suspense>
-      },
-      {
-        path: "/user/setting",
-        element: <React.Suspense fallback={<>加载中</>}>
-          <Setting />
-        </React.Suspense>
-      },
-      {
-        path: "/user/role",
-        element: <React.Suspense fallback={<>加载中</>}>
-          <Role />
-        </React.Suspense>
-      },
-    ],
+    children: routerList.map((item) => {
+      if (item.component) {
+        return {
+          path: item.path,
+          index: item.path === '/home',
+          element: <React.Suspense fallback={<>加载中</>}>
+            <item.component />
+          </React.Suspense>
+        }
+      } else {
+        return {}
+      }
+    }),
     errorElement: <>错误页面</>,
   },
 ])

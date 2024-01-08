@@ -1,4 +1,3 @@
-import SideMenu from './sideMenu'
 import Header from './header'
 import './layout.css'
 import { DoubleArrowLeftIcon } from '@radix-ui/react-icons'
@@ -6,6 +5,7 @@ import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import { useMenuStore } from '@/store'
 import ClassNames from 'classnames'
 import { Outlet  } from 'react-router-dom'
+import { Menu } from '@/components'
 
 const Layout = () => {
   const collapse = useMenuStore((state) => state.collapse)
@@ -16,7 +16,7 @@ const Layout = () => {
   return (
     <div className="flex">
       <div className={ClassNames('border-r-gray-200 border box-border dark:border-r-gray-600', { 'w-60': !collapse }, { 'w-20': collapse })}>
-        <SideMenu />
+        <Menu />
         <div onClick={changeMenu} className={ClassNames({ 'w-60': !collapse }, { 'w-20': collapse }, "fixed bottom-0 flex items-center justify-center cursor-pointer h-10")}>
           {collapse ? <DoubleArrowRightIcon /> : <DoubleArrowLeftIcon />}
         </div>
