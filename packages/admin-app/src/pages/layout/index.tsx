@@ -2,16 +2,16 @@ import SideMenu from './sideMenu'
 import Header from './header'
 import './layout.css'
 import { DoubleArrowLeftIcon } from '@radix-ui/react-icons'
-import { DoubleArrowRightIcon} from '@radix-ui/react-icons'
+import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import { useMenuStore } from '@/store'
 import ClassNames from 'classnames'
 import { Outlet  } from 'react-router-dom'
 
 const Layout = () => {
   const collapse = useMenuStore((state) => state.collapse)
-  const updateCllapse = useMenuStore((state) => state.updateCllapse)
+  const updateCollapse = useMenuStore((state) => state.updateCollapse)
   const changeMenu = () => {
-    updateCllapse(!collapse)
+    updateCollapse(!collapse)
   }
   return (
     <div className="flex">

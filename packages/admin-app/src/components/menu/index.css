@@ -14,6 +14,12 @@
   cursor: pointer;
   margin-top: 0.4rem;
 }
+.rc-menu-submenu-title {
+  justify-content: space-between;
+}
+.rc-menu-submenu-title svg {
+  margin-right: 10px;
+}
 .rc-menu-submenu-active {
   color: peru;
 }
@@ -33,6 +39,9 @@
 .rc-menu-submenu-selected .rc-menu-submenu-title {
   color: peru;
 }
+.rc-menu-submenu-open svg {
+  transform: rotate(90deg);
+}
 .rc-menu-item-selected {
   color: hotpink;
   background-color: #000;
@@ -41,7 +50,6 @@
   position: absolute;
 }
 .rc-menu-submenu-placement-rightTop ul {
-  margin-left: 10px;
   border: 1px solid #ddd;
   background: #FFF;
   border-top: none;

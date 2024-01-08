@@ -11,6 +11,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
+        path: '/home',
         index: true,
         element: <React.Suspense fallback={<>加载中</>}>
           <Home />

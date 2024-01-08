@@ -3,21 +3,21 @@ import { Menu } from '@/components'
 const SideMenu = () => {
   const items = [
     {
-      key: 'menu1',
+      key: 'home',
       label: 'home',
-      link: '/',
+      link: '/home',
     },
     {
-      key: 'menu2',
-      label: 'user',
+      key: 'user',
+      label: '用户',
       children: [
         {
-          key: 'menu2-1',
+          key: 'user-setting',
           label: 'setting',
           link: '/user/setting',
         },
         {
-          key: 'menu2-2',
+          key: 'user-role',
           label: 'role',
           link: '/user/role',
         }

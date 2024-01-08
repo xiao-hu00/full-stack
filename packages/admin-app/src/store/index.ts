@@ -4,10 +4,10 @@ type State = {
 }
 
 type Action = {
-  updateCllapse: (collapse: State['collapse']) => void
+  updateCollapse: (collapse: State['collapse']) => void
 }
 
 export const useMenuStore = create<State & Action>((set) => ({
   collapse: false,
-  updateCllapse: (collapse: boolean) => set(() => ({ collapse: collapse })),
+  updateCollapse: (collapse: boolean) => set(() => ({ collapse: collapse })),
 }))
