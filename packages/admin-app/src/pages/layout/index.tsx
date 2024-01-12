@@ -4,15 +4,23 @@ import { DoubleArrowLeftIcon } from '@radix-ui/react-icons'
 import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import { useMenuStore } from '@/store'
 import ClassNames from 'classnames'
-import { Outlet  } from 'react-router-dom'
+import { Outlet, useNavigate  } from 'react-router-dom'
 import { Menu } from '@/components'
+import { useEffect } from 'react'
 
 const Layout = () => {
   const collapse = useMenuStore((state) => state.collapse)
   const updateCollapse = useMenuStore((state) => state.updateCollapse)
+  const nav = useNavigate()
   const changeMenu = () => {
     updateCollapse(!collapse)
   }
+  useEffect(() => {
+    const path = localStorage.getItem('pathname')
+    if (path) {
+      nav(path)
+    }
+  }, [])
   return (
     <div className="flex">
       <div className={ClassNames('border-r-gray-200 border box-border dark:border-r-gray-600', { 'w-60': !collapse }, { 'w-20': collapse })}>

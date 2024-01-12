@@ -3,7 +3,7 @@ import Menu, { SubMenu, Item as MenuItem } from 'rc-menu'
 import type { MenuProps } from 'rc-menu'
 import { useMenuStore } from '@/store'
 import './index.css'
-import { Link  } from 'react-router-dom'
+import { Link, useLocation  } from 'react-router-dom'
 import { CaretRightIcon } from '@radix-ui/react-icons'
 import { menuList } from '@/router/routerList'
 
@@ -12,34 +12,28 @@ const MyMenu = () => {
   console.log('collapse: ', collapse)
   const [openKeys, setOpenKeys] = useState<string[]>([])
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
+  const { pathname } = useLocation()
   useEffect(() => {
-    if (collapse) return
-    const defaultSub = localStorage.getItem('defaultSub')
-    const defaultMenu = localStorage.getItem('defaultMenu')
-    if (defaultMenu && defaultSub) {
-      setOpenKeys([defaultSub])
-      setSelectedKeys([defaultMenu])
+    // pathname = '/sub/name' split('/')-> '/', 'sub', 'name'
+    if (collapse) return // 折叠的时候不需要执行
+    const path = pathname.split('/')
+    if (path.length > 2) {
+      setOpenKeys([path[1], path[2]])
+      setSelectedKeys([path[2]])
+    } else {
+      setSelectedKeys([path[1]])
     }
-    if (defaultSub && !defaultMenu) {
-      setSelectedKeys([defaultSub])
-    }
-    console.log(defaultSub, defaultMenu)
   }, [collapse])
   const onOpenChange = (openKeys: string[]) => {
     console.log('onOpenChange', openKeys);
     setOpenKeys(openKeys)
   }
   const onClick: MenuProps['onClick'] = (info) => {
-    console.log('click ', info);
+    console.log(info)
     setSelectedKeys([info.key])
-    const keys = info.key.split('-')
-    if (keys.length > 1) {
-      localStorage.setItem('defaultSub', keys[0])
-      localStorage.setItem('defaultMenu', info.key)
-    } else {
-      localStorage.setItem('defaultSub', keys[0])
-      localStorage.removeItem('defaultMenu')
-    }
+    const path = info.keyPath
+    const url = path.length === 1  ? '/' + path[0] : '/' + path[1] + '/' + path[0]
+    localStorage.setItem('pathname', url)
   }
   return (
     <>

@@ -37,13 +37,13 @@ const menuList: MenuPropType = [
     label: '用户',
     children: [
       {
-        key: 'user-setting',
+        key: 'setting',
         label: 'setting',
         path: '/user/setting',
         component: list['userSetting']
       },
       {
-        key: 'user-role',
+        key: 'role',
         label: 'role',
         path: '/user/role',
         component: list['userRole']
