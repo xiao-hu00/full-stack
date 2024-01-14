@@ -23,6 +23,7 @@ const list = {
   home: React.lazy(() => import('@/pages/home')),
   userSetting: React.lazy(() => import('@/pages/user/setting')),
   userRole: React.lazy(() => import('@/pages/user/role')),
+  dataTable: React.lazy(() => import('@/pages/dataTable')),
 }
 
 const menuList: MenuPropType = [
@@ -49,6 +50,12 @@ const menuList: MenuPropType = [
         component: list['userRole']
       }
     ]
+  },
+  {
+    key: 'dataTable',
+    label: '数据表格',
+    path: '/dataTable',
+    component: list['dataTable']
   },
 ]
 // 扁平化

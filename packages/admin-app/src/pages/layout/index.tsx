@@ -1,9 +1,8 @@
 import Header from './header'
-import './layout.css'
 import { DoubleArrowLeftIcon } from '@radix-ui/react-icons'
 import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import { useMenuStore } from '@/store'
-import ClassNames from 'classnames'
+import { cn } from "@/lib/utils"
 import { Outlet, useNavigate  } from 'react-router-dom'
 import { Menu } from '@/components'
 import { useEffect } from 'react'
@@ -23,14 +22,14 @@ const Layout = () => {
   }, [])
   return (
     <div className="flex">
-      <div className={ClassNames('border-r-gray-200 border box-border dark:border-r-gray-600', { 'w-60': !collapse }, { 'w-20': collapse })}>
+      <div className={cn('border-r-gray-200 border-r box-border dark:border-r-gray-600', { 'w-60': !collapse }, { 'w-20': collapse })}>
         <Menu />
-        <div onClick={changeMenu} className={ClassNames({ 'w-60': !collapse }, { 'w-20': collapse }, "fixed bottom-0 flex items-center justify-center cursor-pointer h-10")}>
+        <div onClick={changeMenu} className={cn({ 'w-60': !collapse }, { 'w-20': collapse }, "border-t-gray-200 border-t fixed bottom-0 flex items-center justify-center cursor-pointer h-10")}>
           {collapse ? <DoubleArrowRightIcon /> : <DoubleArrowLeftIcon />}
         </div>
       </div>
       <div className="flex-1 flex flex-col min-h-[100vh]">
-        <div className="p-3">
+        <div className="p-3 border-b-gray-200 border-b">
           <Header />
         </div>
         <div className="flex-1 p-3">
