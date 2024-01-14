@@ -1,8 +1,19 @@
 import React from 'react'
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, useLocation, Navigate } from 'react-router-dom'
 import Layout from '@/pages/layout'
-
+import Login from '@/pages/login'
 import { routerList } from './routerList'
+
+function RequireAuth({ children }: { children: JSX.Element }) {
+  const token = localStorage.getItem('token')
+  let location = useLocation()
+
+  if (!token) {
+    return <Navigate to="/login" state={{ from: location }} replace />
+  }
+
+  return children;
+}
 
 const router = createBrowserRouter([
   {
@@ -13,9 +24,12 @@ const router = createBrowserRouter([
         return {
           path: item.path,
           index: item.path === '/home',
-          element: <React.Suspense fallback={<>加载中</>}>
-            <item.component />
-          </React.Suspense>
+          element:
+            <RequireAuth>
+              <React.Suspense fallback={<>加载中</>}>
+                <item.component />
+              </React.Suspense>
+            </RequireAuth>
         }
       } else {
         return {}
@@ -23,6 +37,10 @@ const router = createBrowserRouter([
     }),
     errorElement: <>错误页面</>,
   },
+  {
+    path: '/login',
+    element: <Login />
+  }
 ])
 
 export default router

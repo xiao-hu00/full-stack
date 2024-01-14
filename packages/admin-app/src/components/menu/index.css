@@ -1,11 +1,10 @@
 .rc-menu-sub {
-  max-height: 200px;
   transition: all 300ms;
+  overflow: hidden;
+  height: auto;
 }
 .rc-menu-hidden {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
+  height: 0;
 }
 .rc-menu-item, .rc-menu-submenu-title {
   height: 2.5rem;
@@ -53,6 +52,7 @@
   border: 1px solid #ddd;
   background: #FFF;
   border-top: none;
+  width: 180px;
 }
 .rc-menu-submenu-placement-rightTop ul li {
   padding: 12px 8px;

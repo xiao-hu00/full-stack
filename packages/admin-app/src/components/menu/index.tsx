@@ -35,6 +35,8 @@ const MyMenu = () => {
     const url = path.length === 1  ? '/' + path[0] : '/' + path[1] + '/' + path[0]
     localStorage.setItem('pathname', url)
   }
+  const expandNode = (node: any) => ({ height: node.scrollHeight })
+  const collapseNode = () => ({ height: 0 })
   return (
     <>
       <Menu
@@ -43,6 +45,15 @@ const MyMenu = () => {
         onOpenChange={onOpenChange}
         openKeys={openKeys}
         selectedKeys={selectedKeys}
+        motion={!collapse ? {
+          motionName: 'rc-menu-collapse',
+          onAppearStart: collapseNode,
+          onAppearActive: expandNode,
+          onEnterStart: collapseNode,
+          onEnterActive: expandNode,
+          onLeaveStart: expandNode,
+          onLeaveActive: collapseNode,
+        } : {}}
       >
         {menuList?.map((m) => {
           if (m.children) {
