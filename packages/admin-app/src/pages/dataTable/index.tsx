@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+// import { useReactTable } from '@tanstack/react-table'
 
 const invoices = [
   {
@@ -55,6 +56,7 @@ const invoices = [
 ]
 
 const DataTable = () => {
+  // const table = useReactTable({ data: invoices })
   return (
     <>
       <div>数据表格</div>
