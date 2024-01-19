@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import {
   Table,
   TableBody,
@@ -22,58 +22,8 @@ import { DataTablePagination } from './pagination'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Task } from './schema'
 import { DataTableColumnHeader } from './tableHeader'
+import { getData } from '@/api/testApi'
 
-const invoices = [
-  {
-    id: '1',
-    invoice: 'INV001',
-    paymentStatus: 'Paid',
-    totalAmount: '$250.00',
-    paymentMethod: 'Credit Card',
-  },
-  {
-    id: '2',
-    invoice: 'INV002',
-    paymentStatus: 'Pending',
-    totalAmount: '$150.00',
-    paymentMethod: 'PayPal',
-  },
-  {
-    id: '3',
-    invoice: 'INV003',
-    paymentStatus: 'Unpaid',
-    totalAmount: '$350.00',
-    paymentMethod: 'Bank Transfer',
-  },
-  {
-    id: '4',
-    invoice: 'INV004',
-    paymentStatus: 'Paid',
-    totalAmount: '$450.00',
-    paymentMethod: 'Credit Card',
-  },
-  {
-    id: '5',
-    invoice: 'INV005',
-    paymentStatus: 'Paid',
-    totalAmount: '$550.00',
-    paymentMethod: 'PayPal',
-  },
-  {
-    id: '6',
-    invoice: 'INV006',
-    paymentStatus: 'Pending',
-    totalAmount: '$200.00',
-    paymentMethod: 'Bank Transfer',
-  },
-  {
-    id: '7',
-    invoice: 'INV007',
-    paymentStatus: 'Unpaid',
-    totalAmount: '$300.00',
-    paymentMethod: 'Credit Card',
-  },
-]
 const columns: ColumnDef<Task>[] = [
   {
     id: 'select',
@@ -100,14 +50,12 @@ const columns: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    id: 'invoice',
-    accessorKey: 'invoice',
+    id: 'id',
+    accessorKey: 'id',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Invoice' />
     ),
-    cell: ({ row }) => (
-      <div className='w-[80px]'>{row.getValue('invoice')}</div>
-    ),
+    cell: ({ row }) => <div className='w-[80px]'>{row.getValue('id')}</div>,
   },
   {
     id: 'paymentStatus',
@@ -130,12 +78,20 @@ const columns: ColumnDef<Task>[] = [
     ),
   },
 ]
+
 const DataTable = () => {
-  const [rowSelection, setRowSelection] = React.useState({})
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [rowSelection, setRowSelection] = useState({})
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [data, setData] = useState<Task[]>([])
+
+  useEffect(() => {
+    getData().then(res => {
+      setData(res)
+    })
+  }, [])
 
   const table = useReactTable({
-    data: invoices,
+    data: data,
     columns: columns,
     state: {
       sorting,
