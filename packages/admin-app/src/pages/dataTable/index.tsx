@@ -3,7 +3,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -23,6 +22,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Task } from './schema'
 import { DataTableColumnHeader } from './tableHeader'
 import { getData } from '@/api/testApi'
+import { Spin } from '@/components'
 
 const columns: ColumnDef<Task>[] = [
   {
@@ -48,6 +48,7 @@ const columns: ColumnDef<Task>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
+    size: 15,
   },
   {
     id: 'id',
@@ -63,6 +64,7 @@ const columns: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title='Status' />
     ),
     accessorKey: 'paymentStatus',
+    size: 40,
   },
   {
     id: 'paymentMethod',
@@ -83,10 +85,13 @@ const DataTable = () => {
   const [rowSelection, setRowSelection] = useState({})
   const [sorting, setSorting] = useState<SortingState>([])
   const [data, setData] = useState<Task[]>([])
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
     getData().then(res => {
       setData(res)
+      setLoading(false)
     })
   }, [])
 
@@ -117,6 +122,9 @@ const DataTable = () => {
                   className={cn({
                     'text-right': index + 1 === item.headers.length,
                   })}
+                  style={{
+                    width: m.column.getSize(),
+                  }}
                 >
                   {flexRender(m.column.columnDef.header, m.getContext())}
                 </TableHead>
@@ -125,7 +133,15 @@ const DataTable = () => {
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          {loading ? (
+            <TableRow>
+              <TableCell colSpan={columns.length}>
+                <div className='h-24 flex items-center justify-center w-[100%]'>
+                  <Spin loading={loading} />
+                </div>
+              </TableCell>
+            </TableRow>
+          ) : table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map(row => (
               <TableRow
                 key={row.id}
@@ -147,12 +163,6 @@ const DataTable = () => {
             </TableRow>
           )}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan={4}>Total</TableCell>
-            <TableCell className='text-right'>$2,500.00</TableCell>
-          </TableRow>
-        </TableFooter>
       </Table>
       <div className='mt-4'>
         <DataTablePagination table={table} />

@@ -22,9 +22,9 @@ const Layout = () => {
   }, [])
   return (
     <div className="flex">
-      <div className={cn('border-r-gray-200 border-r box-border dark:border-r-gray-600', { 'w-60': !collapse }, { 'w-20': collapse })}>
+      <div className={cn('border-r-gray-200 transition-all border-r box-border dark:border-r-gray-600', { 'w-60': !collapse }, { 'w-20': collapse })}>
         <Menu />
-        <div onClick={changeMenu} className={cn({ 'w-60': !collapse }, { 'w-20': collapse }, "border-t-gray-200 border-t fixed bottom-0 flex items-center justify-center cursor-pointer h-10")}>
+        <div onClick={changeMenu} className={cn({ 'w-60': !collapse }, { 'w-20': collapse }, "border-t-gray-200 transition-all border-t fixed bottom-0 flex items-center justify-center cursor-pointer h-10")}>
           {collapse ? <DoubleArrowRightIcon /> : <DoubleArrowLeftIcon />}
         </div>
       </div>

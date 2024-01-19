@@ -53,7 +53,7 @@ const menuList: MenuPropType = [
   },
   {
     key: 'dataTable',
-    label: '数据表格',
+    label: '数据',
     path: '/dataTable',
     component: list['dataTable']
   },
