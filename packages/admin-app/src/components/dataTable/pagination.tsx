@@ -20,8 +20,26 @@ interface DataTablePaginationProps<TData> {
 }
 
 export function DataTablePagination<TData>({
-  table,
+  table
 }: DataTablePaginationProps<TData>) {
+  const changePage = (num: string) => {
+    switch (num) {
+      case 'last':
+        table.setPageIndex(table.getPageCount() - 1)
+        break
+      case 'first':
+        table.setPageIndex(0)
+        break
+      case 'prev':
+        table.previousPage()
+        break
+      case 'next':
+        table.nextPage()
+        break
+      default:
+        break
+    }
+  }
   return (
     <div className='flex items-center justify-between px-2'>
       <div className='flex-1 text-sm text-muted-foreground'>
@@ -57,7 +75,7 @@ export function DataTablePagination<TData>({
           <Button
             variant='outline'
             className='hidden h-8 w-8 p-0 lg:flex'
-            onClick={() => table.setPageIndex(0)}
+            onClick={() => changePage('first')}
             disabled={!table.getCanPreviousPage()}
           >
             <span className='sr-only'>Go to first page</span>
@@ -66,7 +84,7 @@ export function DataTablePagination<TData>({
           <Button
             variant='outline'
             className='h-8 w-8 p-0'
-            onClick={() => table.previousPage()}
+            onClick={() => changePage('prev')}
             disabled={!table.getCanPreviousPage()}
           >
             <span className='sr-only'>Go to previous page</span>
@@ -75,7 +93,7 @@ export function DataTablePagination<TData>({
           <Button
             variant='outline'
             className='h-8 w-8 p-0'
-            onClick={() => table.nextPage()}
+            onClick={() => changePage('next')}
             disabled={!table.getCanNextPage()}
           >
             <span className='sr-only'>Go to next page</span>
@@ -84,7 +102,7 @@ export function DataTablePagination<TData>({
           <Button
             variant='outline'
             className='hidden h-8 w-8 p-0 lg:flex'
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+            onClick={() => changePage('last')}
             disabled={!table.getCanNextPage()}
           >
             <span className='sr-only'>Go to last page</span>

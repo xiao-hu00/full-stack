@@ -1,28 +1,13 @@
 import { useEffect, useState } from 'react'
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import { cn } from '@/lib/utils'
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  getPaginationRowModel,
   ColumnDef,
-  getSortedRowModel,
-  SortingState,
 } from '@tanstack/react-table'
-import { DataTablePagination } from './pagination'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Task } from './schema'
 import { DataTableColumnHeader } from './tableHeader'
 import { getData } from '@/api/testApi'
-import { Spin } from '@/components'
+import { DataTable } from '@/components'
+import { useRequest } from 'ahooks'
 
 const columns: ColumnDef<Task>[] = [
   {
@@ -81,94 +66,35 @@ const columns: ColumnDef<Task>[] = [
   },
 ]
 
-const DataTable = () => {
-  const [rowSelection, setRowSelection] = useState({})
-  const [sorting, setSorting] = useState<SortingState>([])
-  const [data, setData] = useState<Task[]>([])
-  const [loading, setLoading] = useState(false)
+const Table = () => {
+  const [{ pageSize, currentPage }, setPage] = useState({
+    pageSize: 10,
+    currentPage: 1
+  })
+
+  const { data, run, loading } = useRequest(() => getData({pageSize, currentPage}), {
+    refreshDeps: [pageSize, currentPage],
+  })
 
   useEffect(() => {
-    setLoading(true)
-    getData().then(res => {
-      setData(res)
-      setLoading(false)
-    })
+    run()
   }, [])
 
-  const table = useReactTable({
-    data: data,
-    columns: columns,
-    state: {
-      sorting,
-      rowSelection,
-    },
-    enableRowSelection: true,
-    onSortingChange: setSorting,
-    getCoreRowModel: getCoreRowModel(),
-    onRowSelectionChange: setRowSelection,
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-  })
+  const onChange = (params: any) => {
+    console.log(params)
+    const { pageIndex, pageSize } = params
+    setPage({
+      pageSize,
+      currentPage: pageIndex + 1
+    })
+  }
+  
   return (
     <>
       <div className='mb-4'>数据表格</div>
-      <Table className='border'>
-        <TableHeader>
-          {table.getHeaderGroups().map(item => (
-            <TableRow key={item.id}>
-              {item.headers.map((m, index) => (
-                <TableHead
-                  key={m.id}
-                  className={cn({
-                    'text-right': index + 1 === item.headers.length,
-                  })}
-                  style={{
-                    width: m.column.getSize(),
-                  }}
-                >
-                  {flexRender(m.column.columnDef.header, m.getContext())}
-                </TableHead>
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {loading ? (
-            <TableRow>
-              <TableCell colSpan={columns.length}>
-                <div className='h-24 flex items-center justify-center w-[100%]'>
-                  <Spin loading={loading} />
-                </div>
-              </TableCell>
-            </TableRow>
-          ) : table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map(row => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && 'selected'}
-                className='h-10'
-              >
-                {row.getVisibleCells().map(cell => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className='h-24 text-center'>
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-      <div className='mt-4'>
-        <DataTablePagination table={table} />
-      </div>
+      <DataTable data={data?.data} loading={loading} columns={columns} onChange={onChange} total={data?.total} />
     </>
   )
 }
 
-export default DataTable
+export default Table
