@@ -12,7 +12,7 @@ interface PropType {
   label: string
   component?: React.LazyExoticComponent<React.ComponentType<object>>
   path?: string
-  icon?: React.ReactNode
+  icon?: string
   disable?: boolean
   children?: ItemType[]
 }
@@ -31,11 +31,13 @@ const menuList: MenuPropType = [
     key: 'home',
     label: 'home',
     path: '/home',
-    component: list['home']
+    component: list['home'],
+    icon: 'home'
   },
   {
     key: 'user',
     label: '用户',
+    icon: 'user',
     children: [
       {
         key: 'setting',
@@ -55,6 +57,7 @@ const menuList: MenuPropType = [
     key: 'dataTable',
     label: '数据',
     path: '/dataTable',
+    icon: 'dataTable',
     component: list['dataTable']
   },
 ]

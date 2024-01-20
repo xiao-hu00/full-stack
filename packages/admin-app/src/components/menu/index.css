@@ -20,7 +20,7 @@
 .rc-menu-submenu-title {
   justify-content: space-between;
 }
-.rc-menu-submenu-title svg {
+.rc-menu-submenu-title > svg:last-child {
   margin-right: 10px;
 }
 .rc-menu-submenu-active {
@@ -42,7 +42,7 @@
 .rc-menu-submenu-selected .rc-menu-submenu-title {
   color: peru;
 }
-.rc-menu-submenu-open svg {
+.rc-menu-submenu-open .rc-menu-submenu-title > svg {
   transform: rotate(90deg);
 }
 .rc-menu-item-selected {

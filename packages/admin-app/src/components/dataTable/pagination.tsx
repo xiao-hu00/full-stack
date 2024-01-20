@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -5,8 +6,8 @@ import {
   DoubleArrowRightIcon,
 } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
-
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
@@ -14,15 +15,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useDebounce } from 'ahooks'
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>
 }
 
 export function DataTablePagination<TData>({
-  table
+  table,
 }: DataTablePaginationProps<TData>) {
+  const [value, setValue] = useState<string>('1')
+  const debouncedValue = useDebounce(value, { wait: 500 })
+  useEffect(() => {
+    if (!debouncedValue) return
+    const num = Number(debouncedValue) || 1
+    table.setPageIndex(num - 1)
+  }, [debouncedValue])
+  
   const changePage = (num: string) => {
+    setValue('')
     switch (num) {
       case 'last':
         table.setPageIndex(table.getPageCount() - 1)
@@ -108,6 +119,12 @@ export function DataTablePagination<TData>({
             <span className='sr-only'>Go to last page</span>
             <DoubleArrowRightIcon className='h-4 w-4' />
           </Button>
+          <Input
+            value={value}
+            onChange={e => setValue(e.target.value)}
+            type='number'
+            className='h-8 w-12 focus-visible:ring-transparent appearance-none'
+          />
         </div>
       </div>
     </div>

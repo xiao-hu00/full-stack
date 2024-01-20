@@ -26,22 +26,22 @@ const Layout = () => {
         className={cn(
           'border-r-gray-200 transition-all border-r box-border dark:border-r-gray-600',
           { 'w-60': !collapse },
-          { 'w-20': collapse }
+          { 'w-16': collapse }
         )}
       >
         <Menu />
         <div
           onClick={changeMenu}
           className={cn(
+            'border-t-gray-200 transition-all border-t fixed bottom-0 flex items-center justify-center cursor-pointer h-10',
             { 'w-60': !collapse },
-            { 'w-20': collapse },
-            'border-t-gray-200 transition-all border-t fixed bottom-0 flex items-center justify-center cursor-pointer h-10'
+            { 'w-16': collapse }
           )}
         >
           {collapse ? <DoubleArrowRightIcon /> : <DoubleArrowLeftIcon />}
         </div>
       </div>
-      <div className='flex-1 flex flex-col min-h-[100vh]'>
+      <div className='flex-1 flex flex-col h-[100vh] overflow-auto'>
         <div className='p-3 border-b-gray-200 border-b'>
           <Header />
         </div>

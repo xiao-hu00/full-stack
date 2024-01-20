@@ -3,13 +3,21 @@ import Menu, { SubMenu, Item as MenuItem } from 'rc-menu'
 import type { MenuProps } from 'rc-menu'
 import { useMenuStore } from '@/store'
 import './index.css'
-import { Link, useLocation  } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { CaretRightIcon } from '@radix-ui/react-icons'
 import { menuList } from '@/router/routerList'
+import { Home, UserCog2, FileText } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+const size = 18
+const menuIcons: any = {
+  home: <Home size={size} />,
+  user: <UserCog2 size={size} />,
+  dataTable: <FileText size={size} />,
+}
 
 const MyMenu = () => {
-  const collapse = useMenuStore((state) => state.collapse)
-  console.log('collapse: ', collapse)
+  const collapse = useMenuStore(state => state.collapse)
   const [openKeys, setOpenKeys] = useState<string[]>([])
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const { pathname } = useLocation()
@@ -25,14 +33,13 @@ const MyMenu = () => {
     }
   }, [collapse])
   const onOpenChange = (openKeys: string[]) => {
-    console.log('onOpenChange', openKeys);
     setOpenKeys(openKeys)
   }
-  const onClick: MenuProps['onClick'] = (info) => {
-    console.log(info)
+  const onClick: MenuProps['onClick'] = info => {
     setSelectedKeys([info.key])
     const path = info.keyPath
-    const url = path.length === 1  ? '/' + path[0] : '/' + path[1] + '/' + path[0]
+    const url =
+      path.length === 1 ? '/' + path[0] : '/' + path[1] + '/' + path[0]
     localStorage.setItem('pathname', url)
   }
   const expandNode = (node: any) => ({ height: node.scrollHeight })
@@ -45,21 +52,39 @@ const MyMenu = () => {
         onOpenChange={onOpenChange}
         openKeys={openKeys}
         selectedKeys={selectedKeys}
-        motion={!collapse ? {
-          motionName: 'rc-menu-collapse',
-          onAppearStart: collapseNode,
-          onAppearActive: expandNode,
-          onEnterStart: collapseNode,
-          onEnterActive: expandNode,
-          onLeaveStart: expandNode,
-          onLeaveActive: collapseNode,
-        } : {}}
+        motion={
+          !collapse
+            ? {
+                motionName: 'rc-menu-collapse',
+                onAppearStart: collapseNode,
+                onAppearActive: expandNode,
+                onEnterStart: collapseNode,
+                onEnterActive: expandNode,
+                onLeaveStart: expandNode,
+                onLeaveActive: collapseNode,
+              }
+            : {}
+        }
       >
-        {menuList?.map((m) => {
+        {menuList?.map(m => {
           if (m.children) {
             return (
-              <SubMenu popupOffset={[10, 15]} key={m.key} title={m.label} expandIcon={<CaretRightIcon />}>
-                {m?.children?.map((child) => (
+              <SubMenu
+                popupOffset={[10, 15]}
+                key={m.key}
+                title={
+                  <>
+                    <span className={cn('transition-all',{'pl-4': collapse, 'mr-4': !collapse })}>
+                      {m.icon ? menuIcons[m.icon] : null}
+                    </span>
+                    <div className={cn('flex-1 h-6 overflow-hidden', { hidden: collapse })}>
+                      {m.label}
+                    </div>
+                  </>
+                }
+                expandIcon={<CaretRightIcon />}
+              >
+                {m?.children?.map(child => (
                   <MenuItem key={child.key}>
                     <Link to={child.path || '/'}>{child.label}</Link>
                   </MenuItem>
@@ -67,9 +92,16 @@ const MyMenu = () => {
               </SubMenu>
             )
           }
-          return <MenuItem key={m.key}>
-            <Link to={m.path || '/'}>{m.label}</Link>
-          </MenuItem>
+          return (
+            <MenuItem key={m.key}>
+              <Link to={m.path || '/'}>
+                <span className={cn('mr-4 transition-all', {'pl-4': collapse})}>
+                  {m.icon ? menuIcons[m.icon] : null}
+                </span>
+                <span className={cn({ hidden: collapse })}>{m.label}</span>
+              </Link>
+            </MenuItem>
+          )
         })}
       </Menu>
     </>
