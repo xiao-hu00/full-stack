@@ -29,7 +29,7 @@ const LoadingSpinner = ({
       strokeWidth='2'
       strokeLinecap='round'
       strokeLinejoin='round'
-      className={cn({ hidden: !loading }, 'animate-spin', className)}
+      className={cn({ hidden: !loading }, 'animate-spin text-sky-700', className)}
     >
       <path d='M21 12a9 9 0 1 1-6.219-8.56' />
     </svg>
@@ -41,7 +41,7 @@ const LoadingSpinner = ({
     <div className='relative'>
       <div
         className={cn(
-          'absolute w-[100%] h-[100%] bg-slate-100 z-10 bg-opacity-40 flex justify-center pt-10',
+          'absolute w-[100%] h-[100%] bg-slate-100 z-10 bg-opacity-70 flex justify-center pt-16',
           { hidden: !loading }
         )}
       >

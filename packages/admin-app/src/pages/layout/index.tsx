@@ -24,7 +24,7 @@ const Layout = () => {
     <div className='flex'>
       <div
         className={cn(
-          'border-r-gray-200 transition-all border-r box-border dark:border-r-gray-600',
+          'border-r-gray-200 transition-all border-r box-border dark:border-r-gray-800',
           { 'w-60': !collapse },
           { 'w-16': collapse }
         )}
@@ -33,7 +33,7 @@ const Layout = () => {
         <div
           onClick={changeMenu}
           className={cn(
-            'border-t-gray-200 transition-all border-t fixed bottom-0 flex items-center justify-center cursor-pointer h-10',
+            'border-t-gray-200 dark:border-t-gray-800 transition-all border-t fixed bottom-0 flex items-center justify-center cursor-pointer h-10',
             { 'w-60': !collapse },
             { 'w-16': collapse }
           )}
@@ -42,7 +42,7 @@ const Layout = () => {
         </div>
       </div>
       <div className='flex-1 flex flex-col h-[100vh] overflow-auto'>
-        <div className='p-3 border-b-gray-200 border-b'>
+        <div className='p-3 border-b-gray-200 border-b dark:border-b-gray-800'>
           <Header />
         </div>
         <div className='flex-1 p-3'>
