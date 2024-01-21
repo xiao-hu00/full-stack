@@ -1,6 +1,7 @@
 import { ModeToggle } from '@/components/mode-toggle'
 import { LogOutIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+
 const Header = () => {
   const navigate = useNavigate()
   const logout = () => {

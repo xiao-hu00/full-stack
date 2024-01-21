@@ -3,6 +3,8 @@ import { createBrowserRouter, useLocation, Navigate } from 'react-router-dom'
 import Layout from '@/pages/layout'
 import Login from '@/pages/login'
 import { routerList } from './routerList'
+import { useMount, useUnmount, useInterval } from 'ahooks'
+import { useMenuStore } from '@/store'
 
 function RequireAuth({ children }: { children: JSX.Element }) {
   const token = localStorage.getItem('token')
@@ -13,6 +15,24 @@ function RequireAuth({ children }: { children: JSX.Element }) {
   }
 
   return children;
+}
+
+function FallBack() {
+  const updateProgress = useMenuStore(state => state.updateProgress)
+  useMount(() => {
+    updateProgress(30)
+  })
+  let num = 30
+  useInterval(() => {
+    console.log('time interval')
+    num = num + 10
+    if (num === 90) return
+    updateProgress(num)
+  }, 1000)
+  useUnmount(() => {
+    updateProgress(101)
+  })
+  return null
 }
 
 const router = createBrowserRouter([
@@ -26,7 +46,7 @@ const router = createBrowserRouter([
           index: item.path === '/home',
           element:
             <RequireAuth>
-              <React.Suspense fallback={<>加载中</>}>
+              <React.Suspense fallback={<><FallBack /></>}>
                 <item.component />
               </React.Suspense>
             </RequireAuth>

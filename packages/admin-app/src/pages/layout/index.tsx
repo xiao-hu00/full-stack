@@ -1,14 +1,15 @@
+import { useEffect } from 'react'
 import Header from './header'
-import { DoubleArrowLeftIcon } from '@radix-ui/react-icons'
-import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
+import { DoubleArrowLeftIcon, DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import { useMenuStore } from '@/store'
 import { cn } from '@/lib/utils'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { Menu } from '@/components'
-import { useEffect } from 'react'
+import LoadingBar from 'react-top-loading-bar'
 
 const Layout = () => {
   const collapse = useMenuStore(state => state.collapse)
+  const progress = useMenuStore(state => state.progress)
   const updateCollapse = useMenuStore(state => state.updateCollapse)
   const nav = useNavigate()
   const changeMenu = () => {
@@ -22,6 +23,8 @@ const Layout = () => {
   }, [])
   return (
     <div className='flex'>
+      {/* 顶部进度条 */}
+      <LoadingBar progress={progress} color='#38b9f7' />
       <div
         className={cn(
           'border-r-gray-200 transition-all border-r box-border dark:border-r-gray-800',

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "fdev": "pnpm --filter=./packages/three-study run dev",
-    "bdev": "pnpm --filter=./packages/nest-study run start"
+    "bdev": "pnpm --filter=./packages/nest-study run dev",
+    "adev": "pnpm --filter=./packages/admin-app run dev"
   }
 }
