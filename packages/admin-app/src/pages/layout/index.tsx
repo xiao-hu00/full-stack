@@ -28,7 +28,7 @@ const Layout = () => {
       <div
         className={cn(
           'border-r-gray-200 transition-all border-r box-border dark:border-r-gray-800',
-          { 'w-60': !collapse },
+          { 'w-56': !collapse },
           { 'w-16': collapse }
         )}
       >
@@ -37,7 +37,7 @@ const Layout = () => {
           onClick={changeMenu}
           className={cn(
             'border-t-gray-200 dark:border-t-gray-800 transition-all border-t fixed bottom-0 flex items-center justify-center cursor-pointer h-10',
-            { 'w-60': !collapse },
+            { 'w-56': !collapse },
             { 'w-16': collapse }
           )}
         >

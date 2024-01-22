@@ -12,19 +12,26 @@ import {
   useReactTable,
   getCoreRowModel,
   PaginationState,
-  ColumnDef,
+  // ColumnDef,
   getSortedRowModel,
   SortingState,
   flexRender,
 } from '@tanstack/react-table'
 import { DataTablePagination } from './pagination'
 import { Task } from './schema'
+import { Task as columnsType } from '@/pages/dataTable/schema'
 import { Spin } from '@/components'
+import { tableColumn } from './column'
+
+interface CallbackType {
+  pageIndex: number
+  pageSize: number
+}
 interface DataTableProps {
-  columns: ColumnDef<Task>[]
+  columns: columnsType[]
   data?: Task[]
   loading?: boolean
-  onChange?: Function
+  onChange?: (values: CallbackType) => void
   total?: number
 }
 
@@ -36,6 +43,9 @@ const DataTable = (props: DataTableProps) => {
     pageIndex: 0,
     pageSize: 10,
   })
+  const myCol = useMemo(() => {
+    return tableColumn(columns)
+  }, [columns])
   const pagination = useMemo(
     () => ({
       pageIndex,
@@ -48,7 +58,7 @@ const DataTable = (props: DataTableProps) => {
   }, [pageIndex, pageSize])
   const table = useReactTable({
     data: data || [],
-    columns: columns,
+    columns: myCol,
     pageCount: Math.ceil((total || 0) / pageSize),
     state: {
       sorting,
