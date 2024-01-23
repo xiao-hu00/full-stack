@@ -1,10 +1,10 @@
 export interface ColumnsType {
   id: string
-  header: string | ((column: any) => JSX.Element)
+  header: string | ((column: column) => JSX.Element)
   accessorKey: string
   sort?: boolean
   size?: number
-  cell?: (row: any) => JSX.Element
+  cell?: (row: row) => JSX.Element
 }
 
 export interface CallbackType {
@@ -16,6 +16,6 @@ export interface DataTableProps {
   columns: ColumnsType[]
   data?: Array[]
   loading?: boolean
-  onChange?: (values: CallbackType) => void
+  onChange?: (values: table) => void
   total?: number
 }

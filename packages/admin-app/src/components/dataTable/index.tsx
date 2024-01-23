@@ -1,4 +1,10 @@
-import { useEffect, useState, useMemo } from 'react'
+import {
+  useState,
+  useMemo,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from 'react'
 import {
   Table,
   TableBody,
@@ -20,15 +26,20 @@ import { DataTablePagination } from './pagination'
 import { DataTableProps } from './data'
 import { Spin } from '@/components'
 import { tableColumn } from './column'
+import { Input } from '../ui/input'
+import { useDebounce } from 'ahooks'
 
-const DataTable = (props: DataTableProps) => {
-  const { data, columns, loading = false, onChange, total } = props
+const DataTable = forwardRef((props: DataTableProps, ref) => {
+  const { data, columns, loading = false, total, onChange } = props
   const [rowSelection, setRowSelection] = useState({})
+  const [value, setValue] = useState<string>('')
+  const [changeValues, setChangeValue] = useState<object>({})
   const [sorting, setSorting] = useState<SortingState>([])
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   })
+  const debouncedValue = useDebounce(value, { wait: 500 })
   const myCol = useMemo(() => {
     return tableColumn(columns)
   }, [columns])
@@ -39,9 +50,22 @@ const DataTable = (props: DataTableProps) => {
     }),
     [pageIndex, pageSize]
   )
+  const getTableSelect = () => {
+    return table.getSelectedRowModel().rows.map((item) => item.original)
+  }
+  useImperativeHandle(ref, () => {
+    return {
+      getTableSelect
+    }
+  })
   useEffect(() => {
-    onChange && onChange({ pageIndex, pageSize })
+    onChange && onChange({ ...changeValues, pageIndex, pageSize })
+    setChangeValue({ ...changeValues, pageIndex, pageSize })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageIndex, pageSize])
+  useEffect(() => {
+    onChange && onChange(changeValues)
+  }, [debouncedValue])
   const table = useReactTable({
     data: data || [],
     columns: myCol,
@@ -60,8 +84,16 @@ const DataTable = (props: DataTableProps) => {
     getSortedRowModel: getSortedRowModel(),
     onPaginationChange: setPagination,
   })
+  const onChangeSearch = (e) => {
+    const v = e.target.value
+    setValue(v)
+    setChangeValue({ ...changeValues, search: v })
+  }
   return (
     <>
+      <div className='mt-4 mb-4'>
+        <Input className='w-56'  value={value} onChange={e => onChangeSearch(e)} />
+      </div>
       <Spin loading={loading}>
         <Table className='border'>
           <TableHeader>
@@ -119,6 +151,6 @@ const DataTable = (props: DataTableProps) => {
       </Spin>
     </>
   )
-}
+})
 
 export default DataTable
