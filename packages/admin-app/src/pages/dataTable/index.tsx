@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Task } from './schema'
 import { getData } from '@/api/testApi'
 import { DataTable } from '@/components'
-import { useRequest } from 'ahooks'
+import { useRequest, useMount } from 'ahooks'
 
 const columns: Task[] = [
   {
@@ -48,9 +48,9 @@ const Table = () => {
     }
   )
 
-  useEffect(() => {
+  useMount(() => {
     run()
-  }, [])
+  })
 
   const onChange = params => {
     console.log(params)

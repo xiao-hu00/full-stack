@@ -12,28 +12,14 @@ import {
   useReactTable,
   getCoreRowModel,
   PaginationState,
-  // ColumnDef,
   getSortedRowModel,
   SortingState,
   flexRender,
 } from '@tanstack/react-table'
 import { DataTablePagination } from './pagination'
-import { Task } from './schema'
-import { Task as columnsType } from '@/pages/dataTable/schema'
+import { DataTableProps } from './data'
 import { Spin } from '@/components'
 import { tableColumn } from './column'
-
-interface CallbackType {
-  pageIndex: number
-  pageSize: number
-}
-interface DataTableProps {
-  columns: columnsType[]
-  data?: Task[]
-  loading?: boolean
-  onChange?: (values: CallbackType) => void
-  total?: number
-}
 
 const DataTable = (props: DataTableProps) => {
   const { data, columns, loading = false, onChange, total } = props
@@ -107,14 +93,20 @@ const DataTable = (props: DataTableProps) => {
                 >
                   {row.getVisibleCells().map(cell => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className='h-24 text-center'>
+                <TableCell
+                  colSpan={columns.length}
+                  className='h-24 text-center'
+                >
                   暂无数据
                 </TableCell>
               </TableRow>

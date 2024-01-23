@@ -1,6 +1,6 @@
 // import api from './index'
 import { faker } from "@faker-js/faker"
-import { Task } from '@/components/dataTable/schema'
+import { Task } from '@/components/dataTable/data'
 const chunk = (input: Array<any>, size: number) => {
   return input.reduce((arr, item, idx) => {
     return idx % size === 0

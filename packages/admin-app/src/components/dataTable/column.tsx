@@ -1,10 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Task } from './schema'
 import { DataTableColumnHeader } from './tableHeader'
-import { Task as columnsType } from '@/pages/dataTable/schema'
+import { ColumnsType, Task } from './data'
 
-export function tableColumn(colArray: columnsType[]) {
+export function tableColumn(colArray: ColumnsType[]) {
   const columns  = colArray.map((item) => {
     const obj: ColumnDef<Task> = {
       id: item.id,
@@ -39,6 +38,9 @@ export function tableColumn(colArray: columnsType[]) {
         <DataTableColumnHeader column={column} title='Invoice' />
       ),
       obj.cell = ({ row }) => <div className='w-[80px]'>{row.getValue('id')}</div>
+    }
+    if (item.cell) {
+      obj.cell = item.cell
     }
     return obj
   })
