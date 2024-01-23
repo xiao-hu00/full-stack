@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import { Task } from './schema'
 import { getData } from '@/api/testApi'
 import { DataTable } from '@/components'
 import { useRequest, useMount } from 'ahooks'
 
-const columns: Task[] = [
+const columns = [
   {
     id: 'select',
     header: 'select',
@@ -32,6 +31,7 @@ const columns: Task[] = [
     id: 'totalAmount',
     header: 'Amount',
     accessorKey: 'totalAmount',
+    cell: ({ row }) => <div className='w-[80px]'>{row.getValue('totalAmount')}</div>
   },
 ]
 

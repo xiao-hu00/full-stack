@@ -1,11 +1,11 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './tableHeader'
-import { ColumnsType, Task } from './data'
+import { ColumnsType } from './data'
 
 export function tableColumn(colArray: ColumnsType[]) {
   const columns  = colArray.map((item) => {
-    const obj: ColumnDef<Task> = {
+    const obj: ColumnDef<any> = {
       id: item.id,
       accessorKey: item.accessorKey,
       header: item.header,

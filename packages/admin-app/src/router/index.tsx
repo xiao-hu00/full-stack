@@ -8,7 +8,7 @@ import { useMenuStore } from '@/store'
 
 function RequireAuth({ children }: { children: JSX.Element }) {
   const token = localStorage.getItem('token')
-  let location = useLocation()
+  const location = useLocation()
 
   if (!token) {
     return <Navigate to="/login" state={{ from: location }} replace />

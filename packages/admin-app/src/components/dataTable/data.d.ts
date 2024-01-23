@@ -1,12 +1,10 @@
-import React from 'react'
-
 export interface ColumnsType {
   id: string
-  header: string | (() => React.ReactNode)
+  header: string | ((column: any) => JSX.Element)
   accessorKey: string
   sort?: boolean
   size?: number
-  cell?: () => React.ReactNode
+  cell?: (row: any) => JSX.Element
 }
 
 export interface CallbackType {
@@ -14,16 +12,9 @@ export interface CallbackType {
   pageSize: number
 }
 
-export interface Task {
-  id: string
-  paymentStatus: string
-  totalAmount: string
-  paymentMethod: string
-}
-
 export interface DataTableProps {
   columns: ColumnsType[]
-  data?: Task[]
+  data?: Array[]
   loading?: boolean
   onChange?: (values: CallbackType) => void
   total?: number
