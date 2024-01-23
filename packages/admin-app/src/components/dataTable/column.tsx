@@ -9,7 +9,9 @@ export function tableColumn(colArray: ColumnsType[]) {
       id: item.id,
       accessorKey: item.accessorKey,
       header: item.header,
-      size: item.size
+      size: item.size,
+      enableSorting: item.enableSorting,
+      enableHiding: item.enableHiding,
     }
     // checkbox 选择
     if (item.id === 'select') {
@@ -33,9 +35,9 @@ export function tableColumn(colArray: ColumnsType[]) {
         />
       )
     }
-    if (item.id !== 'select' && item.sort) {
+    if (item.id !== 'select' && item.sort && typeof item.header === 'string') {
       obj.header = ({ column }) => (
-        <DataTableColumnHeader column={column} title='Invoice' />
+        <DataTableColumnHeader column={column} title={item.header.toString()} />
       ),
       obj.cell = ({ row }) => <div className='w-[80px]'>{row.getValue('id')}</div>
     }

@@ -32,12 +32,14 @@ export function DataTableColumnHeader<TData, TValue>({
   const sort = (
     column: DataTableColumnHeaderProps<TData, TValue>['column']
   , sortType: string) => {
-    console.log('requesting')
+    console.log('requesting', sortType)
     setTimeout(() => {
       if (sortType === 'no') {
         column.toggleSorting(undefined)
+      } else if (sortType === 'desc') {
+        column.toggleSorting(true)
       } else {
-        column.toggleSorting(sortType === 'desc')
+        column.toggleSorting(false)
       }
       console.log('ok')
     }, 1000)

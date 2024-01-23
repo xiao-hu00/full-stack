@@ -5,6 +5,8 @@ export interface ColumnsType {
   sort?: boolean
   size?: number
   cell?: (row: row) => JSX.Element
+  enableSorting?: boolean
+  enableHiding?: boolean
 }
 
 export interface CallbackType {

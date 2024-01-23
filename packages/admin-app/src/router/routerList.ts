@@ -23,7 +23,7 @@ const list = {
   home: React.lazy(() => import('@/pages/home')),
   userSetting: React.lazy(() => import('@/pages/user/setting')),
   userRole: React.lazy(() => import('@/pages/user/role')),
-  dataTable: React.lazy(() => import('@/pages/dataTable')),
+  dataTable: React.lazy(() => import('@/pages/dataList')),
 }
 
 const menuList: MenuPropType = [

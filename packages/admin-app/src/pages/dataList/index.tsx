@@ -10,17 +10,21 @@ const columns = [
     header: 'select',
     accessorKey: 'select',
     size: 15,
+    enableSorting: false,
+    enableHiding: false,
   },
   {
     id: 'id',
     accessorKey: 'id',
-    header: 'id',
+    header: 'Invoice',
     sort: true,
   },
   {
     id: 'paymentStatus',
     header: 'PaymentStatus',
     accessorKey: 'paymentStatus',
+    enableSorting: false,
+    size: 50,
   },
   {
     id: 'paymentMethod',
@@ -29,9 +33,11 @@ const columns = [
   },
   {
     id: 'totalAmount',
-    header: 'Amount',
+    header: () => <div className='text-right'>Amount</div>,
     accessorKey: 'totalAmount',
-    cell: ({ row }) => <div className='text-right'>{row.getValue('totalAmount')}</div>
+    cell: ({ row }) => (
+      <div className='text-right'>{row.getValue('totalAmount')}</div>
+    ),
   },
 ]
 
