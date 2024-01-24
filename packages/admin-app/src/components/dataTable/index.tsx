@@ -31,7 +31,7 @@ import { ColumnView } from './columnView'
 
 const DataTable = forwardRef((props: DataTableProps, ref) => {
   // todo <选择全部> 由于每一行都设置了id，所以<选择全部>必须知道所有的id，并设置为true -> rowSelection: {id: true, xxx: true}
-  const { data, columns, loading = false, total = 0, onChange } = props
+  const { data, columns, loading = false, total = 0, onChange, tableHeaderList } = props
   const [rowSelection, setRowSelection] = useState({})
   const [value, setValue] = useState<string>('')
   const [changeValues, setChangeValue] = useState<object>({})
@@ -41,6 +41,7 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
     pageSize: 10,
   })
   const debouncedValue = useDebounce(value, { wait: 500 })
+  // 根据传入的columns生成table需要的columns
   const myCol = useMemo(() => {
     return tableColumn(columns)
   }, [columns])
@@ -51,6 +52,7 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
     }),
     [pageIndex, pageSize]
   )
+  // 获取选择的row
   const getTableSelect = () => {
     return Object.keys(rowSelection)
   }
@@ -60,20 +62,20 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
     }
   })
   useEffect(() => {
-    onChange && onChange({ ...changeValues, pageIndex, pageSize })
-    setChangeValue({ ...changeValues, pageIndex, pageSize })
+    onChange?.({ ...changeValues, pageIndex, pageSize, sort: sorting })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageIndex, pageSize])
-  useEffect(() => {
-    onChange && onChange(changeValues)
-  }, [debouncedValue])
-
-  useEffect(() => {
-    console.log(sorting)
-  }, [sorting])
-
+  }, [debouncedValue, pageIndex, pageSize, sorting])
+  // 排序
+  // const onSortingChange = (fn: any) => {
+  //   setSorting(fn)
+  // }
+  // 翻页
+  // const onPaginationChange = (updater: any) => {
+  //   const nextState = updater(pagination)
+  //   setPagination(nextState)
+  // }
   // 每一行都设置一个唯一id，在 select row 之后，翻页也不会影响到已选中的 row
-  const getRowId = originalRow => originalRow.id.toString()
+  const getRowId = (originalRow: any) => originalRow.id.toString()
 
   const table = useReactTable({
     data: data || [],
@@ -87,14 +89,15 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
     getRowId,
     manualPagination: true,
     enableRowSelection: true,
+    manualSorting: true,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     onRowSelectionChange: setRowSelection,
-    // getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onPaginationChange: setPagination,
   })
-  const onChangeSearch = e => {
+  // 搜索
+  const onChangeSearch = (e: any) => {
     const v = e.target.value
     setValue(v)
     setChangeValue({ ...changeValues, search: v })
@@ -107,7 +110,7 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
           value={value}
           onChange={e => onChangeSearch(e)}
         />
-        <ColumnView table={table} />
+        <ColumnView table={table} tableHeaderList={tableHeaderList} />
       </div>
       <Spin loading={loading}>
         <Table className='border'>

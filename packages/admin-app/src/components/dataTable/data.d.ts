@@ -20,4 +20,5 @@ export interface DataTableProps {
   loading?: boolean
   onChange?: (values: table) => void
   total?: number
+  tableHeaderList?: object
 }

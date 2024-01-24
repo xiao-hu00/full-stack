@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { getData } from '@/api/testApi'
 import { DataTable } from '@/components'
-import { useRequest, useMount } from 'ahooks'
+import { useRequest } from 'ahooks'
 import { Button } from '@/components/ui/button'
 
 const columns = [
@@ -16,59 +16,75 @@ const columns = [
   {
     id: 'id',
     accessorKey: 'id',
-    header: 'Invoice',
+    header: '编号',
     sort: true,
   },
   {
-    id: 'paymentStatus',
-    header: 'PaymentStatus',
+    id: 'payment',
+    header: '状态',
     accessorKey: 'paymentStatus',
     enableSorting: false,
     size: 50,
   },
   {
-    id: 'paymentMethod',
-    header: 'Method',
+    id: 'method',
+    header: '方法',
     accessorKey: 'paymentMethod',
   },
   {
     id: 'totalAmount',
-    header: () => <div className='text-right'>Amount</div>,
+    header: () => <div className='text-right'>金额</div>,
     accessorKey: 'totalAmount',
-    cell: ({ row }) => (
+    cell: ({ row }: any) => (
       <div className='text-right'>{row.getValue('totalAmount')}</div>
     ),
   },
 ]
+// react-table不支持id为中文，所以映射一下
+// 列表抬头 显示或者隐藏 {id: '显示文字'}
+const tableHeaderList: any = {
+  id: '编号',
+  payment: '状态',
+  method: '方法',
+  totalAmount: '金额'
+}
 
 const TableList = () => {
-  const [{ pageSize, currentPage }, setPage] = useState({
+  const [params, setParams] = useState({
     pageSize: 10,
     currentPage: 1,
+    search: '',
+    sort: [],
   })
   const tableRef = useRef<any>(null)
-  const { data, run, loading } = useRequest(
-    () => getData({ pageSize, currentPage }),
+  const { data, loading } = useRequest(
+    () => {
+      console.log('fetch data')
+      return getData(params)
+    },
     {
-      refreshDeps: [pageSize, currentPage],
+      refreshDeps: [params],
     }
   )
 
-  useMount(() => {
-    run()
-  })
-
   const getSelected = () => {
-    const list: any = tableRef?.current?.getTableSelect()
+    const list = tableRef?.current?.getTableSelect()
     console.log(list)
   }
 
-  const onChange = params => {
-    console.log(params)
-    const { pageIndex = 0, pageSize = 10 } = params
-    setPage({
+  const onChange = (params: any) => {
+    const { pageIndex = 0, pageSize = 10, sort = [], search = '' } = params
+    console.log({
       pageSize,
       currentPage: pageIndex + 1,
+      sort,
+      search,
+    })
+    setParams({
+      pageSize,
+      currentPage: pageIndex + 1,
+      sort,
+      search,
     })
   }
 
@@ -83,6 +99,7 @@ const TableList = () => {
         ref={tableRef}
         total={data?.total}
         onChange={onChange}
+        tableHeaderList={tableHeaderList}
       />
     </>
   )

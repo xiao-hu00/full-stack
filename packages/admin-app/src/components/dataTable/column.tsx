@@ -36,8 +36,8 @@ export function tableColumn(colArray: ColumnsType[]) {
       )
     }
     if (item.id !== 'select' && item.sort && typeof item.header === 'string') {
-      obj.header = ({ column }) => (
-        <DataTableColumnHeader column={column} title={item.header.toString()} />
+      obj.header = ({ column, table }) => (
+        <DataTableColumnHeader column={column} tableObj={table} title={item.header.toString()} />
       ),
       obj.cell = ({ row }) => <div className='w-[80px]'>{row.getValue('id')}</div>
     }

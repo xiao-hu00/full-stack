@@ -3,7 +3,7 @@ import {
   ArrowUpIcon,
   CaretSortIcon,
 } from '@radix-ui/react-icons'
-import { Column } from '@tanstack/react-table'
+import { Column, Table } from '@tanstack/react-table'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -18,12 +18,14 @@ interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>
   title: string
+  tableObj?: Table<TData>
 }
 
 export function DataTableColumnHeader<TData, TValue>({
   column,
   title,
   className,
+  tableObj
 }: DataTableColumnHeaderProps<TData, TValue>) {
   if (!column.getCanSort()) {
     return <div className={cn(className)}>{title}</div>
@@ -32,10 +34,9 @@ export function DataTableColumnHeader<TData, TValue>({
   const sort = (
     column: DataTableColumnHeaderProps<TData, TValue>['column']
   , sortType: string) => {
-    console.log('requesting', sortType)
     setTimeout(() => {
       if (sortType === 'no') {
-        column.toggleSorting(undefined)
+        tableObj?.resetSorting(true)
       } else if (sortType === 'desc') {
         column.toggleSorting(true)
       } else {
@@ -74,7 +75,7 @@ export function DataTableColumnHeader<TData, TValue>({
             Desc
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => sort(column, 'no')}>
-            no sort
+            Reset
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
