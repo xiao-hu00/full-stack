@@ -22,4 +22,4 @@ pnpm workspace
 
 ### install shadcn-ui component
 
-`npx shadcn-ui@latest add 'component name'`
+`pnpm dlx shadcn-ui@latest add 'component name' `

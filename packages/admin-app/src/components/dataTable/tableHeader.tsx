@@ -4,6 +4,7 @@ import {
   CaretSortIcon,
 } from '@radix-ui/react-icons'
 import { Column, Table } from '@tanstack/react-table'
+import { ListRestart } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -75,6 +76,7 @@ export function DataTableColumnHeader<TData, TValue>({
             Desc
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => sort(column, 'no')}>
+            <ListRestart className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
             Reset
           </DropdownMenuItem>
         </DropdownMenuContent>

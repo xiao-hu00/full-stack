@@ -38,7 +38,6 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
     total = 0,
     onChange,
     tableHeaderList,
-    enableRowSelection
   } = props
   const [rowSelection, setRowSelection] = useState({})
   const [value, setValue] = useState<string>('')
@@ -96,7 +95,6 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
     },
     getRowId,
     manualPagination: true,
-    enableRowSelection: enableRowSelection,
     manualSorting: true,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
@@ -112,7 +110,7 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
   }
   return (
     <>
-      <div className='mt-4 mb-4 flex gap-4'>
+      <div className='mt-4 mb-4 flex gap-4 justify-between'>
         <Input
           className='w-56'
           value={value}

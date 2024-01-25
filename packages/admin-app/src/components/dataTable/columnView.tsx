@@ -1,39 +1,25 @@
 'use client'
 
-import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
-import { MixerHorizontalIcon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
-
 import { Button } from '../ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-} from '../ui/dropdown-menu'
-
+import { Popover, PopoverTrigger, PopoverContent } from '../ui/popover'
+import { Checkbox } from '../ui/checkbox'
+import { Label } from '../ui/label'
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
   tableHeaderList: any
 }
 
-export function ColumnView<TData>({ table, tableHeaderList }: DataTableViewOptionsProps<TData>) {
+export function ColumnView<TData>({
+  table,
+  tableHeaderList,
+}: DataTableViewOptionsProps<TData>) {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant='outline'
-          size='sm'
-          className='ml-auto hidden h-8 lg:flex focus-visible:ring-transparent'
-        >
-          <MixerHorizontalIcon className='mr-2 h-4 w-4' />
-          View
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align='end' className='w-[160px]'>
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant='outline'>设置列</Button>
+      </PopoverTrigger>
+      <PopoverContent className='p-4 w-32' align='end'>
         {table
           .getAllColumns()
           .filter(
@@ -42,17 +28,19 @@ export function ColumnView<TData>({ table, tableHeaderList }: DataTableViewOptio
           )
           .map(column => {
             return (
-              <DropdownMenuCheckboxItem
-                key={column.id}
-                className='capitalize'
-                checked={column.getIsVisible()}
-                onCheckedChange={value => column.toggleVisibility(!!value)}
-              >
-                {tableHeaderList[column.id] || column.id }
-              </DropdownMenuCheckboxItem>
+              <div key={column.id} className='flex justify-center space-x-4 h-6 items-center'>
+                <Checkbox
+                  id={column.id}
+                  checked={column.getIsVisible()}
+                  onCheckedChange={value => column.toggleVisibility(!!value)}
+                />
+                <Label htmlFor={column.id} className=' hover:text-orange-500'>
+                  {tableHeaderList[column.id] || column.id}
+                </Label>
+              </div>
             )
           })}
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </PopoverContent>
+    </Popover>
   )
 }
