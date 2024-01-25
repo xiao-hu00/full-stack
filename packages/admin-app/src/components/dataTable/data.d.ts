@@ -20,5 +20,6 @@ export interface DataTableProps {
   loading?: boolean
   onChange?: (values: table) => void
   total?: number
-  tableHeaderList?: object
+  tableHeaderList?: object // 显示/隐藏列 的中文映射
+  enableRowSelection?: boolean // 是否能选择行数据
 }

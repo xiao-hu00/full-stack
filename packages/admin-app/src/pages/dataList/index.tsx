@@ -100,6 +100,7 @@ const TableList = () => {
         total={data?.total}
         onChange={onChange}
         tableHeaderList={tableHeaderList}
+        enableRowSelection={true}
       />
     </>
   )

@@ -31,7 +31,15 @@ import { ColumnView } from './columnView'
 
 const DataTable = forwardRef((props: DataTableProps, ref) => {
   // todo <选择全部> 由于每一行都设置了id，所以<选择全部>必须知道所有的id，并设置为true -> rowSelection: {id: true, xxx: true}
-  const { data, columns, loading = false, total = 0, onChange, tableHeaderList } = props
+  const {
+    data,
+    columns,
+    loading = false,
+    total = 0,
+    onChange,
+    tableHeaderList,
+    enableRowSelection
+  } = props
   const [rowSelection, setRowSelection] = useState({})
   const [value, setValue] = useState<string>('')
   const [changeValues, setChangeValue] = useState<object>({})
@@ -42,7 +50,7 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
   })
   const debouncedValue = useDebounce(value, { wait: 500 })
   // 根据传入的columns生成table需要的columns
-  const myCol = useMemo(() => {
+  const tableColumns = useMemo(() => {
     return tableColumn(columns)
   }, [columns])
   const pagination = useMemo(
@@ -79,7 +87,7 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
 
   const table = useReactTable({
     data: data || [],
-    columns: myCol,
+    columns: tableColumns,
     pageCount: Math.ceil((total || 0) / pageSize),
     state: {
       sorting,
@@ -88,7 +96,7 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
     },
     getRowId,
     manualPagination: true,
-    enableRowSelection: true,
+    enableRowSelection: enableRowSelection,
     manualSorting: true,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
@@ -110,7 +118,9 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
           value={value}
           onChange={e => onChangeSearch(e)}
         />
-        <ColumnView table={table} tableHeaderList={tableHeaderList} />
+        {tableHeaderList ? (
+          <ColumnView table={table} tableHeaderList={tableHeaderList} />
+        ) : null}
       </div>
       <Spin loading={loading}>
         <Table className='border'>
