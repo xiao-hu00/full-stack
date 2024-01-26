@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react'
 import { getData } from '@/api/test-api'
 import { DataTable } from '@/components'
-// import { useRequest } from 'ahooks'
 import { Button } from '@/components/ui/button'
 import { useQuery, keepPreviousData } from '@tanstack/react-query'
 
@@ -58,18 +57,9 @@ const TableList = () => {
     sort: [],
   })
   const tableRef = useRef<any>(null)
-  // const { data, loading } = useRequest(
-  //   () => {
-  //     console.log('fetch data')
-  //     return getData(params)
-  //   },
-  //   {
-  //     refreshDeps: [params],
-  //   }
-  // )
-  // 查询
+  // 查询 key: 文件夹名称+函数名
   const { isPending, error, data, isFetching } = useQuery({
-    queryKey: ['dataList-getData', params],
+    queryKey: ['data-list-getData', params],
     queryFn: () => getData(params),
     placeholderData: keepPreviousData
   })
