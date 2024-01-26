@@ -5,7 +5,7 @@ import { useMenuStore } from '@/store'
 import './index.css'
 import { Link, useLocation } from 'react-router-dom'
 import { CaretRightIcon } from '@radix-ui/react-icons'
-import { menuList } from '@/router/routerList'
+import { menuList } from '@/router/router-list'
 import { Home, UserCog2, FileText } from 'lucide-react'
 import { cn } from '@/lib/utils'
 

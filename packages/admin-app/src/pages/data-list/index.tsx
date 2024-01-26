@@ -1,8 +1,9 @@
 import { useState, useRef } from 'react'
-import { getData } from '@/api/testApi'
+import { getData } from '@/api/test-api'
 import { DataTable } from '@/components'
-import { useRequest } from 'ahooks'
+// import { useRequest } from 'ahooks'
 import { Button } from '@/components/ui/button'
+import { useQuery, keepPreviousData } from '@tanstack/react-query'
 
 const columns = [
   {
@@ -57,15 +58,21 @@ const TableList = () => {
     sort: [],
   })
   const tableRef = useRef<any>(null)
-  const { data, loading } = useRequest(
-    () => {
-      console.log('fetch data')
-      return getData(params)
-    },
-    {
-      refreshDeps: [params],
-    }
-  )
+  // const { data, loading } = useRequest(
+  //   () => {
+  //     console.log('fetch data')
+  //     return getData(params)
+  //   },
+  //   {
+  //     refreshDeps: [params],
+  //   }
+  // )
+  // 查询
+  const { isPending, error, data, isFetching } = useQuery({
+    queryKey: ['dataList-getData', params],
+    queryFn: () => getData(params),
+    placeholderData: keepPreviousData
+  })
 
   const getSelected = () => {
     const list = tableRef?.current?.getTableSelect()
@@ -74,7 +81,7 @@ const TableList = () => {
 
   const onChange = (params: any) => {
     const { pageIndex = 0, pageSize = 10, sort = [], search = '' } = params
-    console.log({
+    console.log('onChange', {
       pageSize,
       currentPage: pageIndex + 1,
       sort,
@@ -94,7 +101,7 @@ const TableList = () => {
       <Button onClick={getSelected}>console selected</Button>
       <DataTable
         data={data?.data}
-        loading={loading}
+        loading={isFetching}
         columns={columns}
         ref={tableRef}
         total={data?.total}

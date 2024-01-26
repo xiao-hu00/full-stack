@@ -1,6 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { Checkbox } from '@/components/ui/checkbox'
-import { DataTableColumnHeader } from './tableHeader'
+import { TableColumnHeader } from './table-column-header'
 import { ColumnsType } from './data'
 
 export function tableColumn(colArray: ColumnsType[]) {
@@ -37,7 +37,7 @@ export function tableColumn(colArray: ColumnsType[]) {
     }
     if (item.id !== 'select' && item.sort && typeof item.header === 'string') {
       obj.header = ({ column, table }) => (
-        <DataTableColumnHeader column={column} tableObj={table} title={item.header.toString()} />
+        <TableColumnHeader column={column} tableObj={table} title={item.header.toString()} />
       ),
       obj.cell = ({ row }) => <div className='w-[80px]'>{row.getValue('id')}</div>
     }

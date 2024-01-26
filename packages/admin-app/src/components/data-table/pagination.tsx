@@ -17,15 +17,15 @@ import {
 } from '@/components/ui/select'
 import { useDebounce } from 'ahooks'
 
-interface DataTablePaginationProps<TData> {
+interface PaginationProps<TData> {
   table: Table<TData>
   total: number
 }
 
-export function DataTablePagination<TData>({
+export function Pagination<TData>({
   table,
   total,
-}: DataTablePaginationProps<TData>) {
+}: PaginationProps<TData>) {
   const [value, setValue] = useState<string>('1')
   const debouncedValue = useDebounce(value, { wait: 500 })
   useEffect(() => {

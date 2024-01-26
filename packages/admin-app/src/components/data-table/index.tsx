@@ -21,13 +21,13 @@ import {
   SortingState,
   flexRender,
 } from '@tanstack/react-table'
-import { DataTablePagination } from './pagination'
+import { Pagination } from './pagination'
 import { DataTableProps } from './data'
 import { Spin } from '@/components'
 import { tableColumn } from './column'
 import { Input } from '../ui/input'
 import { useDebounce } from 'ahooks'
-import { ColumnView } from './columnView'
+import { ColumnView } from './column-view'
 
 const DataTable = forwardRef((props: DataTableProps, ref) => {
   // todo <选择全部> 由于每一行都设置了id，所以<选择全部>必须知道所有的id，并设置为true -> rowSelection: {id: true, xxx: true}
@@ -169,7 +169,7 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
           </TableBody>
         </Table>
         <div className='mt-4'>
-          <DataTablePagination table={table} total={total} />
+          <Pagination table={table} total={total} />
         </div>
       </Spin>
     </>

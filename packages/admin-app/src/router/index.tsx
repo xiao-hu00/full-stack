@@ -2,7 +2,7 @@ import React from 'react'
 import { createBrowserRouter, useLocation, Navigate } from 'react-router-dom'
 import Layout from '@/pages/layout'
 import Login from '@/pages/login'
-import { routerList } from './routerList'
+import { routerList } from './router-list'
 import { useMount, useUnmount, useInterval } from 'ahooks'
 import { useMenuStore } from '@/store'
 
@@ -17,7 +17,7 @@ function RequireAuth({ children }: { children: JSX.Element }) {
   return children;
 }
 
-function FallBack() {
+const Fallback = () => {
   const updateProgress = useMenuStore(state => state.updateProgress)
   useMount(() => {
     updateProgress(30)
@@ -46,7 +46,7 @@ const router = createBrowserRouter([
           index: item.path === '/home',
           element:
             <RequireAuth>
-              <React.Suspense fallback={<><FallBack /></>}>
+              <React.Suspense fallback={<><Fallback /></>}>
                 <item.component />
               </React.Suspense>
             </RequireAuth>
