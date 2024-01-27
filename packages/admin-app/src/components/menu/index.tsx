@@ -6,15 +6,7 @@ import './index.css'
 import { Link, useLocation } from 'react-router-dom'
 import { CaretRightIcon } from '@radix-ui/react-icons'
 import { menuList } from '@/router/router-list'
-import { Home, UserCog2, FileText } from 'lucide-react'
 import { cn } from '@/lib/utils'
-
-const size = 18
-const menuIcons: any = {
-  home: <Home size={size} />,
-  user: <UserCog2 size={size} />,
-  dataTable: <FileText size={size} />,
-}
 
 const MyMenu = () => {
   const collapse = useMenuStore(state => state.collapse)
@@ -75,7 +67,7 @@ const MyMenu = () => {
                 title={
                   <>
                     <span className={cn('transition-all',{'pl-4': collapse, 'mr-4': !collapse })}>
-                      {m.icon ? menuIcons[m.icon] : null}
+                      {m.icon}
                     </span>
                     <div className={cn('flex-1 h-6 overflow-hidden', { hidden: collapse })}>
                       {m.label}
@@ -96,7 +88,7 @@ const MyMenu = () => {
             <MenuItem key={m.key}>
               <Link to={m.path || '/'}>
                 <span className={cn('mr-4 transition-all', {'pl-4': collapse})}>
-                  {m.icon ? menuIcons[m.icon] : null}
+                  {m.icon}
                 </span>
                 <span className={cn({ hidden: collapse })}>{m.label}</span>
               </Link>

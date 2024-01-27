@@ -38,6 +38,7 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
     total = 0,
     onChange,
     tableHeaderList,
+    rowSelect = false,
   } = props
   const [rowSelection, setRowSelection] = useState({})
   const [value, setValue] = useState<string>('')
@@ -50,7 +51,7 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
   const debouncedValue = useDebounce(value, { wait: 500 })
   // 根据传入的columns生成table需要的columns
   const tableColumns = useMemo(() => {
-    return tableColumn(columns)
+    return tableColumn(columns, rowSelect)
   }, [columns])
   const pagination = useMemo(
     () => ({

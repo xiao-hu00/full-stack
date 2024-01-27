@@ -3,7 +3,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { TableColumnHeader } from './table-column-header'
 import { ColumnsType } from './data'
 
-export function tableColumn(colArray: ColumnsType[]) {
+export function tableColumn(colArray: ColumnsType[], rowSelect?: boolean) {
   const columns  = colArray.map((item) => {
     const obj: ColumnDef<any> = {
       id: item.id,
@@ -13,29 +13,7 @@ export function tableColumn(colArray: ColumnsType[]) {
       enableSorting: item.enableSorting,
       enableHiding: item.enableHiding,
     }
-    // checkbox 选择
-    if (item.id === 'select') {
-      obj.header = ({ table }) => (
-        <Checkbox
-          checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && 'indeterminate')
-          }
-          onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
-          aria-label='Select all'
-          className='translate-y-[2px]'
-        />
-      )
-      obj.cell = ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={value => row.toggleSelected(!!value)}
-          aria-label='Select row'
-          className='translate-y-[2px]'
-        />
-      )
-    }
-    if (item.id !== 'select' && item.sort && typeof item.header === 'string') {
+    if (item.sort && typeof item.header === 'string') {
       obj.header = ({ column, table }) => (
         <TableColumnHeader column={column} tableObj={table} title={item.header.toString()} />
       ),
@@ -46,5 +24,36 @@ export function tableColumn(colArray: ColumnsType[]) {
     }
     return obj
   })
+  const selectColumn: ColumnDef<any> = {
+    id: '__select',
+    header: '__select',
+    accessorKey: '__select',
+    size: 15,
+    enableSorting: false,
+    enableHiding: false,
+  }
+  // checkbox 选择
+  if (rowSelect) {
+    selectColumn.header = ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && 'indeterminate')
+        }
+        onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+        aria-label='Select all'
+        className='translate-y-[2px]'
+      />
+    )
+    selectColumn.cell = ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={value => row.toggleSelected(!!value)}
+        aria-label='Select row'
+        className='translate-y-[2px]'
+      />
+    )
+    columns.unshift(selectColumn)
+  }
   return columns
 }

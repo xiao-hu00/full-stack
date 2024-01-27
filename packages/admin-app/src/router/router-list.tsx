@@ -1,4 +1,5 @@
 import React from "react"
+import { Home, UserCog2, FileText } from 'lucide-react'
 
 interface ItemType {
   key: string
@@ -12,7 +13,7 @@ interface PropType {
   label: string
   component?: React.LazyExoticComponent<React.ComponentType<object>>
   path?: string
-  icon?: string
+  icon?: JSX.Element
   disable?: boolean
   children?: ItemType[]
 }
@@ -23,8 +24,10 @@ const list = {
   home: React.lazy(() => import('@/pages/home')),
   userSetting: React.lazy(() => import('@/pages/user/setting')),
   userRole: React.lazy(() => import('@/pages/user/role')),
-  dataTable: React.lazy(() => import('@/pages/data-list')),
+  dataList: React.lazy(() => import('@/pages/data-list')),
 }
+
+const iconSize = 18
 
 const menuList: MenuPropType = [
   {
@@ -32,33 +35,33 @@ const menuList: MenuPropType = [
     label: 'home',
     path: '/home',
     component: list['home'],
-    icon: 'home'
+    icon: <Home size={iconSize} />
   },
   {
     key: 'user',
-    label: '用户',
-    icon: 'user',
+    label: '用户设置',
+    icon: <UserCog2 size={iconSize} />,
     children: [
       {
         key: 'setting',
-        label: 'setting',
+        label: '账户设置',
         path: '/user/setting',
         component: list['userSetting']
       },
       {
         key: 'role',
-        label: 'role',
+        label: '角色设置',
         path: '/user/role',
         component: list['userRole']
       }
     ]
   },
   {
-    key: 'dataTable',
-    label: '数据',
-    path: '/dataTable',
-    icon: 'dataTable',
-    component: list['dataTable']
+    key: 'dataList',
+    label: '数据列表',
+    path: '/dataList',
+    icon: <FileText size={iconSize} />,
+    component: list['dataList']
   },
 ]
 // 扁平化

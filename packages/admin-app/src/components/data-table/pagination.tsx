@@ -26,7 +26,7 @@ export function Pagination<TData>({
   table,
   total,
 }: PaginationProps<TData>) {
-  const [value, setValue] = useState<string>('1')
+  const [value, setValue] = useState<string>('')
   const debouncedValue = useDebounce(value, { wait: 500 })
   useEffect(() => {
     if (!debouncedValue) return

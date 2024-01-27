@@ -1,18 +1,10 @@
 import { useState, useRef } from 'react'
 import { getData } from '@/api/test-api'
-import { DataTable } from '@/components'
+import { DataTable, Breadcrumb } from '@/components'
 import { Button } from '@/components/ui/button'
 import { useQuery, keepPreviousData } from '@tanstack/react-query'
 
 const columns = [
-  {
-    id: 'select',
-    header: 'select',
-    accessorKey: 'select',
-    size: 15,
-    enableSorting: false,
-    enableHiding: false,
-  },
   {
     id: 'id',
     accessorKey: 'id',
@@ -46,7 +38,7 @@ const tableHeaderList: any = {
   id: '编号',
   payment: '状态',
   method: '方法',
-  totalAmount: '金额'
+  totalAmount: '金额',
 }
 
 const TableList = () => {
@@ -58,10 +50,10 @@ const TableList = () => {
   })
   const tableRef = useRef<any>(null)
   // 查询 key: 文件夹名称+函数名
-  const { isPending, error, data, isFetching } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ['data-list-getData', params],
     queryFn: () => getData(params),
-    placeholderData: keepPreviousData
+    placeholderData: keepPreviousData,
   })
 
   const getSelected = () => {
@@ -87,6 +79,12 @@ const TableList = () => {
 
   return (
     <>
+      <Breadcrumb
+        items={[
+          { key: '1', label: '首页' },
+          { key: '2', label: '数据列表' },
+        ]}
+      />
       <div className='mb-4'>数据表格</div>
       <Button onClick={getSelected}>console selected</Button>
       <DataTable
@@ -97,6 +95,7 @@ const TableList = () => {
         total={data?.total}
         onChange={onChange}
         tableHeaderList={tableHeaderList}
+        rowSelect={true}
       />
     </>
   )

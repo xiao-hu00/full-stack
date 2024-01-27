@@ -1,13 +1,13 @@
-import { Spin } from "@/components"
+import { Breadcrumb } from "@/components"
 
-function App() {
+const Home = () => {
 
   return (
     <div>
-      <Spin loading={true} />
+      <Breadcrumb items={[{ key: '1', label: '首页' }]} />
       <span>home</span>
     </div>
   )
 }
 
-export default App
+export default Home
