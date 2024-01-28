@@ -27,6 +27,7 @@ interface dataType {
 }
 export function getData({ currentPage, pageSize }: paramsType) {
   const data = chunk(tasks, pageSize)
+  console.log('fetch')
   return new Promise<dataType>((resolve) => {
     setTimeout(() => {
       resolve({

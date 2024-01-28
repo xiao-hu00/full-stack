@@ -10,9 +10,9 @@ const Header = () => {
     navigate('/login')
   }
   return (
-    <div className="w-20 float-right flex items-center justify-between">
-      <LogOutIcon className="cursor-pointer" onClick={logout} />
+    <div className="w-12 h-6 float-right flex items-center justify-between">
       <ModeToggle />
+      <LogOutIcon className="cursor-pointer" onClick={logout} size={16} />
     </div>
   )
 }

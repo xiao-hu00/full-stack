@@ -27,12 +27,12 @@ const list = {
   dataList: React.lazy(() => import('@/pages/data-list')),
 }
 
-const iconSize = 18
+const iconSize = 16
 
 const menuList: MenuPropType = [
   {
     key: 'home',
-    label: 'home',
+    label: '首页',
     path: '/home',
     component: list['home'],
     icon: <Home size={iconSize} />

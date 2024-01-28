@@ -3,6 +3,7 @@
   overflow: hidden;
   height: auto;
   background-color: #f9f9f9;
+  font-size: 14px;
 }
 .rc-menu-hidden {
   height: 0;
