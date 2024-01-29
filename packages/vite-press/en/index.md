@@ -3,23 +3,23 @@
 layout: home
 
 hero:
-  name: "Vite Press 项目"
-  text: "一个 VitePress 站点"
+  name: "Vite Press"
+  text: "A VitePress Site"
   tagline: My great project tagline
   actions:
     - theme: brand
-      text: 示例
-      link: /examples/markdown-examples
+      text: Examples
+      link: /en/examples/markdown-examples
     - theme: alt
-      text: 测试
-      link: /test-file/test-file
+      text: Test
+      link: /en/test-file/test-file
 
 features:
-  - title: 功能 A
+  - title: Feature A
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: 功能 B
+  - title: Feature B
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: 功能 C
+  - title: Feature C
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
 
