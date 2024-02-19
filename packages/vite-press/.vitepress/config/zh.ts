@@ -7,19 +7,19 @@ export const zh = defineConfig({
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
-      { text: '示例', link: '/examples/markdown-examples', activeMatch: '/examples' },
-      { text: '测试', link: '/test-file/test-file', activeMatch: '/test-file' }
+      { text: '指南', link: '/guide/0-1.md', activeMatch: '/guide' },
+      { text: '项目', link: '/test-file/test-file', activeMatch: '/test-file' }
     ],
 
     sidebar: {
-      '/examples': {
-        base: '/examples/',
+      '/guide': {
+        base: '/guide/',
         items: [
           {
-            text: '示例',
+            text: '指南',
             items: [
-              { text: 'Markdown 示例', link: 'markdown-examples' },
-              { text: 'Runtime API 示例', link: 'api-examples' },
+              { text: '0-1开发项目', link: '0-1' },
+              { text: 'git相关', link: 'git' },
             ]
           },
         ]
