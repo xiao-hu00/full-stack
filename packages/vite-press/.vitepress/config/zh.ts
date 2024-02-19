@@ -54,7 +54,7 @@ export const zh = defineConfig({
     },
 
     outline: {
-      label: '页面导航'
+      label: '本页目录'
     },
 
     lastUpdated: {
