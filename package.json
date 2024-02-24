@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "fdev": "pnpm --filter=./packages/three-study run dev",
-    "bdev": "pnpm --filter=./packages/nest-study run dev",
+    "fdev": "pnpm --filter=./packages/three-app run dev",
+    "bdev": "pnpm --filter=./packages/nest-app run dev",
     "adev": "pnpm --filter=./packages/admin-app run dev"
   }
 }
