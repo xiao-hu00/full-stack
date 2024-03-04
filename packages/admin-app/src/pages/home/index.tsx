@@ -7,38 +7,51 @@ import {
   useSensor,
   useSensors,
   DragOverlay,
+  MeasuringStrategy,
+} from '@dnd-kit/core'
+import type {
+  DragStartEvent,
+  DragEndEvent,
+  MeasuringConfiguration,
 } from '@dnd-kit/core'
 import {
   arrayMove,
   SortableContext,
-  verticalListSortingStrategy,
+  rectSortingStrategy,
 } from '@dnd-kit/sortable'
-import SortItem from './sortItem'
+import SortableItem from './SortableItem'
 
 const Home = () => {
-  const [items, setItems] = useState([1, 2, 3, 4, 5])
+  const [items, setItems] = useState<any>([1, 2, 3, 4, 5])
   const [activeId, setActiveId] = useState<any>(null)
+  const measuring: MeasuringConfiguration = {
+    droppable: {
+      strategy: MeasuringStrategy.Always,
+    },
+  }
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: { distance: 5 },
-    }),
+    })
   )
-  const onDragEnd = (event: any) => {
-    const { over } = event
+  const onDragEnd = ({ over }: DragEndEvent) => {
     console.log('over', over)
     const activeIndex = activeId ? items.indexOf(activeId) : -1
-    const overIndex = items.indexOf(over?.id);
-    if (activeIndex !== overIndex) {
-      setItems(m => {
-        return arrayMove(m, activeIndex, overIndex)
-      })
+    if (over) {
+      const overIndex = items.indexOf(over.id)
+
+      if (activeIndex !== overIndex) {
+        const newIndex = overIndex
+
+        setItems((m: any) => arrayMove(m, activeIndex, newIndex))
+      }
     }
     if (!over?.id) {
       setActiveId(null)
     }
   }
   const renderContainerDragOverlay = (activeId: any) => {
-    return <SortItem key={activeId} data={activeId} id={activeId} />
+    return <SortableItem key={activeId} id={activeId} />
   }
   return (
     <div>
@@ -48,11 +61,12 @@ const Home = () => {
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragEnd={onDragEnd}
-        onDragStart={({ active }: any) => {
+        measuring={measuring}
+        onDragStart={({ active }: DragStartEvent) => {
           if (!active) {
-            return;
+            return
           }
-          setActiveId(active.id);
+          setActiveId(active.id)
         }}
       >
         <div
@@ -62,15 +76,17 @@ const Home = () => {
             height: 600,
           }}
         >
-          <SortableContext items={items} strategy={verticalListSortingStrategy}>
-            {items.map(m => (
-              <SortItem key={m} data={m} id={m} />
-            ))}
+          <SortableContext items={items} strategy={rectSortingStrategy}>
+            <div className='grid grid-cols-2'>
+              {items.map((m: any) => (
+                <SortableItem key={m} id={m} />
+              ))}
+            </div>
           </SortableContext>
         </div>
-        <DragOverlay dropAnimation={null}>
+        {/* <DragOverlay>
           {activeId ? renderContainerDragOverlay(activeId) : null}
-        </DragOverlay>
+        </DragOverlay> */}
       </DndContext>
     </div>
   )

@@ -1,7 +1,8 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-const SortItem = (props: any) => {
-  const { id, data } = props
+
+const SortableItem = (props: any) => {
+  const { id } = props
   const {
     attributes,
     listeners,
@@ -9,6 +10,7 @@ const SortItem = (props: any) => {
     transition,
     isDragging,
     isSorting,
+    setNodeRef,
   } = useSortable({ id })
   const myStyle =
     isDragging || isSorting
@@ -17,14 +19,18 @@ const SortItem = (props: any) => {
           transition,
         }
       : undefined
-
   return (
-    <div style={{ cursor: 'move', ...myStyle }} {...listeners} {...attributes}>
-      <div style={{ border: '1px solid #DDD', marginBottom: 25 }}>
-        drag: {data}
+    <div
+      ref={setNodeRef}
+      style={{ cursor: 'move', ...myStyle, gridColumn: id === 3 ? '1 / span 2' : '' }}
+      {...listeners}
+      {...attributes}
+    >
+      <div style={{ border: '1px solid #DDD', marginBottom: 25, height: id === 3 ? 90 : 25 }}>
+        drag: {id}
       </div>
     </div>
   )
 }
 
-export default SortItem
+export default SortableItem

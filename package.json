@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "fdev": "pnpm --filter=./packages/three-app run dev",
-    "bdev": "pnpm --filter=./packages/nest-app run dev",
-    "adev": "pnpm --filter=./packages/admin-app run dev"
+    "dev:three": "pnpm --filter=./packages/three-app run dev",
+    "dev:nest": "pnpm --filter=./packages/nest-app run dev",
+    "dev:next": "pnpm --filter=./packages/next-app run dev",
+    "dev:admin": "pnpm --filter=./packages/admin-app run dev"
   }
 }
