@@ -19,14 +19,17 @@ const SortableItem = (props: any) => {
           transition,
         }
       : undefined
+  const style = {
+    opacity: isDragging ? 0.5 : 1
+  }
   return (
     <div
       ref={setNodeRef}
-      style={{ cursor: 'move', ...myStyle, gridColumn: id === 3 ? '1 / span 2' : '' }}
+      style={{ cursor: 'move', ...myStyle }}
       {...listeners}
       {...attributes}
     >
-      <div style={{ border: '1px solid #DDD', marginBottom: 25, height: id === 3 ? 90 : 25 }}>
+      <div className='bg-white border border-gray-300 mb-4' style={{ ...style, height: id === 3 ? 90 : 25 }}>
         drag: {id}
       </div>
     </div>

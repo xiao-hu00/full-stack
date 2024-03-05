@@ -17,7 +17,7 @@ import type {
 import {
   arrayMove,
   SortableContext,
-  rectSortingStrategy,
+  verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import SortableItem from './SortableItem'
 
@@ -35,7 +35,6 @@ const Home = () => {
     })
   )
   const onDragEnd = ({ over }: DragEndEvent) => {
-    console.log('over', over)
     const activeIndex = activeId ? items.indexOf(activeId) : -1
     if (over) {
       const overIndex = items.indexOf(over.id)
@@ -56,7 +55,7 @@ const Home = () => {
   return (
     <div>
       <Breadcrumb items={[{ key: '1', label: '首页' }]} />
-      <span>home</span>
+      <span>列表拖拽排序</span>
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -69,24 +68,18 @@ const Home = () => {
           setActiveId(active.id)
         }}
       >
-        <div
-          style={{
-            margin: '0 auto',
-            width: 500,
-            height: 600,
-          }}
-        >
-          <SortableContext items={items} strategy={rectSortingStrategy}>
-            <div className='grid grid-cols-2'>
+        <div className='w-60'>
+          <SortableContext items={items} strategy={verticalListSortingStrategy}>
+            <div>
               {items.map((m: any) => (
                 <SortableItem key={m} id={m} />
               ))}
             </div>
           </SortableContext>
         </div>
-        {/* <DragOverlay>
+        <DragOverlay>
           {activeId ? renderContainerDragOverlay(activeId) : null}
-        </DragOverlay> */}
+        </DragOverlay>
       </DndContext>
     </div>
   )
