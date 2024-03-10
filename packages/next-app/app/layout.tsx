@@ -29,6 +29,11 @@ export default function RootLayout({
               doc
             </Link>
           </li>
+          <li>
+            <Link href='/mdx' className='hover:text-orange-600'>
+              markdown
+            </Link>
+          </li>
         </ul>
         <div>{children}</div>
       </body>
