@@ -18,6 +18,7 @@
     "@types/mdx": "^2.0.11",
     "dayjs": "^1.11.10",
     "next": "14.1.0",
+    "nextjs-toploader": "^1.6.6",
     "react": "^18",
     "react-dom": "^18"
   },
