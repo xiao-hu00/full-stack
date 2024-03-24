@@ -24,7 +24,7 @@ const LoadingSpinner = ({
     <div className='relative'>
       <div
         className={cn(
-          'absolute w-[100%] h-[100%] bg-slate-100 z-10 bg-opacity-70 flex justify-center pt-16',
+          'absolute w-[100%] h-[100%] bg-white z-10 bg-opacity-70 flex justify-center pt-16',
           { hidden: !loading }
         )}
       >

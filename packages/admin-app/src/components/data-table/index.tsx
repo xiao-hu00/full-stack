@@ -84,7 +84,9 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
   // }
   // 每一行都设置一个唯一id，在 select row 之后，翻页也不会影响到已选中的 row
   const getRowId = (originalRow: any) => originalRow.id.toString()
-
+  const [columnOrder, setColumnOrder] = useState<any>(() =>
+    tableColumns.map(c => c.id!)
+  )
   const table = useReactTable({
     data: data || [],
     columns: tableColumns,
@@ -93,6 +95,7 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
       sorting,
       rowSelection,
       pagination,
+      columnOrder,
     },
     getRowId,
     manualPagination: true,
@@ -102,6 +105,7 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
     onRowSelectionChange: setRowSelection,
     getSortedRowModel: getSortedRowModel(),
     onPaginationChange: setPagination,
+    onColumnOrderChange: setColumnOrder,
   })
   // 搜索
   const onChangeSearch = (e: any) => {
@@ -118,7 +122,7 @@ const DataTable = forwardRef((props: DataTableProps, ref) => {
           onChange={e => onChangeSearch(e)}
         />
         {tableHeaderList ? (
-          <ColumnView table={table} tableHeaderList={tableHeaderList} />
+          <ColumnView columnOrder={columnOrder} setColumnOrder={setColumnOrder} table={table} tableHeaderList={tableHeaderList} />
         ) : null}
       </div>
       <Spin loading={loading}>

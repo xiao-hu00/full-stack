@@ -1,45 +1,108 @@
 'use client'
-
+import { useMemo, useState } from 'react'
 import { Table } from '@tanstack/react-table'
 import { Button } from '../ui/button'
 import { Popover, PopoverTrigger, PopoverContent } from '../ui/popover'
-import { Checkbox } from '../ui/checkbox'
-import { Label } from '../ui/label'
+
+import {
+  closestCenter,
+  DndContext,
+  MouseSensor,
+  useSensor,
+  useSensors,
+  // DragOverlay,
+  MeasuringStrategy,
+} from '@dnd-kit/core'
+import type {
+  DragStartEvent,
+  DragEndEvent,
+  MeasuringConfiguration,
+} from '@dnd-kit/core'
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable'
+import SortableItem from './sortable-item'
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
   tableHeaderList: any
+  setColumnOrder: any
+  columnOrder: any
 }
 
 export function ColumnView<TData>({
   table,
   tableHeaderList,
+  columnOrder,
+  setColumnOrder
 }: DataTableViewOptionsProps<TData>) {
+  const [activeId, setActiveId] = useState<any>(null)
+  const onDragEnd = ({ over }: DragEndEvent) => {
+    const activeIndex = activeId ? columnOrder.indexOf(activeId) : -1
+    if (over) {
+      const overIndex = columnOrder.indexOf(over.id)
+
+      if (activeIndex !== overIndex) {
+        const newIndex = overIndex
+        setColumnOrder((m: any) => arrayMove(m, activeIndex, newIndex))
+        console.log(table.getAllColumns())
+        console.log(arrayMove(columnOrder, activeIndex, newIndex))
+      }
+    }
+    if (!over?.id) {
+      setActiveId(null)
+    }
+  }
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: { distance: 5 },
+    })
+  )
+  const measuring: MeasuringConfiguration = {
+    droppable: {
+      strategy: MeasuringStrategy.Always,
+    },
+  }
+  const newColumn = useMemo(() => {
+    const originColumn = table
+      .getAllColumns()
+      .filter(
+        column =>
+          typeof column.accessorFn !== 'undefined' &&
+          column.getCanHide()
+      )
+    const list = columnOrder.map((item: any) => {
+      const obj = originColumn.find(m => m.id === item)
+      if (obj) {
+        return obj
+      }
+    }).filter((m: any) => !!m?.id)
+    console.log('list', list)
+    return list
+  }, [columnOrder])
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button variant='outline'>设置列</Button>
       </PopoverTrigger>
       <PopoverContent className='p-4 w-32' align='end'>
-        {table
-          .getAllColumns()
-          .filter(
-            column =>
-              typeof column.accessorFn !== 'undefined' && column.getCanHide()
-          )
-          .map(column => {
-            return (
-              <div key={column.id} className='flex justify-center space-x-4 h-6 items-center'>
-                <Checkbox
-                  id={column.id}
-                  checked={column.getIsVisible()}
-                  onCheckedChange={value => column.toggleVisibility(!!value)}
-                />
-                <Label htmlFor={column.id} className=' hover:text-orange-500'>
-                  {tableHeaderList[column.id] || column.id}
-                </Label>
-              </div>
-            )
-          })}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={onDragEnd}
+          measuring={measuring}
+          onDragStart={({ active }: DragStartEvent) => {
+            if (!active) {
+              return
+            }
+            setActiveId(active.id)
+          }}
+        >
+          <SortableContext items={columnOrder} strategy={verticalListSortingStrategy}>
+            {newColumn.map((column: any) => <SortableItem id={column?.id} key={column?.id} tableHeaderList={tableHeaderList} column={column} />)}
+          </SortableContext>
+        </DndContext>
       </PopoverContent>
     </Popover>
   )
