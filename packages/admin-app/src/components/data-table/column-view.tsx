@@ -10,7 +10,6 @@ import {
   MouseSensor,
   useSensor,
   useSensors,
-  // DragOverlay,
   MeasuringStrategy,
 } from '@dnd-kit/core'
 import type {
@@ -23,30 +22,29 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
-import SortableItem from './sortable-item'
+import { SortableItem } from './sortable-item'
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
   tableHeaderList: any
-  setColumnOrder: any
-  columnOrder: any
+  setColumnOrder: (state: any) => void
+  columnOrder: string[]
 }
 
 export function ColumnView<TData>({
   table,
   tableHeaderList,
   columnOrder,
-  setColumnOrder
+  setColumnOrder,
 }: DataTableViewOptionsProps<TData>) {
   const [activeId, setActiveId] = useState<any>(null)
   const onDragEnd = ({ over }: DragEndEvent) => {
     const activeIndex = activeId ? columnOrder.indexOf(activeId) : -1
     if (over) {
-      const overIndex = columnOrder.indexOf(over.id)
+      const overIndex = columnOrder.indexOf(over.id + '')
 
       if (activeIndex !== overIndex) {
         const newIndex = overIndex
-        setColumnOrder((m: any) => arrayMove(m, activeIndex, newIndex))
-        console.log(table.getAllColumns())
+        setColumnOrder((m: string[]) => arrayMove(m, activeIndex, newIndex))
         console.log(arrayMove(columnOrder, activeIndex, newIndex))
       }
     }
@@ -69,15 +67,16 @@ export function ColumnView<TData>({
       .getAllColumns()
       .filter(
         column =>
-          typeof column.accessorFn !== 'undefined' &&
-          column.getCanHide()
+          typeof column.accessorFn !== 'undefined' && column.getCanHide()
       )
-    const list = columnOrder.map((item: any) => {
-      const obj = originColumn.find(m => m.id === item)
-      if (obj) {
-        return obj
-      }
-    }).filter((m: any) => !!m?.id)
+    const list = columnOrder
+      .map(item => {
+        const obj = originColumn.find(m => m.id === item)
+        if (obj) {
+          return obj
+        }
+      })
+      .filter(m => !!m?.id)
     console.log('list', list)
     return list
   }, [columnOrder])
@@ -99,8 +98,18 @@ export function ColumnView<TData>({
             setActiveId(active.id)
           }}
         >
-          <SortableContext items={columnOrder} strategy={verticalListSortingStrategy}>
-            {newColumn.map((column: any) => <SortableItem id={column?.id} key={column?.id} tableHeaderList={tableHeaderList} column={column} />)}
+          <SortableContext
+            items={columnOrder}
+            strategy={verticalListSortingStrategy}
+          >
+            {newColumn.map(column => (
+              <SortableItem
+                id={column?.id}
+                key={column?.id}
+                tableHeaderList={tableHeaderList}
+                column={column}
+              />
+            ))}
           </SortableContext>
         </DndContext>
       </PopoverContent>

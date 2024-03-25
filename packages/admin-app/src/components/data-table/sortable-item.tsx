@@ -2,9 +2,16 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Checkbox } from '../ui/checkbox'
 import { Label } from '../ui/label'
+import { Column } from '@tanstack/react-table'
 
-const SortableItem = (props: any) => {
-  const { id, column, tableHeaderList } = props
+interface SortableItemProps<TData> {
+  tableHeaderList?: any
+  id?: string
+  column?: Column<TData, unknown>
+}
+
+export function SortableItem<TData>(props: SortableItemProps<TData>) {
+  const { id = '-1', column, tableHeaderList } = props
   const {
     attributes,
     listeners,
@@ -27,26 +34,20 @@ const SortableItem = (props: any) => {
   return (
     <div
       ref={setNodeRef}
-      style={{ cursor: 'move', ...myStyle }}
+      style={{ cursor: 'move', ...myStyle, ...style }}
       {...listeners}
       {...attributes}
     >
-      <div
-        key={column.id}
-        className='flex justify-center space-x-4 h-6 items-center'
-      >
+      <div key={id} className='flex justify-center space-x-4 h-6 items-center'>
         <Checkbox
-          id={column.id}
-          checked={column.getIsVisible()}
-          onCheckedChange={(value: any) => column.toggleVisibility(!!value)}
+          id={id}
+          checked={column?.getIsVisible()}
+          onCheckedChange={(value) => column?.toggleVisibility(!!value)}
         />
-        <Label htmlFor={column.id} className=' hover:text-orange-500'>
-          {tableHeaderList[column.id] || column.id}
+        <Label htmlFor={id} className=' hover:text-orange-500'>
+          {tableHeaderList[id] || id}
         </Label>
-        
       </div>
     </div>
   )
 }
-
-export default SortableItem
