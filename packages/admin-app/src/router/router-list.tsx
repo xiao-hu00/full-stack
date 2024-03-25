@@ -1,5 +1,5 @@
-import React from "react"
-import { Home, UserCog2, FileText } from 'lucide-react'
+import React from 'react'
+import { Home, UserCog2, FileText, Component } from 'lucide-react'
 
 interface ItemType {
   key: string
@@ -25,6 +25,9 @@ const list = {
   userSetting: React.lazy(() => import('@/pages/user/setting')),
   userRole: React.lazy(() => import('@/pages/user/role')),
   dataList: React.lazy(() => import('@/pages/data-list')),
+  icons: React.lazy(() => import('@/pages/widget/icons')),
+  form: React.lazy(() => import('@/pages/widget/form')),
+  table: React.lazy(() => import('@/pages/widget/table')),
 }
 
 const iconSize = 16
@@ -35,39 +38,64 @@ const menuList: MenuPropType = [
     label: '首页',
     path: '/home',
     component: list['home'],
-    icon: <Home size={iconSize} />
+    icon: <Home size={iconSize} />,
   },
   {
     key: 'user',
-    label: '用户设置',
+    label: '配置',
     icon: <UserCog2 size={iconSize} />,
     children: [
       {
         key: 'setting',
         label: '账户设置',
         path: '/user/setting',
-        component: list['userSetting']
+        component: list['userSetting'],
       },
       {
         key: 'role',
         label: '角色设置',
         path: '/user/role',
-        component: list['userRole']
-      }
-    ]
+        component: list['userRole'],
+      },
+    ],
   },
   {
     key: 'dataList',
     label: '数据列表',
     path: '/dataList',
     icon: <FileText size={iconSize} />,
-    component: list['dataList']
+    component: list['dataList'],
+  },
+  {
+    key: 'widget',
+    label: '组件',
+    icon: <Component size={iconSize} />,
+    children: [
+      {
+        key: 'icons',
+        label: '图标',
+        path: '/widget/icons',
+        component: list['icons'],
+      },
+      {
+        key: 'table',
+        label: '数据表格',
+        path: '/widget/table',
+        component: list['table'],
+      },
+      {
+        key: 'form',
+        label: '表单',
+        path: '/widget/form',
+        component: list['form'],
+      },
+    ],
   },
 ]
 // 扁平化
 const routerList: MenuPropType = []
 const generateRouter = (arr: MenuPropType) => {
-  arr.forEach((m) => {
+  arr.forEach(m => {
     if (m.component) {
       routerList.push(m)
     }
