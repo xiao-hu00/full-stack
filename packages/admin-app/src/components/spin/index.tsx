@@ -1,13 +1,14 @@
 import { cn } from '@/lib/utils'
 import React from 'react'
 import './index.css'
+import { LoadingSpinner } from './loading'
 export interface ISVGProps extends React.SVGProps<SVGSVGElement> {
   size?: number
   className?: string
   loading: boolean
 }
 
-const LoadingSpinner = ({
+const Spinner = ({
   size = 30,
   loading,
   ...props
@@ -18,21 +19,21 @@ const LoadingSpinner = ({
     [children]
   )
   if (!isNestedPattern) {
-    return <div className='loader' style={{ width: size, height: size }}></div>
+    return <LoadingSpinner size={size} {...props} />
   }
   return (
     <div className='relative'>
       <div
         className={cn(
-          'absolute w-[100%] h-[100%] bg-white z-10 bg-opacity-70 flex justify-center pt-16',
+          'absolute w-[100%] h-[100%] bg-white/70 dark:bg-black/70 z-10 flex justify-center pt-16',
           { hidden: !loading }
         )}
       >
-        <div className='loader' style={{ width: size, height: size }}></div>
+        <LoadingSpinner size={size} {...props} />
       </div>
       <div>{children}</div>
     </div>
   )
 }
 
-export default LoadingSpinner
+export default Spinner
