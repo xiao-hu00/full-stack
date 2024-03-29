@@ -21,13 +21,14 @@ const Layout = () => {
     updateCollapse(!collapse)
   }
   useEffect(() => {
-    document.body.classList.forEach((className) => {
+    document.body.classList.forEach(className => {
       if (className.match(/^theme.*/)) {
         document.body.classList.remove(className)
       }
     })
     if (myConfig) {
-      return document.body.classList.add(`theme-${myConfig.theme}`)
+      document.body.classList.add(`theme-${myConfig.theme}`)
+      document.body.style.setProperty('--radius', `${myConfig.radius}rem`)
     }
   }, [myConfig])
   useEffect(() => {
@@ -37,12 +38,9 @@ const Layout = () => {
     }
   }, [])
   return (
-    <div
-      className='flex'
-      style={{ '--radius': `${myConfig.radius}rem` } as React.CSSProperties}
-    >
+    <div className='flex'>
       {/* 顶部进度条 */}
-      <LoadingBar progress={progress} color='#38b9f7' />
+      <LoadingBar progress={progress} color={`hsl(var(--primary))`} />
       <div
         className={cn(
           'border-r-gray-200 transition-all border-r box-border dark:border-r-gray-800',
