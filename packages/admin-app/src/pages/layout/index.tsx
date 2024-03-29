@@ -1,7 +1,11 @@
 import { useEffect } from 'react'
 import Header from './header'
-import { DoubleArrowLeftIcon, DoubleArrowRightIcon } from '@radix-ui/react-icons'
+import {
+  DoubleArrowLeftIcon,
+  DoubleArrowRightIcon,
+} from '@radix-ui/react-icons'
 import { useMenuStore } from '@/store'
+import { useThemeStore } from '@/store/theme-store'
 import { cn } from '@/lib/utils'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { Menu } from '@/components'
@@ -11,10 +15,21 @@ const Layout = () => {
   const collapse = useMenuStore(state => state.collapse)
   const progress = useMenuStore(state => state.progress)
   const updateCollapse = useMenuStore(state => state.updateCollapse)
+  const myConfig = useThemeStore(state => state.config)
   const nav = useNavigate()
   const changeMenu = () => {
     updateCollapse(!collapse)
   }
+  useEffect(() => {
+    document.body.classList.forEach((className) => {
+      if (className.match(/^theme.*/)) {
+        document.body.classList.remove(className)
+      }
+    })
+    if (myConfig) {
+      return document.body.classList.add(`theme-${myConfig.theme}`)
+    }
+  }, [myConfig])
   useEffect(() => {
     const path = localStorage.getItem('pathname')
     if (path) {
@@ -22,7 +37,10 @@ const Layout = () => {
     }
   }, [])
   return (
-    <div className='flex'>
+    <div
+      className='flex'
+      style={{ '--radius': `${myConfig.radius}rem` } as React.CSSProperties}
+    >
       {/* 顶部进度条 */}
       <LoadingBar progress={progress} color='#38b9f7' />
       <div
