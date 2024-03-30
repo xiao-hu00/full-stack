@@ -1,5 +1,5 @@
 import React from 'react'
-import { Home, UserCog2, FileText, Component } from 'lucide-react'
+import { Home, UserCog2, Component } from 'lucide-react'
 
 interface ItemType {
   key: string
@@ -24,7 +24,6 @@ const list = {
   home: React.lazy(() => import('@/pages/home')),
   userSetting: React.lazy(() => import('@/pages/user/setting')),
   userRole: React.lazy(() => import('@/pages/user/role')),
-  dataList: React.lazy(() => import('@/pages/data-list')),
   icons: React.lazy(() => import('@/pages/widget/icons')),
   form: React.lazy(() => import('@/pages/widget/form')),
   table: React.lazy(() => import('@/pages/widget/table')),
@@ -58,13 +57,6 @@ const menuList: MenuPropType = [
         component: list['userRole'],
       },
     ],
-  },
-  {
-    key: 'dataList',
-    label: '数据列表',
-    path: '/dataList',
-    icon: <FileText size={iconSize} />,
-    component: list['dataList'],
   },
   {
     key: 'widget',

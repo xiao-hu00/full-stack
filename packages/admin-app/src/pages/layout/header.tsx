@@ -1,6 +1,7 @@
 import { ModeToggle } from '@/components/mode-toggle'
 import { LogOutIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { OpenTabs } from '@/components'
 
 const Header = () => {
   const navigate = useNavigate()
@@ -10,9 +11,12 @@ const Header = () => {
     navigate('/login')
   }
   return (
-    <div className="w-12 h-6 float-right flex items-center justify-between">
-      <ModeToggle />
-      <LogOutIcon className="cursor-pointer" onClick={logout} size={16} />
+    <div className="h-14 flex items-center justify-between space-x-8">
+      <OpenTabs />
+      <div className='flex w-12 justify-between '>
+        <ModeToggle />
+        <LogOutIcon className="cursor-pointer" onClick={logout} size={16} />
+      </div>
     </div>
   )
 }
