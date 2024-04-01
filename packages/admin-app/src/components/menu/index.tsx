@@ -6,10 +6,12 @@ import './index.css'
 import { Link, useLocation } from 'react-router-dom'
 import { CaretRightIcon } from '@radix-ui/react-icons'
 import { menuList } from '@/router/router-list'
+import { useOpenMenuStore } from '@/store/open-list'
 import { cn } from '@/lib/utils'
 
 const MyMenu = () => {
   const collapse = useMenuStore(state => state.collapse)
+  const addOpenItem = useOpenMenuStore(state=> state.addOpenMenu)
   const [openKeys, setOpenKeys] = useState<string[]>([])
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const { pathname } = useLocation()
@@ -36,6 +38,10 @@ const MyMenu = () => {
   }
   const expandNode = (node: any) => ({ height: node.scrollHeight })
   const collapseNode = () => ({ height: 0 })
+  const clickLink = (item: any) => {
+    console.log(item)
+    addOpenItem({ url: item.path, title: item.label })
+  }
   return (
     <>
       <Menu
@@ -78,7 +84,7 @@ const MyMenu = () => {
               >
                 {m?.children?.map(child => (
                   <MenuItem key={child.key}>
-                    <Link to={child.path || '/'}>{child.label}</Link>
+                    <Link onClick={() => clickLink(child)} to={child.path || '/'}>{child.label}</Link>
                   </MenuItem>
                 ))}
               </SubMenu>
@@ -86,7 +92,7 @@ const MyMenu = () => {
           }
           return (
             <MenuItem key={m.key}>
-              <Link to={m.path || '/'}>
+              <Link to={m.path || '/'} onClick={() => clickLink(m)}>
                 <span className={cn('mr-4 transition-all', {'pl-4': collapse})}>
                   {m.icon}
                 </span>
