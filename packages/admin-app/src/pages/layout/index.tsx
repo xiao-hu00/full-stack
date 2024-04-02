@@ -60,8 +60,8 @@ const Layout = () => {
           {collapse ? <DoubleArrowRightIcon /> : <DoubleArrowLeftIcon />}
         </div>
       </div>
-      <div className='flex-1 flex flex-col h-[100vh] overflow-auto'>
-        <div className='border-b-gray-200 border-b dark:border-b-gray-800'>
+      <div className='flex-1 flex flex-col h-[100vh] overflow-auto relative'>
+        <div className='border-b-gray-200 border-b bg-[hsl(var(--background))] dark:border-b-gray-800 sticky top-0'>
           <Header />
         </div>
         <div className='flex-1 p-3'>

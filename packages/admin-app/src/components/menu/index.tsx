@@ -10,10 +10,10 @@ import { useOpenMenuStore } from '@/store/open-list'
 import { cn } from '@/lib/utils'
 
 const MyMenu = () => {
-  const collapse = useMenuStore(state => state.collapse)
-  const addOpenItem = useOpenMenuStore(state=> state.addOpenMenu)
-  const [openKeys, setOpenKeys] = useState<string[]>([])
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([])
+  const collapse = useMenuStore(state => state.collapse) // 是否展开侧边栏
+  const addOpenItem = useOpenMenuStore(state=> state.addOpenMenu) // 把点击的菜单添加到顶部列表
+  const [openKeys, setOpenKeys] = useState<string[]>([]) // 当前打开的菜单的key
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]) // 当前选择的菜单的key
   const { pathname } = useLocation()
   useEffect(() => {
     // pathname = '/sub/name' split('/')-> '/', 'sub', 'name'
@@ -26,6 +26,9 @@ const MyMenu = () => {
       setSelectedKeys([path[1]])
     }
   }, [collapse])
+  useEffect(() => {
+    console.log('路由变化了', pathname)
+  }, [pathname])
   const onOpenChange = (openKeys: string[]) => {
     setOpenKeys(openKeys)
   }
@@ -39,7 +42,6 @@ const MyMenu = () => {
   const expandNode = (node: any) => ({ height: node.scrollHeight })
   const collapseNode = () => ({ height: 0 })
   const clickLink = (item: any) => {
-    console.log(item)
     addOpenItem({ url: item.path, title: item.label })
   }
   return (

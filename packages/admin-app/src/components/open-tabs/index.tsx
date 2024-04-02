@@ -11,14 +11,18 @@ import {
 import { useOpenMenuStore } from '@/store/open-list'
 
 const OpenTabs = () => {
+  const openMenuList = useOpenMenuStore(state => state.openMenuList)
+  const deleteOpenMenu = useOpenMenuStore(state => state.deleteOpenMenu)
   const [activeMenu, setActiveMenu] = useState({
     title: '',
-    url: ''
+    url: '',
   })
   const clickMenu = (item: any) => {
     setActiveMenu(item)
   }
-  const openMenuList = useOpenMenuStore(state => state.openMenuList)
+  const deleteMenu = (item: any) => {
+    deleteOpenMenu(item)
+  }
   return (
     <ScrollArea className='flex-1 px-4'>
       <div className='flex space-x-4 h-14'>
@@ -29,7 +33,9 @@ const OpenTabs = () => {
                 <ContextMenu>
                   <ContextMenuTrigger
                     className={`${
-                      activeMenu?.title === item.title ? 'text-[hsl(var(--primary))]' : ''
+                      activeMenu?.title === item.title
+                        ? 'text-[hsl(var(--primary))]'
+                        : ''
                     }`}
                     onClick={() => clickMenu(item)}
                   >
@@ -43,7 +49,11 @@ const OpenTabs = () => {
                   </ContextMenuContent>
                 </ContextMenu>
               </div>
-              <X size={14} className='cursor-pointer hover:text-red-400' />
+              <X
+                size={14}
+                onClick={() => deleteMenu(item)}
+                className='cursor-pointer hover:text-red-400'
+              />
             </div>
             <Separator
               orientation='vertical'

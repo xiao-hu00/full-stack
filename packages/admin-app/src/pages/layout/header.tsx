@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <div className="h-14 flex items-center justify-between space-x-8">
       <OpenTabs />
-      <div className='flex w-12 justify-between '>
+      <div className='flex w-14 justify-between pr-2'>
         <ModeToggle />
         <LogOutIcon className="cursor-pointer" onClick={logout} size={16} />
       </div>
