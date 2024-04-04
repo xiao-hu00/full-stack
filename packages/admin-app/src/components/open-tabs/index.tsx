@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { X } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import {
   ContextMenu,
   ContextMenuContent,
@@ -9,38 +10,65 @@ import {
   ContextMenuTrigger,
 } from '@/components/ui/context-menu'
 import { useOpenMenuStore } from '@/store/open-list'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const OpenTabs = () => {
   const openMenuList = useOpenMenuStore(state => state.openMenuList)
   const deleteOpenMenu = useOpenMenuStore(state => state.deleteOpenMenu)
+  const [delIndex, setDelIndex] = useState(-1)
   const [activeMenu, setActiveMenu] = useState({
     title: '',
     url: '',
   })
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    const current = openMenuList?.find(item => item.url === pathname)
+    if (current) {
+      setActiveMenu(current)
+      return
+    }
+    if (openMenuList?.length) {
+      const index = delIndex > -1 ? delIndex : openMenuList.length - 1
+      const next = openMenuList[index] ?? openMenuList[openMenuList.length - 1]
+      setActiveMenu(next)
+      navigate(next.url)
+    }
+  }, [pathname, openMenuList])
   const clickMenu = (item: any) => {
     setActiveMenu(item)
+    navigate(item.url || '/home')
   }
-  const deleteMenu = (item: any) => {
+  const deleteMenu = (item: any, e: any) => {
+    if (item.title === activeMenu.title) {
+      const index = openMenuList?.findIndex(m => m.title === item.title)
+      if (index === 0 || (index && index > -1)) {
+        setDelIndex(index)
+      }
+    }
     deleteOpenMenu(item)
+    e.stopPropagation()
   }
   return (
-    <ScrollArea className='flex-1 px-4'>
-      <div className='flex space-x-4 h-14'>
+    <ScrollArea className='flex-1 pr-6'>
+      <div className='flex h-14'>
         {openMenuList?.map((item, index) => (
-          <div key={item.url} className='flex space-x-2 items-center'>
-            <div className='flex items-center space-x-4'>
-              <div className='cursor-pointer whitespace-nowrap hover:text-[hsl(var(--primary)/0.75)]'>
+          <div
+            key={item.url}
+            className={cn(
+              'flex items-center cursor-pointer hover:text-[hsl(var(--primary))] select-none',
+              {
+                'text-[hsl(var(--primary))] bg-white dark:bg-black':
+                  activeMenu?.title === item.title,
+              }
+            )}
+            onClick={() => clickMenu(item)}
+          >
+            <div className='flex w-32 items-center space-x-4 justify-between px-3'>
+              <div className='whitespace-nowrap'>
                 <ContextMenu>
-                  <ContextMenuTrigger
-                    className={`${
-                      activeMenu?.title === item.title
-                        ? 'text-[hsl(var(--primary))]'
-                        : ''
-                    }`}
-                    onClick={() => clickMenu(item)}
-                  >
-                    {item.title}
-                  </ContextMenuTrigger>
+                  <ContextMenuTrigger>{item.title}</ContextMenuTrigger>
                   <ContextMenuContent>
                     <ContextMenuItem>关闭右侧</ContextMenuItem>
                     <ContextMenuItem>关闭左侧</ContextMenuItem>
@@ -51,14 +79,21 @@ const OpenTabs = () => {
               </div>
               <X
                 size={14}
-                onClick={() => deleteMenu(item)}
-                className='cursor-pointer hover:text-red-400'
+                onClick={e => deleteMenu(item, e)}
+                className={cn(
+                  'cursor-pointer text-gray-400 hover:text-red-400',
+                  {
+                    invisible: openMenuList.length === 1,
+                  }
+                )}
               />
             </div>
             <Separator
               orientation='vertical'
               hidden={index === openMenuList.length - 1}
-              className='h-6'
+              className={cn('h-6 dark:bg-gray-700', {
+                invisible: activeMenu?.title === item.title,
+              })}
             />
           </div>
         ))}

@@ -25,19 +25,18 @@ const MyMenu = () => {
     } else {
       setSelectedKeys([path[1]])
     }
-  }, [collapse])
-  useEffect(() => {
-    console.log('路由变化了', pathname)
-  }, [pathname])
+  }, [collapse, pathname])
   const onOpenChange = (openKeys: string[]) => {
     setOpenKeys(openKeys)
   }
   const onClick: MenuProps['onClick'] = info => {
+    console.log(info)
     setSelectedKeys([info.key])
     const path = info.keyPath
     const url =
       path.length === 1 ? '/' + path[0] : '/' + path[1] + '/' + path[0]
     localStorage.setItem('pathname', url)
+    localStorage.setItem('pathText', info.domEvent.target?.text)
   }
   const expandNode = (node: any) => ({ height: node.scrollHeight })
   const collapseNode = () => ({ height: 0 })

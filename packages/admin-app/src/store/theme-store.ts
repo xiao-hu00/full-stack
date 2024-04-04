@@ -3,7 +3,7 @@ import { Theme } from '@/pages/home/themes'
 import { persist } from 'zustand/middleware'
 
 type Config = {
-  theme?: Theme["name"]
+  theme?: Theme['name']
   radius?: number
 }
 
@@ -12,15 +12,17 @@ type State = {
   setConfig: (config: Config) => void
 }
 
-export const useThemeStore = create<State>()(persist(
-  (set) => ({
-    config: {
-      theme: 'blue',
-      radius: 0.5
-    },
-    setConfig: (config: Config) => set(() => ({ config }))
-  }),
-  {
-    name: 'theme',
-  }
-))
+export const useThemeStore = create<State>()(
+  persist(
+    set => ({
+      config: {
+        theme: 'zinc',
+        radius: 0.5,
+      },
+      setConfig: (config: Config) => set(() => ({ config })),
+    }),
+    {
+      name: 'theme',
+    }
+  )
+)

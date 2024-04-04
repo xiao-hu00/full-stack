@@ -52,6 +52,7 @@ const Login = () => {
   const enter = () => {
     localStorage.setItem('token', '123123')
     localStorage.setItem('pathname', '/home')
+    localStorage.setItem('pathText', '首页')
     navigate('/home')
   }
   return (

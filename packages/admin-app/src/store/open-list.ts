@@ -12,6 +12,7 @@ type State = {
 type Action = {
   deleteOpenMenu: (item: menuItem) => void
   addOpenMenu: (item: menuItem) => void
+  cleanOpenMenu: () => void
 }
 
 export const useOpenMenuStore = create<State & Action>(set => ({
@@ -31,4 +32,5 @@ export const useOpenMenuStore = create<State & Action>(set => ({
         openMenuList: list,
       }
     }),
+  cleanOpenMenu: () => set(() => ({ openMenuList: [] })),
 }))

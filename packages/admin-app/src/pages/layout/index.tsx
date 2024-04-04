@@ -6,16 +6,16 @@ import {
 } from '@radix-ui/react-icons'
 import { useMenuStore } from '@/store'
 import { useThemeStore } from '@/store/theme-store'
+import { useOpenMenuStore } from '@/store/open-list'
 import { cn } from '@/lib/utils'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { Menu } from '@/components'
 import LoadingBar from 'react-top-loading-bar'
 
 const Layout = () => {
-  const collapse = useMenuStore(state => state.collapse)
-  const progress = useMenuStore(state => state.progress)
-  const updateCollapse = useMenuStore(state => state.updateCollapse)
+  const { collapse, progress, updateCollapse } = useMenuStore()
   const myConfig = useThemeStore(state => state.config)
+  const { addOpenMenu } = useOpenMenuStore()
   const nav = useNavigate()
   const changeMenu = () => {
     updateCollapse(!collapse)
@@ -33,6 +33,8 @@ const Layout = () => {
   }, [myConfig])
   useEffect(() => {
     const path = localStorage.getItem('pathname')
+    const text = localStorage.getItem('pathText')
+    addOpenMenu({ title: text || '', url: path || '' })
     if (path) {
       nav(path)
     }
@@ -61,7 +63,7 @@ const Layout = () => {
         </div>
       </div>
       <div className='flex-1 flex flex-col h-[100vh] overflow-auto relative'>
-        <div className='border-b-gray-200 border-b bg-[hsl(var(--background))] dark:border-b-gray-800 sticky top-0'>
+        <div className='bg-[hsl(var(--background))] sticky top-0'>
           <Header />
         </div>
         <div className='flex-1 p-3'>
