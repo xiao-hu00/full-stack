@@ -38,6 +38,8 @@ const OpenTabs = () => {
   }, [pathname, openMenuList])
   const clickMenu = (item: any) => {
     setActiveMenu(item)
+    localStorage.setItem('pathname', item.url)
+    localStorage.setItem('pathText', item.title)
     navigate(item.url || '/home')
   }
   const deleteMenu = (item: any, e: any) => {
@@ -68,7 +70,7 @@ const OpenTabs = () => {
             <div className='flex w-32 items-center space-x-4 justify-between px-3'>
               <div className='whitespace-nowrap'>
                 <ContextMenu>
-                  <ContextMenuTrigger>{item.title}</ContextMenuTrigger>
+                  <ContextMenuTrigger className='h-[100%] w-[100%]'>{item.title}</ContextMenuTrigger>
                   <ContextMenuContent>
                     <ContextMenuItem>关闭右侧</ContextMenuItem>
                     <ContextMenuItem>关闭左侧</ContextMenuItem>

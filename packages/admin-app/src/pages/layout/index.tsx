@@ -11,11 +11,13 @@ import { cn } from '@/lib/utils'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { Menu } from '@/components'
 import LoadingBar from 'react-top-loading-bar'
+import { motion } from 'framer-motion'
 
 const Layout = () => {
   const { collapse, progress, updateCollapse } = useMenuStore()
   const myConfig = useThemeStore(state => state.config)
   const { addOpenMenu } = useOpenMenuStore()
+  const pathname = localStorage.getItem('pathname')
   const nav = useNavigate()
   const changeMenu = () => {
     updateCollapse(!collapse)
@@ -67,7 +69,30 @@ const Layout = () => {
           <Header />
         </div>
         <div className='flex-1 p-3'>
-          <Outlet />
+          <motion.div
+            key={pathname}
+            initial='initial'
+            animate='in'
+            variants={{
+              initial: {
+                opacity: 0,
+                x: -20
+              },
+              in: {
+                opacity: 1,
+                x: 0
+              },
+              out: {
+                opacity: 0,
+                x: 20
+              },
+            }}
+            transition={{
+              duration: 0.3,
+            }}
+          >
+            <Outlet />
+          </motion.div>
         </div>
       </div>
     </div>
