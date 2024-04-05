@@ -117,6 +117,7 @@ const MyMenu = () => {
               key={m.key}
               className='whitespace-nowrap'
               onClick={() => clickLink(m)}
+              title={m.label}
             >
               <span className={cn({ 'mr-4': !collapse })}>{m.icon}</span>
               <span className={cn({ hidden: collapse }, 'whitespace-nowrap')}>
