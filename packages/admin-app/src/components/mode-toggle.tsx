@@ -1,9 +1,22 @@
+import { useEffect } from 'react'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from '@/components/theme-provider'
+import { useThemeStore } from '@/store/theme-store'
 
 export function ModeToggle() {
   const { setTheme } = useTheme()
-
+  const myConfig = useThemeStore(state => state.config)
+  useEffect(() => {
+    document.body.classList.forEach(className => {
+      if (className.match(/^theme.*/)) {
+        document.body.classList.remove(className)
+      }
+    })
+    if (myConfig) {
+      document.body.classList.add(`theme-${myConfig.theme}`)
+      document.body.style.setProperty('--radius', `${myConfig.radius}rem`)
+    }
+  }, [myConfig])
   return (
     <>
       <Sun

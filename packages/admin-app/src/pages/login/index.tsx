@@ -1,11 +1,12 @@
 import { Button } from '@/components/ui/button'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Loader2 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { useThemeStore } from '@/store/theme-store'
 import {
   Form,
   FormControl,
@@ -16,6 +17,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
+// 表单校验
 const formSchema = z.object({
   username: z.string().min(2, {
     message: 'Username must be at least 2 characters.',
@@ -37,22 +39,34 @@ const Login = () => {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const myConfig = useThemeStore(state => state.config)
+  // 初始化主题
+  useEffect(() => {
+    document.body.classList.forEach(className => {
+      if (className.match(/^theme.*/)) {
+        document.body.classList.remove(className)
+      }
+    })
+    if (myConfig) {
+      document.body.classList.add(`theme-${myConfig.theme}`)
+      document.body.style.setProperty('--radius', `${myConfig.radius}rem`)
+    }
+  }, [])
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
     setLoading(true)
     setTimeout(() => {
-      // localStorage.setItem('token', '123123')
-      // localStorage.setItem('pathname', '/home')
-      // navigate('/home')
+      localStorage.setItem('token', '123123')
+      navigate('/home')
       setLoading(false)
     }, 1500)
   }
+
   const enter = () => {
     localStorage.setItem('token', '123123')
-    localStorage.setItem('pathname', '/home')
-    localStorage.setItem('pathText', '首页')
     navigate('/home')
   }
   return (

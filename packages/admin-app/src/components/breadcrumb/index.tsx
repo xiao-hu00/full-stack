@@ -1,3 +1,11 @@
+/*
+ * @Author: xiaohu
+ * @Date: 2024-01-27 15:46:07
+ * @LastEditTime: 2024-04-05 16:54:41
+ * @LastEditors: xiaohu
+ * @Description: 面包屑组件
+ */
+
 import { ChevronRight } from 'lucide-react'
 type ItemType = {
   key: string | number,

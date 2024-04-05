@@ -1,3 +1,11 @@
+/*
+ * @Author: xiaohu
+ * @Date: 2024-04-04 01:03:51
+ * @LastEditTime: 2024-04-05 16:54:11
+ * @LastEditors: xiaohu
+ * @Description: 顶部打开的菜单tab标签
+ */
+
 import { useEffect, useState } from 'react'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
@@ -9,22 +17,28 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from '@/components/ui/context-menu'
-import { useOpenMenuStore } from '@/store/open-list'
+import { useOpenMenuStore } from '@/store/open-tabs'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { routerList } from '@/router/router-list'
 
 const OpenTabs = () => {
   const openMenuList = useOpenMenuStore(state => state.openMenuList)
   const deleteOpenMenu = useOpenMenuStore(state => state.deleteOpenMenu)
+  const { addOpenMenu } = useOpenMenuStore()
   const [delIndex, setDelIndex] = useState(-1)
   const [activeMenu, setActiveMenu] = useState({
     title: '',
-    url: '',
+    path: '',
   })
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
   useEffect(() => {
-    const current = openMenuList?.find(item => item.url === pathname)
+    const obj = routerList.find(m => m.path === pathname)
+    addOpenMenu({ title: obj?.label || '', path: pathname })
+  }, [])
+  useEffect(() => {
+    const current = openMenuList?.find(item => item.path === pathname)
     if (current) {
       setActiveMenu(current)
       return
@@ -33,14 +47,12 @@ const OpenTabs = () => {
       const index = delIndex > -1 ? delIndex : openMenuList.length - 1
       const next = openMenuList[index] ?? openMenuList[openMenuList.length - 1]
       setActiveMenu(next)
-      navigate(next.url)
+      navigate(next.path)
     }
   }, [pathname, openMenuList])
   const clickMenu = (item: any) => {
     setActiveMenu(item)
-    localStorage.setItem('pathname', item.url)
-    localStorage.setItem('pathText', item.title)
-    navigate(item.url || '/home')
+    navigate(item.path || '/home')
   }
   const deleteMenu = (item: any, e: any) => {
     if (item.title === activeMenu.title) {
@@ -57,7 +69,7 @@ const OpenTabs = () => {
       <div className='flex h-14'>
         {openMenuList?.map((item, index) => (
           <div
-            key={item.url}
+            key={item.path}
             className={cn(
               'flex items-center cursor-pointer hover:text-[hsl(var(--primary))] select-none',
               {

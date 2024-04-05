@@ -2,15 +2,14 @@ import { ModeToggle } from '@/components/mode-toggle'
 import { LogOutIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { OpenTabs } from '@/components'
-import { useOpenMenuStore } from '@/store/open-list'
+import { useOpenMenuStore } from '@/store/open-tabs'
 
 const Header = () => {
   const navigate = useNavigate()
   const { cleanOpenMenu } = useOpenMenuStore()
+
   const logout = () => {
     localStorage.removeItem('token')
-    localStorage.removeItem('pathname')
-    localStorage.removeItem('pathText')
     cleanOpenMenu()
     navigate('/login')
   }

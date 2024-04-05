@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 type menuItem = {
   title: string
-  url: string
+  path: string
 }
 
 type State = {

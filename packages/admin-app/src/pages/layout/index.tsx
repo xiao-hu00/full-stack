@@ -5,8 +5,6 @@ import {
   DoubleArrowRightIcon,
 } from '@radix-ui/react-icons'
 import { useMenuStore } from '@/store'
-import { useThemeStore } from '@/store/theme-store'
-import { useOpenMenuStore } from '@/store/open-list'
 import { cn } from '@/lib/utils'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { Menu } from '@/components'
@@ -15,28 +13,14 @@ import { motion } from 'framer-motion'
 
 const Layout = () => {
   const { collapse, progress, updateCollapse } = useMenuStore()
-  const myConfig = useThemeStore(state => state.config)
-  const { addOpenMenu } = useOpenMenuStore()
   const pathname = localStorage.getItem('pathname')
   const nav = useNavigate()
   const changeMenu = () => {
     updateCollapse(!collapse)
   }
-  useEffect(() => {
-    document.body.classList.forEach(className => {
-      if (className.match(/^theme.*/)) {
-        document.body.classList.remove(className)
-      }
-    })
-    if (myConfig) {
-      document.body.classList.add(`theme-${myConfig.theme}`)
-      document.body.style.setProperty('--radius', `${myConfig.radius}rem`)
-    }
-  }, [myConfig])
+
   useEffect(() => {
     const path = localStorage.getItem('pathname')
-    const text = localStorage.getItem('pathText')
-    addOpenMenu({ title: text || '', url: path || '' })
     if (path) {
       nav(path)
     }

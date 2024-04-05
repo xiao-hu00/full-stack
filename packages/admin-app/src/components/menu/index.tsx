@@ -1,3 +1,11 @@
+/*
+ * @Author: lonelydawn
+ * @Date: 2024-04-04 01:03:51
+ * @LastEditTime: 2024-04-05 16:52:14
+ * @LastEditors: lonelydawn
+ * @Description: 侧边菜单
+ */
+
 import { useEffect, useState } from 'react'
 import Menu, { SubMenu, Item as MenuItem } from 'rc-menu'
 import type { MenuProps } from 'rc-menu'
@@ -6,7 +14,7 @@ import './index.css'
 import { Link, useLocation } from 'react-router-dom'
 import { CaretRightIcon } from '@radix-ui/react-icons'
 import { menuList } from '@/router/router-list'
-import { useOpenMenuStore } from '@/store/open-list'
+import { useOpenMenuStore } from '@/store/open-tabs'
 import { cn } from '@/lib/utils'
 
 const MyMenu = () => {
@@ -32,16 +40,11 @@ const MyMenu = () => {
   const onClick: MenuProps['onClick'] = info => {
     console.log(info)
     setSelectedKeys([info.key])
-    const path = info.keyPath
-    const url =
-      path.length === 1 ? '/' + path[0] : '/' + path[1] + '/' + path[0]
-    localStorage.setItem('pathname', url)
-    localStorage.setItem('pathText', info.domEvent.target?.text)
   }
   const expandNode = (node: any) => ({ height: node.scrollHeight })
   const collapseNode = () => ({ height: 0 })
   const clickLink = (item: any) => {
-    addOpenItem({ url: item.path, title: item.label })
+    addOpenItem({ path: item.path, title: item.label })
   }
   return (
     <>
