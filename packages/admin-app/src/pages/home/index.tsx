@@ -1,3 +1,10 @@
+/*
+ * @Author: xiaohu
+ * @Date: 2024-03-30 15:42:46
+ * @LastEditTime: 2024-04-05 16:58:12
+ * @LastEditors: xiaohu
+ * @Description: 首页
+ */
 import { Breadcrumb } from '@/components'
 import { Button } from '@/components/ui/button'
 import { themes } from './themes'
