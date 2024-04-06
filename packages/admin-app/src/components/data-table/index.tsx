@@ -1,10 +1,3 @@
-/*
- * @Author: xiaohu
- * @Date: 2024-01-27 15:38:18
- * @LastEditTime: 2024-04-05 16:55:15
- * @LastEditors: xiaohu
- * @Description: 表格组件
- */
 import {
   useState,
   useMemo,

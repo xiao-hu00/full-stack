@@ -2,7 +2,7 @@ import { ModeToggle } from '@/components/mode-toggle'
 import { LogOutIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { OpenTabs } from '@/components'
-import { useOpenMenuStore } from '@/store/open-tabs'
+import { useOpenMenuStore } from '@/store/open-top-tabs'
 
 const Header = () => {
   const navigate = useNavigate()

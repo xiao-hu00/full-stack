@@ -1,11 +1,3 @@
-/*
- * @Author: lonelydawn
- * @Date: 2024-04-04 01:03:51
- * @LastEditTime: 2024-04-06 02:38:23
- * @LastEditors: xiaohu
- * @Description: 侧边菜单
- */
-
 import { useEffect, useState } from 'react'
 import Menu, { SubMenu, Item as MenuItem } from 'rc-menu'
 import type { MenuProps } from 'rc-menu'
@@ -14,7 +6,7 @@ import './index.css'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { CaretRightIcon } from '@radix-ui/react-icons'
 import { menuList } from '@/router/router-list'
-import { useOpenMenuStore } from '@/store/open-tabs'
+import { useOpenMenuStore } from '@/store/open-top-tabs'
 import { cn } from '@/lib/utils'
 import './index.less'
 
@@ -74,7 +66,7 @@ const MyMenu = () => {
                 onLeaveActive: collapseNode,
               }
             : {
-                motionName: 'rc-menu-open-zoom',
+                motionName: 'rc-menu-open-slide-up',
                 motionAppear: true,
                 motionEnter: true,
                 motionLeave: true,
@@ -83,16 +75,16 @@ const MyMenu = () => {
       >
         {menuList?.map(m => {
           if (m.children) {
+            // 二级菜单
             return (
               <SubMenu
                 popupOffset={[10, 0]}
                 key={m.key}
-                className='whitespace-nowrap'
                 title={
                   <>
                     <span className={cn({ 'mr-4': !collapse })}>{m.icon}</span>
                     <div
-                      className={cn('flex-1 h-6 overflow-hidden', {
+                      className={cn('flex-1 h-6 overflow-hidden text-ellipsis mr-6', {
                         hidden: collapse,
                       })}
                     >
@@ -106,21 +98,21 @@ const MyMenu = () => {
               >
                 {m?.children?.map(child => (
                   <MenuItem key={child.key} onClick={() => clickLink(child)}>
-                    {child.label}
+                    <span className='text-ellipsis overflow-hidden'>{child.label}</span>
                   </MenuItem>
                 ))}
               </SubMenu>
             )
           }
+          // 一级菜单
           return (
             <MenuItem
               key={m.key}
-              className='whitespace-nowrap'
               onClick={() => clickLink(m)}
               title={m.label}
             >
               <span className={cn({ 'mr-4': !collapse })}>{m.icon}</span>
-              <span className={cn({ hidden: collapse }, 'whitespace-nowrap')}>
+              <span className={cn({ hidden: collapse }, 'text-ellipsis mr-4 overflow-hidden')}>
                 {m.label}
               </span>
             </MenuItem>

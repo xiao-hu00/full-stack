@@ -40,7 +40,7 @@ const Layout = () => {
         <div
           onClick={changeMenu}
           className={cn(
-            'border-t-gray-200 dark:border-t-gray-800 transition-all border-t fixed bottom-0 flex items-center justify-center cursor-pointer h-10',
+            'border-t-gray-200 dark:border-t-gray-800 transition-all duration-200 border-t fixed bottom-0 flex items-center justify-center cursor-pointer h-10',
             { 'w-56': !collapse },
             { 'w-16': collapse }
           )}

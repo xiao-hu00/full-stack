@@ -1,11 +1,3 @@
-/*
- * @Author: xiaohu
- * @Date: 2024-04-04 01:03:51
- * @LastEditTime: 2024-04-05 16:54:11
- * @LastEditors: xiaohu
- * @Description: 顶部打开的菜单tab标签
- */
-
 import { useEffect, useState } from 'react'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
@@ -17,7 +9,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from '@/components/ui/context-menu'
-import { useOpenMenuStore } from '@/store/open-tabs'
+import { useOpenMenuStore } from '@/store/open-top-tabs'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { routerList } from '@/router/router-list'
 

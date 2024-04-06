@@ -1,10 +1,3 @@
-/*
- * @Author: xiaohu
- * @Date: 2024-03-30 15:42:46
- * @LastEditTime: 2024-04-06 02:23:40
- * @LastEditors: xiaohu
- * @Description: 登录页
- */
 import { Button } from '@/components/ui/button'
 import { useState, useEffect } from 'react'
 import { Loader2 } from 'lucide-react'

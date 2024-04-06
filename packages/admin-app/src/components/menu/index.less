@@ -8,7 +8,7 @@
 
   &-collapse {
     overflow: hidden;
-    transition: height 0.3s ease-out;
+    transition: height 0.15s ease-out;
   }
 
   &-submenu {
@@ -18,6 +18,8 @@
   }
   &-item,
   &-submenu-title {
+    word-wrap: break-word;
+    white-space: nowrap;
     height: 3.5rem;
     display: flex;
     align-items: center;
@@ -59,7 +61,7 @@
       li {
         margin-top: 0;
         border-top: 1px solid #ddd;
-        padding-left: 12px;
+        padding: 0 12px;
       }
     }
   }
@@ -77,6 +79,7 @@
       opacity: 0;
       animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);
       animation-play-state: paused;
+      animation-duration: 200ms;
     }
 
     &-slide-up-leave {
@@ -84,41 +87,48 @@
       opacity: 1;
       animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);
       animation-play-state: paused;
+      animation-duration: 200ms;
     }
 
     &-slide-up-enter&-slide-up-enter-active,
     &-slide-up-appear&-slide-up-appear-active {
       animation-name: rcMenuOpenSlideUpIn;
       animation-play-state: running;
+      animation-duration: 200ms;
     }
 
     &-slide-up-leave&-slide-up-leave-active {
       animation-name: rcMenuOpenSlideUpOut;
       animation-play-state: running;
+      animation-duration: 200ms;
     }
 
     @keyframes rcMenuOpenSlideUpIn {
       0% {
         opacity: 0;
-        transform-origin: 0% 0%;
-        transform: scaleY(0);
+        // transform-origin: 0% 0%;
+        // transform: scaleY(0);
+        transform: translateX(30px);
       }
       100% {
         opacity: 1;
-        transform-origin: 0% 0%;
-        transform: scaleY(1);
+        // transform-origin: 0% 0%;
+        // transform: scaleY(1);
+        transform: translateX(0px);
       }
     }
     @keyframes rcMenuOpenSlideUpOut {
       0% {
         opacity: 1;
-        transform-origin: 0% 0%;
+        // transform-origin: 0% 0%;
         transform: scaleY(1);
+        // transform: translateX(0px);
       }
       100% {
         opacity: 0;
-        transform-origin: 0% 0%;
+        // transform-origin: 0% 0%;
         transform: scaleY(0);
+        // transform: translateX(-10px);
       }
     }
 
