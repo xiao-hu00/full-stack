@@ -8,13 +8,14 @@ import { useMenuStore } from '@/store'
 
 function RequireAuth({ children }: { children: JSX.Element }) {
   const token = localStorage.getItem('token')
-  const location = useLocation()
+  const { pathname } = useLocation()
 
   if (!token) {
-    return <Navigate to="/login" state={{ from: location }} replace />
+    const url = encodeURIComponent(pathname)
+    return <Navigate to={`/login?redirect=${url}`} replace />
   }
 
-  return children;
+  return children
 }
 
 const Fallback = () => {
@@ -37,30 +38,31 @@ const Fallback = () => {
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    id: 'root',
     element: <Layout />,
-    children: routerList.map((item) => {
+    children: routerList.map(item => {
       if (item.component) {
         return {
           path: item.path,
           index: item.path === '/home',
-          element:
+          element: (
             <RequireAuth>
-              <React.Suspense fallback={<><Fallback /></>}>
+              <React.Suspense fallback={<Fallback />}>
                 <item.component />
               </React.Suspense>
             </RequireAuth>
+          ),
         }
       } else {
         return {}
       }
     }),
-    errorElement: <>错误页面</>,
+    errorElement: <Navigate to='/home' />,
   },
   {
     path: '/login',
-    element: <Login />
-  }
+    element: <Login />,
+  },
 ])
 
 export default router

@@ -1,17 +1,18 @@
 import { ModeToggle } from '@/components/mode-toggle'
 import { LogOutIcon } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { OpenTabs } from '@/components'
 import { useOpenMenuStore } from '@/store/open-top-tabs'
 
 const Header = () => {
   const navigate = useNavigate()
   const { cleanOpenMenu } = useOpenMenuStore()
-
+  const { pathname } = useLocation()
   const logout = () => {
     localStorage.removeItem('token')
     cleanOpenMenu()
-    navigate('/login')
+    const url = encodeURIComponent(pathname)
+    navigate({ pathname: '/login', search: '?redirect=' + url })
   }
   return (
     <div className='h-14 flex items-center justify-between space-x-8 bg-gray-50 dark:bg-gray-900'>

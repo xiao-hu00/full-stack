@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import Header from './header'
 import {
   DoubleArrowLeftIcon,
@@ -6,25 +5,18 @@ import {
 } from '@radix-ui/react-icons'
 import { useMenuStore } from '@/store'
 import { cn } from '@/lib/utils'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { Menu } from '@/components'
 import LoadingBar from 'react-top-loading-bar'
 import { motion } from 'framer-motion'
 
 const Layout = () => {
   const { collapse, progress, updateCollapse } = useMenuStore()
-  const pathname = localStorage.getItem('pathname')
-  const nav = useNavigate()
+  const { pathname } = useLocation()
   const changeMenu = () => {
     updateCollapse(!collapse)
   }
 
-  useEffect(() => {
-    const path = localStorage.getItem('pathname')
-    if (path) {
-      nav(path)
-    }
-  }, [])
   return (
     <div className='flex'>
       {/* 顶部进度条 */}
@@ -60,19 +52,19 @@ const Layout = () => {
             variants={{
               initial: {
                 opacity: 0,
-                x: -20
+                x: -20,
               },
               in: {
                 opacity: 1,
-                x: 0
+                x: 0,
               },
               out: {
                 opacity: 0,
-                x: 20
+                x: 20,
               },
             }}
             transition={{
-              duration: 0.3,
+              duration: 0.2,
             }}
           >
             <Outlet />

@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { useState, useEffect } from 'react'
 import { Loader2 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -30,7 +30,7 @@ const formSchema = z.object({
 const Login = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-
+  const [params] = useSearchParams()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,15 +60,12 @@ const Login = () => {
     setLoading(true)
     setTimeout(() => {
       localStorage.setItem('token', '123123')
-      navigate('/home')
+      const url = decodeURIComponent(params.get('redirect') || '/home')
+      navigate(url)
       setLoading(false)
     }, 1500)
   }
 
-  const enter = () => {
-    localStorage.setItem('token', '123123')
-    navigate('/home')
-  }
   return (
     <div className='flex justify-center'>
       <div className='w-[300px] mt-10'>
