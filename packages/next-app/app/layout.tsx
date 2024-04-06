@@ -19,20 +19,25 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <NextTopLoader />
+        <NextTopLoader color='purple' />
         <ul className='flex space-x-4 p-3'>
           <li>
-            <Link href='/' className='hover:text-orange-600'>
+            <Link href='/login' className='hover:text-orange-200'>
+              login
+            </Link>
+          </li>
+          <li>
+            <Link href='/' className='hover:text-orange-200'>
               home
             </Link>
           </li>
           <li>
-            <Link href='/doc' className='hover:text-orange-600'>
+            <Link href='/doc' className='hover:text-orange-200'>
               doc
             </Link>
           </li>
           <li>
-            <Link href='/mdx' className='hover:text-orange-600'>
+            <Link href='/mdx' className='hover:text-orange-200'>
               markdown
             </Link>
           </li>

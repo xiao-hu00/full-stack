@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import dayjs from 'dayjs'
 import { User } from '@prisma/client'
+import { auth } from '@/auth'
 
 export const metadata: Metadata = {
   title: 'App Document',
@@ -20,7 +21,10 @@ async function getData() {
 }
 
 export default async function Doc() {
-  const { data }: { data: User[] } = await getData()
+  const { data }: { data: User[] } = {data: []} // await getData()
+  const session = await auth()
+  console.log('123', session)
+
   return (
     <div>
       User List
