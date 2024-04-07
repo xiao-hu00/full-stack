@@ -44,7 +44,7 @@ const Layout = () => {
         <div className='bg-[hsl(var(--background))] sticky top-0'>
           <Header />
         </div>
-        <div className='flex-1 p-3'>
+        <div className='flex-1 p-4'>
           <motion.div
             key={pathname}
             initial='initial'

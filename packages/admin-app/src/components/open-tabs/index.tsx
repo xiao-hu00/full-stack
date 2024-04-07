@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import { useEffect, useRef, useState } from 'react'
 import { Separator } from '@/components/ui/separator'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -24,6 +23,7 @@ const OpenTabs = () => {
   })
   const navigate = useNavigate()
   const { pathname } = useLocation()
+  const scrollRef = useRef<any>(null)
 
   useEffect(() => {
     const obj = routerList.find(m => m.path === pathname)
@@ -56,9 +56,16 @@ const OpenTabs = () => {
     deleteOpenMenu(item)
     e.stopPropagation()
   }
+  const onWheel = (e: any) => {
+    scrollRef.current.scrollLeft += e.deltaY
+  }
   return (
-    <ScrollArea className='flex-1 pr-6'>
-      <div className='flex h-14'>
+    <div
+      className='flex-1 pr-6 w-[100% - 120px] overflow-auto no-scrollbar'
+      ref={scrollRef}
+      onWheel={e => onWheel(e)}
+    >
+      <div className='flex h-12'>
         {openMenuList?.map((item, index) => (
           <div
             key={item.path}
@@ -74,7 +81,9 @@ const OpenTabs = () => {
             <div className='flex w-32 items-center space-x-4 justify-between px-3'>
               <div className='whitespace-nowrap'>
                 <ContextMenu>
-                  <ContextMenuTrigger className='h-[100%] w-[100%]'>{item.title}</ContextMenuTrigger>
+                  <ContextMenuTrigger className='h-[100%] w-[100%]'>
+                    {item.title}
+                  </ContextMenuTrigger>
                   <ContextMenuContent>
                     <ContextMenuItem>关闭右侧</ContextMenuItem>
                     <ContextMenuItem>关闭左侧</ContextMenuItem>
@@ -104,8 +113,7 @@ const OpenTabs = () => {
           </div>
         ))}
       </div>
-      <ScrollBar orientation='horizontal' />
-    </ScrollArea>
+    </div>
   )
 }
 

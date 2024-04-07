@@ -1,4 +1,3 @@
-import { Breadcrumb } from '@/components'
 import { Button } from '@/components/ui/button'
 import { themes } from './themes'
 import { useThemeStore } from '@/store/theme-store'
@@ -15,7 +14,6 @@ const Home = () => {
   }
   return (
     <div>
-      <Breadcrumb items={[{ key: '1', label: '首页' }]} />
       <div>
         config: {JSON.stringify(myConfig)}
         <Button className='ml-4' onClick={() => changeTheme('green')}>
