@@ -61,11 +61,11 @@ const OpenTabs = () => {
   }
   return (
     <div
-      className='flex-1 pr-6 w-[100% - 120px] overflow-auto no-scrollbar'
+      className='flex-1 pr-6 w-[100% - 120px] overflow-auto no-scrollbar text-sm'
       ref={scrollRef}
       onWheel={e => onWheel(e)}
     >
-      <div className='flex h-12'>
+      <div className='flex h-10'>
         {openMenuList?.map((item, index) => (
           <div
             key={item.path}

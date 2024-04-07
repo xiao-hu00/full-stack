@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { getData } from '@/api/test-api'
-import { DataTable, Breadcrumb } from '@/components'
+import { DataTable } from '@/components'
 import { Button } from '@/components/ui/button'
 import { useQuery, keepPreviousData } from '@tanstack/react-query'
 
@@ -79,12 +79,6 @@ const TableList = () => {
 
   return (
     <>
-      <Breadcrumb
-        items={[
-          { key: '1', label: '首页' },
-          { key: '2', label: '数据列表' },
-        ]}
-      />
       <div className='mb-4'>数据表格</div>
       <Button onClick={getSelected}>console selected</Button>
       <DataTable

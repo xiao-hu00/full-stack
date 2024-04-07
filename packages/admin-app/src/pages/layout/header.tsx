@@ -16,15 +16,15 @@ const Header = () => {
     navigate({ pathname: '/login', search: '?redirect=' + url })
   }
   return (
-    <div className='h-20'>
-      <div className='h-12 flex items-center justify-between space-x-8 bg-gray-50 dark:bg-gray-900'>
+    <div className='border-b border-b-gray-100 dark:border-b-gray-800'>
+      <div className='h-10 flex items-center justify-between space-x-8 bg-gray-50 dark:bg-gray-900'>
         <OpenTabs />
         <div className='flex w-14 justify-between pr-2'>
           <ModeToggle />
           <LogOutIcon className='cursor-pointer' onClick={logout} size={16} />
         </div>
       </div>
-      <Breadcrumb items={[{ key: '1', label: '首页' }]} />
+      <Breadcrumb />
     </div>
   )
 }
