@@ -10,25 +10,31 @@ const columns = [
     accessorKey: 'id',
     header: '编号',
     sort: true,
+    size: 50,
   },
   {
-    id: 'payment',
-    header: '状态',
-    accessorKey: 'paymentStatus',
+    id: 'title',
+    header: '标题',
+    accessorKey: 'title',
+  },
+  {
+    id: 'priority',
+    header: '分类',
+    accessorKey: 'priority',
     enableSorting: false,
     size: 50,
   },
   {
-    id: 'method',
-    header: '方法',
-    accessorKey: 'paymentMethod',
+    id: 'status',
+    header: '状态',
+    accessorKey: 'status',
   },
   {
-    id: 'totalAmount',
-    header: () => <div className='text-right'>金额</div>,
-    accessorKey: 'totalAmount',
+    id: 'label',
+    header: () => <div className='text-center'>标签</div>,
+    accessorKey: 'label',
     cell: ({ row }: any) => (
-      <div className='text-right'>{row.getValue('totalAmount')}</div>
+      <div className='text-center'>{row.getValue('label')}</div>
     ),
   },
 ]
@@ -36,9 +42,10 @@ const columns = [
 // 列表抬头 显示或者隐藏 {id: '显示文字'}
 const tableHeaderList: any = {
   id: '编号',
-  payment: '状态',
-  method: '方法',
-  totalAmount: '金额',
+  priority: '分类',
+  status: '状态',
+  title: '标题',
+  label: '标签',
 }
 
 const TableList = () => {
@@ -60,7 +67,6 @@ const TableList = () => {
     const list = tableRef?.current?.getTableSelect()
     console.log(list)
   }
-
   const onChange = (params: any) => {
     const { pageIndex = 0, pageSize = 10, sort = [], search = '' } = params
     console.log('onChange', {
@@ -86,7 +92,7 @@ const TableList = () => {
         loading={isFetching}
         columns={columns}
         ref={tableRef}
-        total={data?.total}
+        total={data?.items}
         onChange={onChange}
         tableHeaderList={tableHeaderList}
         rowSelect={true}

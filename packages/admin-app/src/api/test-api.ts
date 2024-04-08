@@ -1,39 +1,16 @@
-// import api from './index'
-import { faker } from "@faker-js/faker"
-import { TestType } from './data'
-const chunk = (input: Array<any>, size: number) => {
-  return input.reduce((arr, item, idx) => {
-    return idx % size === 0
-      ? [...arr, [item]]
-      : [...arr.slice(0, -1), [...arr.slice(-1)[0], item]];
-  }, [])
-}
-
-faker.seed(110)
-const tasks = Array.from({ length: 100 }, () => ({
-  id: `TASK-${faker.number.int({ min: 1000, max: 9999 })}`,
-  paymentStatus: faker.helpers.arrayElement(['Paid', 'Pending', 'Unpaid']),
-  paymentMethod: faker.helpers.arrayElement(['Credit Card', 'PayPal', 'Bank Transfer']),
-  totalAmount: `$${faker.number.int({ min: 100, max: 9999 })}`,
-}))
+import api from './index'
 
 interface paramsType {
   currentPage: number
   pageSize: number
 }
-interface dataType {
-  data: TestType[]
-  total: number
-}
-export function getData({ currentPage, pageSize }: paramsType) {
-  const data = chunk(tasks, pageSize)
-  console.log('fetch')
-  return new Promise<dataType>((resolve) => {
-    setTimeout(() => {
-      resolve({
-        data: data[currentPage - 1],
-        total: 100,
-      })
-    }, 1000)
+
+export function getData({ currentPage, pageSize }: paramsType): any {
+  return api.get(`/tasks`, {
+    params: {
+      _page: currentPage, 
+      _per_page: pageSize
+    },
   })
+  
 }

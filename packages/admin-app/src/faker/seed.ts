@@ -7,6 +7,8 @@ const __dirname = path.dirname(__filename);
 
 import { labels, priorities, statuses } from "./data"
 
+faker.seed(120)
+
 const tasks = Array.from({ length: 100 }, () => ({
   id: `TASK-${faker.number.int({ min: 1000, max: 9999 })}`,
   title: faker.hacker.phrase().replace(/^./, (letter) => letter.toUpperCase()),
