@@ -84,9 +84,12 @@ const MyMenu = () => {
                   <>
                     <span className={cn({ 'mr-4': !collapse })}>{m.icon}</span>
                     <div
-                      className={cn('flex-1 h-6 overflow-hidden text-ellipsis mr-6', {
-                        hidden: collapse,
-                      })}
+                      className={cn(
+                        'flex-1 h-6 overflow-hidden text-ellipsis mr-6',
+                        {
+                          hidden: collapse,
+                        }
+                      )}
                     >
                       {m.label}
                     </div>
@@ -98,7 +101,9 @@ const MyMenu = () => {
               >
                 {m?.children?.map(child => (
                   <MenuItem key={child.key} onClick={() => clickLink(child)}>
-                    <span className='text-ellipsis overflow-hidden'>{child.label}</span>
+                    <span className='text-ellipsis overflow-hidden'>
+                      {child.label}
+                    </span>
                   </MenuItem>
                 ))}
               </SubMenu>
@@ -106,13 +111,14 @@ const MyMenu = () => {
           }
           // 一级菜单
           return (
-            <MenuItem
-              key={m.key}
-              onClick={() => clickLink(m)}
-              title={m.label}
-            >
+            <MenuItem key={m.key} onClick={() => clickLink(m)} title={m.label}>
               <span className={cn({ 'mr-4': !collapse })}>{m.icon}</span>
-              <span className={cn({ hidden: collapse }, 'text-ellipsis mr-4 overflow-hidden')}>
+              <span
+                className={cn(
+                  { hidden: collapse },
+                  'text-ellipsis mr-4 overflow-hidden'
+                )}
+              >
                 {m.label}
               </span>
             </MenuItem>

@@ -13,7 +13,7 @@
 
 .rc-menu-item-active {
   color: hsl(var(--primary));
-  background-color: hsl(var(--secondary));
+  background-color: hsl(var(--secondary)/0.65);
 }
 .rc-menu-submenu-selected .rc-menu-submenu-title {
   color: hsl(var(--primary));
@@ -26,26 +26,27 @@
 
 .rc-menu-submenu-placement-rightTop ul {
   background: hsl(var(--background));
+  z-index: 2;
 }
 
 .dark .rc-menu-submenu-selected .rc-menu-submenu-title {
-  color: hotpink;
+  color: hsl(var(--primary)/75);;
 }
 .dark .rc-menu-submenu-active {
-  color: red;
+  color: hsl(var(--primary));
 }
 .dark .rc-menu-sub {
   background-color: #141414;
 }
 .dark .rc-menu-item {
-  color: #fff;
+  color: hsl(var(--secondary-foreground)/0.8);
 }
 .dark .rc-menu-item-selected {
-  color: red;
-  background-color: #212121;
+  color: hsl(var(--primary));
+  background-color: hsl(var(--secondary));
 }
 .dark .rc-menu-item-active {
-  color: red;
+  color: hsl(var(--primary));
 }
 .dark .rc-menu-submenu-placement-rightTop ul {
   background: hsl(var(--background));

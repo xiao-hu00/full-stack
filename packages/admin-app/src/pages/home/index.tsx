@@ -13,7 +13,7 @@ const Home = () => {
     setConfig({ theme: config?.name, radius: 0.5 })
   }
   return (
-    <div>
+    <div className='p-4'>
       <div>
         config: {JSON.stringify(myConfig)}
         <Button className='ml-4' onClick={() => changeTheme('green')}>

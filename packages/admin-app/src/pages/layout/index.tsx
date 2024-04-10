@@ -7,70 +7,70 @@ import { useMenuStore } from '@/store'
 import { cn } from '@/lib/utils'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Menu } from '@/components'
-import LoadingBar from 'react-top-loading-bar'
 import { motion } from 'framer-motion'
 
 const Layout = () => {
-  const { collapse, progress, updateCollapse } = useMenuStore()
+  const { collapse, updateCollapse } = useMenuStore()
   const { pathname } = useLocation()
   const changeMenu = () => {
     updateCollapse(!collapse)
   }
 
   return (
-    <div className='flex'>
-      {/* 顶部进度条 */}
-      <LoadingBar progress={progress} color={`hsl(var(--primary))`} />
-      <div
-        className={cn(
-          'border-r-gray-200 transition-all border-r box-border dark:border-r-gray-800',
-          { 'w-56': !collapse },
-          { 'w-16': collapse }
-        )}
+    <div
+      className='grid h-[100vh] transition-all overflow-auto'
+      style={{
+        gridTemplateColumns: collapse ? '4rem 1fr' : '14rem 1fr',
+        gridTemplateRows: '5rem 1fr',
+      }}
+    >
+      <nav
+        className='border-r-gray-200 border-r box-border dark:border-r-gray-800 row-span-2 grid h-[100vh] sticky top-0 overflow-auto no-scrollbar'
+        style={{
+          gridTemplateRows: '1fr 2.5rem',
+        }}
       >
         <Menu />
         <div
           onClick={changeMenu}
           className={cn(
-            'border-t-gray-200 dark:border-t-gray-800 transition-all duration-200 border-t fixed bottom-0 flex items-center justify-center cursor-pointer h-10',
-            { 'w-56': !collapse },
-            { 'w-16': collapse }
+            'border-gray-200 dark:border-gray-800 border-t flex items-center justify-center cursor-pointer h-10 z-2 bg-[hsl(var(--background))] w-[100%]'
           )}
         >
           {collapse ? <DoubleArrowRightIcon /> : <DoubleArrowLeftIcon />}
         </div>
-      </div>
-      <div className='flex-1 flex flex-col h-[100vh] overflow-auto relative'>
-        <div className='bg-[hsl(var(--background))] sticky top-0'>
-          <Header />
-        </div>
-        <div className='flex-1 p-4'>
-          <motion.div
-            key={pathname}
-            initial='initial'
-            animate='in'
-            variants={{
-              initial: {
-                opacity: 0,
-                x: -20,
-              },
-              in: {
-                opacity: 1,
-                x: 0,
-              },
-              out: {
-                opacity: 0,
-                x: 20,
-              },
-            }}
-            transition={{
-              duration: 0.2,
-            }}
-          >
-            <Outlet />
-          </motion.div>
-        </div>
-      </div>
+      </nav>
+      <header className='bg-[hsl(var(--background))] sticky top-0 z-2 auto-cols-fr'>
+        <Header />
+      </header>
+
+      <main className='flex-1 p-4 bg-gray-50 dark:bg-gray-900 auto-cols-fr'>
+        <motion.div
+          className='bg-[hsl(var(--background))]'
+          key={pathname}
+          initial='initial'
+          animate='in'
+          variants={{
+            initial: {
+              opacity: 0,
+              x: -20,
+            },
+            in: {
+              opacity: 1,
+              x: 0,
+            },
+            out: {
+              opacity: 0,
+              x: 20,
+            },
+          }}
+          transition={{
+            duration: 0.2,
+          }}
+        >
+          <Outlet />
+        </motion.div>
+      </main>
     </div>
   )
 }

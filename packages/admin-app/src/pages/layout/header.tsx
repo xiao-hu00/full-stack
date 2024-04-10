@@ -16,7 +16,7 @@ const Header = () => {
     navigate({ pathname: '/login', search: '?redirect=' + url })
   }
   return (
-    <div className='border-b border-b-gray-100 dark:border-b-gray-800'>
+    <div className='border-b border-b-gray-100 shadow-sm shadow-gray-300 dark:border-b-gray-800 dark:shadow-gray-500'>
       <div className='h-10 flex items-center justify-between space-x-8 bg-gray-50 dark:bg-gray-900'>
         <OpenTabs />
         <div className='flex w-14 justify-between pr-2'>
