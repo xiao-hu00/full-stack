@@ -31,7 +31,7 @@ const Breadcrumb = ({ className }: PropsType) => {
       variants={{
         initial: { opacity: 0, y: -10 },
         in: { opacity: 1, x: 0, y: 0 },
-        out: { opacity: 0, x: -10 },
+        out: { opacity: 0, y: 10 },
       }}
       transition={{ duration: 0.2 }}
       className={cn(

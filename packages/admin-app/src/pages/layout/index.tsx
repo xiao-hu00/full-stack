@@ -24,7 +24,7 @@ const Layout = () => {
         gridTemplateRows: '5rem 1fr',
       }}
     >
-      <nav
+      <aside
         className='border-r-gray-200 border-r box-border dark:border-r-gray-800 row-span-2 grid h-[100vh] sticky top-0 overflow-auto no-scrollbar'
         style={{
           gridTemplateRows: '1fr 2.5rem',
@@ -39,14 +39,14 @@ const Layout = () => {
         >
           {collapse ? <DoubleArrowRightIcon /> : <DoubleArrowLeftIcon />}
         </div>
-      </nav>
+      </aside>
       <header className='bg-[hsl(var(--background))] sticky top-0 z-2 auto-cols-fr'>
         <Header />
       </header>
 
       <main className='flex-1 p-4 bg-gray-50 dark:bg-gray-900 auto-cols-fr'>
         <motion.div
-          className='bg-[hsl(var(--background))]'
+          className='bg-[hsl(var(--background))] h-[100%]'
           key={pathname}
           initial='initial'
           animate='in'

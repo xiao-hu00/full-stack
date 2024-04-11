@@ -1,11 +1,6 @@
 
 const Setting = () => {
-
-  return (
-    <>
-      <span>setting</span>
-    </>
-  )
+  return <>设置</>
 }
 
 export default Setting

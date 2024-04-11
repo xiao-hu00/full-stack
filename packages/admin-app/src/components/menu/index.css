@@ -51,3 +51,26 @@
 .dark .rc-menu-submenu-placement-rightTop ul {
   background: hsl(var(--background));
 }
+
+.f-open-item {
+  position: relative;
+  border-radius: 12px 12px 0 0;
+}
+.f-open-item::before,.f-open-item::after{
+  position: absolute;
+  bottom: 0;
+  content: '';
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  box-shadow: 0 0 0 40px hsl(var(--background));/*使用box-shadow不影响尺寸*/
+  transition: .2s;
+}
+.f-open-item::before{
+  left: -20px;
+  clip-path: inset(50% -10px 0 50%);
+}
+.f-open-item::after{
+  right: -20px;
+  clip-path: inset(50% 50% 0 -10px);
+}

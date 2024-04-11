@@ -20,6 +20,7 @@ const OpenTabs = () => {
   const [activeMenu, setActiveMenu] = useState({
     title: '',
     path: '',
+    index: -1,
   })
   const navigate = useNavigate()
   const { pathname } = useLocation()
@@ -29,16 +30,21 @@ const OpenTabs = () => {
     const obj = routerList.find(m => m.path === pathname)
     addOpenMenu({ title: obj?.label || '', path: pathname })
   }, [])
+  const findMenuIndex = (item: any) =>
+    openMenuList?.findIndex(m => m.title === item?.title)
   useEffect(() => {
+    // 刷新或者删除之后，当前应该高亮显示的tab
     const current = openMenuList?.find(item => item.path === pathname)
+    const index = findMenuIndex(current) || -1
     if (current) {
-      setActiveMenu(current)
+      setActiveMenu({ ...current, index })
       return
     }
     if (openMenuList?.length) {
       const index = delIndex > -1 ? delIndex : openMenuList.length - 1
+      // 点击删除后，下一个应该显示的菜单
       const next = openMenuList[index] ?? openMenuList[openMenuList.length - 1]
-      setActiveMenu(next)
+      setActiveMenu({ ...next, index })
       navigate(next.path)
     }
   }, [pathname, openMenuList])
@@ -48,7 +54,7 @@ const OpenTabs = () => {
   }
   const deleteMenu = (item: any, e: any) => {
     if (item.title === activeMenu.title) {
-      const index = openMenuList?.findIndex(m => m.title === item.title)
+      const index = findMenuIndex(item)
       if (index === 0 || (index && index > -1)) {
         setDelIndex(index)
       }
@@ -72,13 +78,13 @@ const OpenTabs = () => {
             className={cn(
               'flex items-center cursor-pointer hover:text-[hsl(var(--primary))] select-none',
               {
-                'text-[hsl(var(--primary))] bg-white dark:bg-black':
+                'text-[hsl(var(--primary))] f-open-item bg-white dark:bg-black':
                   activeMenu?.title === item.title,
               }
             )}
             onClick={() => clickMenu(item)}
           >
-            <div className='flex w-32 items-center space-x-4 justify-between px-3'>
+            <div className='flex items-center space-x-4 justify-between px-3'>
               <div className='whitespace-nowrap'>
                 <ContextMenu>
                   <ContextMenuTrigger className='h-[100%] w-[100%]'>
@@ -107,7 +113,9 @@ const OpenTabs = () => {
               orientation='vertical'
               hidden={index === openMenuList.length - 1}
               className={cn('h-6 dark:bg-gray-700', {
-                invisible: activeMenu?.title === item.title,
+                invisible:
+                  activeMenu?.title === item.title ||
+                  index === activeMenu.index - 1,
               })}
             />
           </div>
