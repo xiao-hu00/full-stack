@@ -8,14 +8,13 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from '@/components/ui/context-menu'
-import { useOpenMenuStore } from '@/store/open-top-tabs'
+import { useOpenMenuStore, type menuItem } from '@/store/open-top-tabs'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { routerList } from '@/router/router-list'
 
 const OpenTabs = () => {
   const openMenuList = useOpenMenuStore(state => state.openMenuList)
-  const deleteOpenMenu = useOpenMenuStore(state => state.deleteOpenMenu)
-  const { addOpenMenu } = useOpenMenuStore()
+  const { addOpenMenu, deleteOpenMenu, updateOpenMenu } = useOpenMenuStore()
   const [delIndex, setDelIndex] = useState(-1)
   const [activeMenu, setActiveMenu] = useState({
     title: '',
@@ -31,16 +30,16 @@ const OpenTabs = () => {
     addOpenMenu({ title: obj?.label || '', path: pathname })
   }, [])
   const findMenuIndex = (item: any) =>
-    openMenuList?.findIndex(m => m.title === item?.title)
+    openMenuList.findIndex(m => m.title === item?.title)
   useEffect(() => {
     // 刷新或者删除之后，当前应该高亮显示的tab
-    const current = openMenuList?.find(item => item.path === pathname)
+    const current = openMenuList.find(item => item.path === pathname)
     const index = findMenuIndex(current) || -1
     if (current) {
       setActiveMenu({ ...current, index })
       return
     }
-    if (openMenuList?.length) {
+    if (openMenuList.length) {
       const index = delIndex > -1 ? delIndex : openMenuList.length - 1
       // 点击删除后，下一个应该显示的菜单
       const next = openMenuList[index] ?? openMenuList[openMenuList.length - 1]
@@ -52,7 +51,7 @@ const OpenTabs = () => {
     setActiveMenu(item)
     navigate(item.path || '/home')
   }
-  const deleteMenu = (item: any, e: any) => {
+  const deleteMenu = (item: menuItem, e: any) => {
     if (item.title === activeMenu.title) {
       const index = findMenuIndex(item)
       if (index === 0 || (index && index > -1)) {
@@ -64,6 +63,23 @@ const OpenTabs = () => {
   }
   const onWheel = (e: any) => {
     scrollRef.current.scrollLeft += e.deltaY
+  }
+  const update = (item: menuItem, type: string) => {
+    const index = findMenuIndex(item)
+    let list = [] as menuItem[]
+    if (type === 'right') {
+      // 关闭右侧
+      list = openMenuList.filter((_, i) => i <= index)
+    } else if (type === 'left') {
+      // 关闭左侧
+      list = openMenuList.filter((_, i) => i >= index)
+      setDelIndex(index - 1)
+    } else if (type === 'other') {
+      // 关闭其他
+      list = openMenuList.filter((_, i) => i === index)
+    }
+    
+    updateOpenMenu(list)
   }
   return (
     <div
@@ -82,33 +98,33 @@ const OpenTabs = () => {
                   activeMenu?.title === item.title,
               }
             )}
-            onClick={() => clickMenu(item)}
           >
-            <div className='flex items-center space-x-4 justify-between px-3'>
-              <div className='whitespace-nowrap'>
-                <ContextMenu>
-                  <ContextMenuTrigger className='h-[100%] w-[100%]'>
-                    {item.title}
-                  </ContextMenuTrigger>
-                  <ContextMenuContent>
-                    <ContextMenuItem>关闭右侧</ContextMenuItem>
-                    <ContextMenuItem>关闭左侧</ContextMenuItem>
-                    <ContextMenuItem>关闭其他</ContextMenuItem>
-                    <ContextMenuItem>关闭所有</ContextMenuItem>
-                  </ContextMenuContent>
-                </ContextMenu>
-              </div>
-              <X
-                size={14}
-                onClick={e => deleteMenu(item, e)}
-                className={cn(
-                  'cursor-pointer text-gray-400 hover:text-red-400',
-                  {
-                    invisible: openMenuList.length === 1,
-                  }
-                )}
-              />
-            </div>
+            <ContextMenu>
+              <ContextMenuTrigger
+                onClick={() => clickMenu(item)}
+                className='flex items-center space-x-4 justify-between px-3 w-full h-full whitespace-nowrap'
+              >
+                <div>{item.title}</div>
+                <X
+                  size={14}
+                  onClick={e => deleteMenu(item, e)}
+                  className={cn(
+                    'cursor-pointer text-gray-400 hover:text-red-400',
+                    {
+                      invisible: openMenuList.length === 1,
+                    }
+                  )}
+                />
+              </ContextMenuTrigger>
+              <ContextMenuContent>
+                <ContextMenuItem onClick={() => update(item, 'right')}>
+                  关闭右侧
+                </ContextMenuItem>
+                <ContextMenuItem onClick={() => update(item, 'left')}>关闭左侧</ContextMenuItem>
+                <ContextMenuItem onClick={() => update(item, 'other')}>关闭其他</ContextMenuItem>
+              </ContextMenuContent>
+            </ContextMenu>
+
             <Separator
               orientation='vertical'
               hidden={index === openMenuList.length - 1}
