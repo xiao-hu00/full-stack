@@ -27,6 +27,7 @@ const list = {
   icons: React.lazy(() => import('@/pages/widget/icons')),
   form: React.lazy(() => import('@/pages/widget/form')),
   table: React.lazy(() => import('@/pages/widget/table')),
+  pdf: React.lazy(() => import('@/pages/widget/pdf')),
 }
 
 const iconSize = 16
@@ -80,6 +81,12 @@ const menuList: MenuPropType = [
         label: '表单',
         path: '/widget/form',
         component: list['form'],
+      },
+      {
+        key: 'pdf',
+        label: 'PDF查看',
+        path: '/widget/pdf',
+        component: list['pdf'],
       },
     ],
   },
