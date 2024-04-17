@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import { ChevronRight, Search } from 'lucide-react'
-import { menuList, type PropType  } from '@/router/router-list'
+import { menuList, type PropType, type ItemType } from '@/router/router-list'
 import { motion } from 'framer-motion'
 import { ModeToggle } from '@/components/mode-toggle'
 import { LogOutIcon } from 'lucide-react'
@@ -24,20 +24,18 @@ const Breadcrumb = ({ className }: PropsType) => {
   const { pathname } = useLocation()
   const keys = pathname.split('/').filter(m => !!m)
   const navigate = useNavigate()
-  const { cleanOpenMenu } = useOpenMenuStore()
-  const [searchList, setSearchList] = useState<any>([])
+  const { cleanOpenMenu, addOpenMenu } = useOpenMenuStore()
+  const [searchList, setSearchList] = useState<PropType[]>([])
+  const [open, setOpen] = useState(false)
 
   const items: PropType[] = []
-  const allList: PropType[] = []
   menuList.forEach(item => {
     // 一级菜单push到数组
-    allList.push(item)
     if (keys.includes(item.key)) {
       items.push(item)
     }
     // 二级菜单push到数组
     item?.children?.forEach(m => {
-      allList.push(m)
       if (keys.includes(m.key)) {
         items.push(m)
       }
@@ -55,8 +53,31 @@ const Breadcrumb = ({ className }: PropsType) => {
       setSearchList([])
       return
     }
-    const list = allList.filter(item => item.label.indexOf(e.target.value) > -1)
+    const list: PropType[] = []
+    menuList.forEach(item => {
+      if (item.component && item.label.indexOf(e.target.value) > -1) {
+        list.push(item)
+        return
+      }
+      const newChildren: ItemType[] = []
+      item?.children?.forEach(m => {
+        if (m.label.indexOf(e.target.value) > -1) {
+          newChildren.push(m)
+        }
+      })
+      if (newChildren.length > 0) {
+        list.push({ ...item, children: newChildren })
+      }
+    })
     setSearchList(list)
+  }
+
+  const searchClick = (item: PropType) => {
+    if (item.component && item.path) {
+      setOpen(false)
+      navigate({ pathname: item.path })
+      addOpenMenu({ path: item.path, title: item.label })
+    }
   }
   return (
     <div className='flex justify-between items-center px-3 h-10'>
@@ -81,7 +102,10 @@ const Breadcrumb = ({ className }: PropsType) => {
       </motion.div>
 
       <div className='flex justify-between pr-2 space-x-4 items-center'>
-        <Dialog>
+        <Dialog open={open} onOpenChange={() => {
+          setSearchList([])
+          setOpen(!open)
+        }}>
           <DialogTrigger>
             <div className='text-xs border px-3 items-center h-8 rounded-sm flex space-x-1'>
               <Search size={14} />
@@ -89,7 +113,7 @@ const Breadcrumb = ({ className }: PropsType) => {
             </div>
           </DialogTrigger>
           <DialogContent className='p-0'>
-            <div className='flex h-12 items-center pl-2 pr-8 border-b border-b-gray-100'>
+            <div className='flex h-12 items-center pl-2 pr-8 border-b border-b-gray-100 dark:border-b-gray-800'>
               <Search className='text-gray-500' size={18} />
               <Input
                 className='h-full border-none focus-visible:ring-0 shadow-none'
@@ -97,11 +121,29 @@ const Breadcrumb = ({ className }: PropsType) => {
                 onChange={e => searchChange(e)}
               />
             </div>
-            <div className='h-[300px] overflow-auto'>
-              {searchList.map((item: any) => (
-                <div key={item.key}>{item.label}</div>
+            <div className='h-[300px] overflow-auto p-0'>
+              {searchList.map(item => (
+                <div key={item.key} className='px-2'>
+                  <div
+                    onClick={() => searchClick(item)}
+                    className='p-2 cursor-default hover:bg-[hsl(var(--secondary)/0.65)]'
+                  >
+                    {item.label}
+                  </div>
+                  {item?.children?.map((m: any) => (
+                    <div
+                      key={m.key}
+                      className='p-2 pl-6 cursor-default hover:bg-[hsl(var(--secondary)/0.65)]'
+                      onClick={() => searchClick(m)}
+                    >
+                      {m.label}
+                    </div>
+                  ))}
+                </div>
               ))}
-              {searchList.length === 0 && <div>暂无数据</div>}
+              {searchList.length === 0 && (
+                <div className='text-center mt-8'>暂无数据</div>
+              )}
             </div>
           </DialogContent>
         </Dialog>

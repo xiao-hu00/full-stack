@@ -13,7 +13,7 @@
 
 .rc-menu-item-active {
   color: hsl(var(--primary));
-  background-color: hsl(var(--secondary)/0.65);
+  background-color: hsl(var(--secondary) / 0.65);
 }
 .rc-menu-submenu-selected .rc-menu-submenu-title {
   color: hsl(var(--primary));
@@ -23,14 +23,16 @@
   color: hsl(var(--background));
   background-color: hsl(var(--primary));
 }
+.rc-menu-submenu-placement-rightTop {
+  z-index: 20;
+}
 
 .rc-menu-submenu-placement-rightTop ul {
   background: hsl(var(--background));
-  z-index: 2;
 }
 
 .dark .rc-menu-submenu-selected .rc-menu-submenu-title {
-  color: hsl(var(--primary)/75);;
+  color: hsl(var(--primary) / 75);
 }
 .dark .rc-menu-submenu-active {
   color: hsl(var(--primary));
@@ -39,7 +41,7 @@
   background-color: #141414;
 }
 .dark .rc-menu-item {
-  color: hsl(var(--secondary-foreground)/0.8);
+  color: hsl(var(--secondary-foreground) / 0.8);
 }
 .dark .rc-menu-item-selected {
   color: hsl(var(--primary));
@@ -56,21 +58,22 @@
   position: relative;
   border-radius: 12px 12px 0 0;
 }
-.f-open-item::before,.f-open-item::after{
+.f-open-item::before,
+.f-open-item::after {
   position: absolute;
   bottom: 0;
   content: '';
   width: 20px;
   height: 20px;
   border-radius: 100%;
-  box-shadow: 0 0 0 40px hsl(var(--background));/*使用box-shadow不影响尺寸*/
-  transition: .2s;
+  box-shadow: 0 0 0 40px hsl(var(--background)); /*使用box-shadow不影响尺寸*/
+  transition: 0.2s;
 }
-.f-open-item::before{
+.f-open-item::before {
   left: -20px;
   clip-path: inset(50% -10px 0 50%);
 }
-.f-open-item::after{
+.f-open-item::after {
   right: -20px;
   clip-path: inset(50% 50% 0 -10px);
 }
