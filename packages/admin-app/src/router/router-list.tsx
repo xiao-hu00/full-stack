@@ -1,14 +1,14 @@
 import React from 'react'
 import { Home, UserCog2, Component } from 'lucide-react'
 
-interface ItemType {
+export interface ItemType {
   key: string
   label: string
   component: React.LazyExoticComponent<React.ComponentType<object>>
   path?: string
   disable?: boolean
 }
-interface PropType {
+export interface PropType {
   key: string
   label: string
   component?: React.LazyExoticComponent<React.ComponentType<object>>

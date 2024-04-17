@@ -1,24 +1,21 @@
 import { cn } from '@/lib/utils'
 import { ChevronRight, Search } from 'lucide-react'
-import { menuList } from '@/router/router-list'
+import { menuList, type PropType  } from '@/router/router-list'
 import { motion } from 'framer-motion'
 import { ModeToggle } from '@/components/mode-toggle'
 import { LogOutIcon } from 'lucide-react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useOpenMenuStore } from '@/store/open-top-tabs'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '../ui/input'
+import { useState } from 'react'
 interface PropsType {
   className?: string
 }
@@ -28,15 +25,19 @@ const Breadcrumb = ({ className }: PropsType) => {
   const keys = pathname.split('/').filter(m => !!m)
   const navigate = useNavigate()
   const { cleanOpenMenu } = useOpenMenuStore()
+  const [searchList, setSearchList] = useState<any>([])
 
-  const items = [] as any
+  const items: PropType[] = []
+  const allList: PropType[] = []
   menuList.forEach(item => {
     // 一级菜单push到数组
+    allList.push(item)
     if (keys.includes(item.key)) {
       items.push(item)
     }
     // 二级菜单push到数组
     item?.children?.forEach(m => {
+      allList.push(m)
       if (keys.includes(m.key)) {
         items.push(m)
       }
@@ -49,7 +50,14 @@ const Breadcrumb = ({ className }: PropsType) => {
     const url = encodeURIComponent(pathname)
     navigate({ pathname: '/login', search: '?redirect=' + url })
   }
-
+  const searchChange = (e: any) => {
+    if (!e.target.value) {
+      setSearchList([])
+      return
+    }
+    const list = allList.filter(item => item.label.indexOf(e.target.value) > -1)
+    setSearchList(list)
+  }
   return (
     <div className='flex justify-between items-center px-3 h-10'>
       <motion.div
@@ -75,11 +83,26 @@ const Breadcrumb = ({ className }: PropsType) => {
       <div className='flex justify-between pr-2 space-x-4 items-center'>
         <Dialog>
           <DialogTrigger>
-            <div className='text-xs border px-3 items-center h-8 rounded-sm flex space-x-1'><Search size={14} />
-            <span>搜索</span></div>
+            <div className='text-xs border px-3 items-center h-8 rounded-sm flex space-x-1'>
+              <Search size={14} />
+              <span>搜索</span>
+            </div>
           </DialogTrigger>
-          <DialogContent>
-            <Input placeholder='请输入搜索关键字' />
+          <DialogContent className='p-0'>
+            <div className='flex h-12 items-center pl-2 pr-8 border-b border-b-gray-100'>
+              <Search className='text-gray-500' size={18} />
+              <Input
+                className='h-full border-none focus-visible:ring-0 shadow-none'
+                placeholder='请输入搜索关键字'
+                onChange={e => searchChange(e)}
+              />
+            </div>
+            <div className='h-[300px] overflow-auto'>
+              {searchList.map((item: any) => (
+                <div key={item.key}>{item.label}</div>
+              ))}
+              {searchList.length === 0 && <div>暂无数据</div>}
+            </div>
           </DialogContent>
         </Dialog>
         <ModeToggle />
