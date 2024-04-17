@@ -40,7 +40,7 @@ const Layout = () => {
           {collapse ? <DoubleArrowRightIcon /> : <DoubleArrowLeftIcon />}
         </div>
       </aside>
-      <header className='bg-[hsl(var(--background))] sticky top-0 z-2 auto-cols-fr'>
+      <header className='bg-[hsl(var(--background))] sticky top-0 z-10 auto-cols-fr'>
         <Header />
       </header>
 
