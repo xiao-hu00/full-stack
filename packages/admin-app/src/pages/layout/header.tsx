@@ -1,6 +1,6 @@
 
 import { OpenTabs } from '@/components'
-import { Breadcrumb } from '@/components'
+import { TopTools } from '@/components'
 
 const Header = () => {
   
@@ -9,7 +9,7 @@ const Header = () => {
       <div className='h-10 flex items-center justify-between space-x-8 bg-gray-50 dark:bg-gray-900'>
         <OpenTabs />
       </div>
-      <Breadcrumb />
+      <TopTools />
     </div>
   )
 }

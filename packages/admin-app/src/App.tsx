@@ -1,5 +1,5 @@
 import './App.css'
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/top-tools/theme-provider"
 import { RouterProvider } from 'react-router-dom'
 import router from './router'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'

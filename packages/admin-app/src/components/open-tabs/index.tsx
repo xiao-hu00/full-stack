@@ -83,7 +83,7 @@ const OpenTabs = () => {
   }
   return (
     <div
-      className='flex-1 pr-6 w-[100% - 120px] overflow-auto no-scrollbar text-sm'
+      className='flex-1 pr-6 w-full overflow-auto no-scrollbar text-sm'
       ref={scrollRef}
       onWheel={e => onWheel(e)}
     >
@@ -94,7 +94,7 @@ const OpenTabs = () => {
             className={cn(
               'flex items-center cursor-pointer hover:text-[hsl(var(--primary))] select-none',
               {
-                'text-[hsl(var(--primary))] f-open-item bg-white dark:bg-black':
+                'text-[hsl(var(--primary))] bg-white dark:bg-black':
                   activeMenu?.title === item.title,
               }
             )}

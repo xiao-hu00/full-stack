@@ -1,28 +1,16 @@
-import { Button } from '@/components/ui/button'
-import { themes } from './themes'
+import { themes } from '../../components/top-tools/themes'
 import { useThemeStore } from '@/store/theme-store'
+type Theme = 'dark' | 'light'
 
 const Home = () => {
-  const setConfig = useThemeStore(state => state.setConfig)
   const myConfig = useThemeStore(state => state.config)
   const obj = themes.find(item => item.name === myConfig.theme)
-  const keys = Object.keys(obj?.cssVars.light || {})
-  const values = Object.values(obj?.cssVars.light || {})
-  const changeTheme = (type: string) => {
-    const config = themes.find(item => item.name === type)
-    setConfig({ theme: config?.name, radius: 0.5 })
-  }
+  const themeName = localStorage.getItem('vite-ui-theme') as Theme
+  const keys = Object.keys(obj?.cssVars[themeName] || {})
+  const values = Object.values(obj?.cssVars[themeName] || {})
   return (
     <div className='p-4'>
-      <div>
-        config: {JSON.stringify(myConfig)}
-        <Button className='ml-4' onClick={() => changeTheme('green')}>
-          Green
-        </Button>
-        <Button className='ml-4' onClick={() => changeTheme('violet')}>
-          Violet
-        </Button>
-      </div>
+      <div>config: {JSON.stringify(myConfig)}</div>
       <div>色值卡：</div>
       <div>
         {keys?.map((item, index) => (

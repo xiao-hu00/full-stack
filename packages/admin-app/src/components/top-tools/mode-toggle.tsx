@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Moon, Sun } from 'lucide-react'
-import { useTheme } from '@/components/theme-provider'
+import { useTheme } from '@/components/top-tools/theme-provider'
 import { useThemeStore } from '@/store/theme-store'
 
 export function ModeToggle() {

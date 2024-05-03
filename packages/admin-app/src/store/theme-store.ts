@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Theme } from '@/pages/home/themes'
+import { Theme } from '@/components/top-tools/themes'
 import { persist } from 'zustand/middleware'
 
 type Config = {
