@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
 import NextTopLoader from 'nextjs-toploader'
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -41,8 +42,14 @@ export default function RootLayout({
               markdown
             </Link>
           </li>
+          <li>
+            <Link href='/list' className='hover:text-orange-200'>
+              考题
+            </Link>
+          </li>
         </ul>
         <div>{children}</div>
+        <Toaster />
       </body>
     </html>
   )
