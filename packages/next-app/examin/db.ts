@@ -442,7 +442,7 @@ export const MULTIPLE_CHOICE = [
   {
     id: 41,
     question: '关于项目的关键依赖，正确的是',
-    answer: [],
+    answer: ['1', '2', '3'],
     options: [
       '关键依赖项可能直接转为成问题',
       '关键依赖项的识别和跟踪贯穿整个项目的生命周期',
@@ -475,7 +475,7 @@ export const MULTIPLE_CHOICE = [
   {
     id: 44,
     question: '在进行系统测试设计时，测试人员需要借助尽可能多的信息开展工作，可以参考哪些文档',
-    answer: [],
+    answer: ['1', '2', '3', '4'],
     options: [
       '项目WBS',
       '评审与决策报告',
@@ -519,7 +519,7 @@ export const MULTIPLE_CHOICE = [
   {
     id: 48,
     question: '以下哪些措施是问题管理范畴',
-    answer: [],
+    answer: ['2', '3', '4'],
     options: [
       '找出根治的解决方案',
       '找出事件发生的根本原因',
@@ -530,7 +530,7 @@ export const MULTIPLE_CHOICE = [
   {
     id: 49,
     question: '架构评审的目的包括',
-    answer: [],
+    answer: ['1', '2', '3'],
     options: [
       '组织级相关标准和技术规范',
       '确定架构设计方向',
@@ -597,7 +597,7 @@ export const MULTIPLE_CHOICE = [
   {
     id: 55,
     question: '以下哪些是建立任务时需要做的',
-    answer: [],
+    answer: ['1', '2', '4'],
     options: [
       '进行任务影响分析',
       '制定版本规划',
@@ -630,7 +630,7 @@ export const MULTIPLE_CHOICE = [
   {
     id: 58,
     question: 'ST回归测试时应考虑',
-    answer: [],
+    answer: ['1', '2', '3', '4'],
     options: [
       '送代内发生变更的特性',
       '与其它产品有关联影响的功能',
@@ -675,7 +675,7 @@ export const MULTIPLE_CHOICE = [
   {
     id: 62,
     question: '调不良质量成本包括',
-    answer: [],
+    answer: ['1', '2', '3', '4'],
     options: [
       '鉴定成本（分析故障原因）',
       '预防成本（不增值的部分）',
@@ -731,7 +731,7 @@ export const JUDGE = [
   {
     id: 74,
     question: '当测试时遇到不确定的问题时，不需要提缺陷',
-    answer: 'true',
+    answer: 'false',
   },
   {
     id: 75,
@@ -814,24 +814,9 @@ export const JUDGE = [
     answer: 'false',
   },
   {
-    id: 91,
-    question: '专题优先级排序通常可以采用定性排序法和定量排序法',
-    answer: 'true',
-  },
-  {
-    id: 92,
-    question: '提测时测试会进行冒烟测试，可以不安排联调',
-    answer: 'false',
-  },
-  {
     id: 93,
     question: '开发人员在测试环境提交LABEL时（包括首轮LABEL和后续批次的LABEL），无需与测试人员沟通，应直接尽快发布到测试环境',
     answer: 'false',
-  },
-  {
-    id: 94,
-    question: '在估算时，要考虑对估算有影响的因素、假设和约束',
-    answer: 'true',
   },
   {
     id: 95,
@@ -839,19 +824,9 @@ export const JUDGE = [
     answer: 'false',
   },
   {
-    id: 96,
-    question: '当测试时遇到不确定的问题时，不需要提缺陷',
-    answer: 'false',
-  },
-  {
     id: 97,
     question: '项目工期紧张，可先不做代码检视交由后期测试把控质量风险',
     answer: 'false',
-  },
-  {
-    id: 98,
-    question: '会议评审后，评审记录人可将缺陷能在《评审与决策报告》或通过项目管理工具进行跟踪记录',
-    answer: 'true',
   },
   {
     id: 99,
@@ -902,21 +877,6 @@ export const JUDGE = [
     id: 108,
     question: '特急任务的ST测试与UAT测试，均不用执行',
     answer: 'false',
-  },
-  {
-    id: 109,
-    question: '业务专题分析由BA主导，PO/专题负责人等相关角色辅助完成',
-    answer: 'false',
-  },
-  {
-    id: 110,
-    question: '在开展需求分析和设计时，要邀请每个变更产品的主办室组人员参与分析',
-    answer: 'true',
-  },
-  {
-    id: 111,
-    question: '在估算时，要考虑对估算有影响的因素、假设和约束',
-    answer: 'true',
   },
   {
     id: 112,
