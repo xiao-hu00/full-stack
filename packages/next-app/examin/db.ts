@@ -101,7 +101,7 @@ export const SINGLE_CHOICE = [
   {
     id: 10,
     question: '任务负责人根据需求的内容、关联产品的涉及范围，技术可行性，发布时间的要求等完成任务的影响分析，确定',
-    answer: '',
+    answer: '1',
     options: [
       '任务需求说明书',
       '任务实现方案',
@@ -299,7 +299,7 @@ export const SINGLE_CHOICE = [
   {
     id: 28,
     question: '以下关于开发类任务的说法，错误的是？',
-    answer: '',
+    answer: '1',
     options: [
       '重点关注解决方案，管理过程相对弱化',
       '可以不涉及系统版本变更',
