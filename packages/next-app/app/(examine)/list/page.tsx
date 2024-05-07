@@ -69,7 +69,7 @@ export default async function List() {
                 {index + 1}.{item.question}
               </div>
               <div className='text-gray-400 text-sm mb-8'>
-                {item.answer ? '正确' : '错误'}
+                {item.answer === 'true' ? '正确' : '错误'}
               </div>
             </div>
           ))}
