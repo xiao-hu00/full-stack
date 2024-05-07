@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import dayjs from 'dayjs'
-import { User } from '@prisma/client'
-import { auth } from '@/auth'
+// import { User } from '@prisma/client'
+// import { auth } from '@/auth'
 
 export const metadata: Metadata = {
   title: 'App Document',
@@ -10,20 +10,20 @@ export const metadata: Metadata = {
 
 async function getData() {
   console.log('getData')
-  const res = await fetch('http://127.0.0.1:3000/api/user')
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data')
-  }
-  return res.json()
+  // const res = await fetch('http://127.0.0.1:3000/api/user')
+  // // The return value is *not* serialized
+  // // You can return Date, Map, Set, etc.
+  // if (!res.ok) {
+  //   // This will activate the closest `error.js` Error Boundary
+  //   throw new Error('Failed to fetch data')
+  // }
+  // return res.json()
 }
 
 export default async function Doc() {
-  const { data }: { data: User[] } = {data: []} // await getData()
-  const session = await auth()
-  console.log('123', session)
+  const { data }: { data: any[] } = {data: []} // await getData()
+  // const session = await auth()
+  // console.log('123', session)
 
   return (
     <div className='p-4'>
