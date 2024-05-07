@@ -44,7 +44,7 @@ export default function RootLayout({
           </li>
           <li>
             <Link href='/list' className='hover:text-orange-200'>
-              考题
+              examine
             </Link>
           </li>
         </ul>

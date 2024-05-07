@@ -10,12 +10,12 @@ export default function RootLayout({
       <ul className='flex space-x-4 p-3'>
         <li>
           <Link href='/list' className='hover:text-orange-200'>
-            考题
+            questions
           </Link>
         </li>
         <li>
-          <Link href='/test' className='hover:text-orange-200'>
-            自测
+          <Link scroll={false} href='/test' className='hover:text-orange-200'>
+            examine
           </Link>
         </li>
       </ul>

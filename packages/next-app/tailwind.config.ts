@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss"
+const plugin = require('tailwindcss/plugin')
 
 const config = {
   darkMode: ["class"],
@@ -7,7 +8,7 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
   prefix: "",
   theme: {
     container: {
@@ -74,7 +75,16 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    plugin(function({ addBase, theme }: any) {
+      addBase({
+        'h1': { fontSize: theme('fontSize.2xl') },
+        'h2': { fontSize: theme('fontSize.xl') },
+        'h3': { fontSize: theme('fontSize.lg') },
+      })
+    })
+  ],
 } satisfies Config
 
 export default config

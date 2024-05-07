@@ -26,7 +26,7 @@ export default function CheckboxGroup(props: any) {
           />
           <label
             htmlFor={props.items?.id + '-' + index}
-            className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+            className='text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
           >
             {item}
           </label>

@@ -26,8 +26,8 @@ export default async function Doc() {
   console.log('123', session)
 
   return (
-    <div>
-      User List
+    <div className='p-4'>
+      <h1>数据请求示例</h1>
       <div>{data.length === 0 ? '暂无数据' : ''}</div>
       <div>
         {data.map(item => (

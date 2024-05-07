@@ -21,6 +21,17 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer'
+
 const ABC_ARRAY = ['A', 'B', 'C', 'D', 'E']
 
 function getRandomArray(arr: Array<any>, length: number) {
@@ -107,24 +118,40 @@ export default function Test() {
     setCheckData(list)
   }
 
+  const createQuestions = (
+    <>
+      <div className='grid grid-cols-10 gap-3'>
+        {checkData.map((item: any) => (
+          <div
+            key={item.number}
+            className={cn(
+              'text-center cursor-default rounded-full bg-white border border-gray-200',
+              { 'bg-blue-400 text-white': item.selected === 'true' },
+              { 'bg-green-400 text-white': item.correct === 'true' },
+              { 'bg-red-400 text-white': item.correct === 'false' }
+            )}
+          >
+            <Link href={`#s${item.number}`}>{item.number}</Link>
+          </div>
+        ))}
+      </div>
+    </>
+  )
+
   return (
     <>
-      <div className='fixed left-[720px] top-0 p-4 w-[400px]'>
-        <div className='grid grid-cols-10 gap-3'>
-          {checkData.map((item: any) => (
-            <div
-              key={item.number}
-              className={cn(
-                'text-center cursor-default rounded-full bg-white border border-gray-200',
-                { 'bg-blue-400 text-white': item.selected === 'true' },
-                { 'bg-green-400 text-white': item.correct === 'true' },
-                { 'bg-red-400 text-white': item.correct === 'false' }
-              )}
-            >
-              <Link href={`#s${item.number}`}>{item.number}</Link>
-            </div>
-          ))}
-        </div>
+      <Drawer>
+        <DrawerTrigger asChild>
+          <Button variant='outline' className='block sm:hidden'>
+            查看答题信息
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent>
+          <div className='mx-auto w-full max-w-sm px-4 py-8'>{createQuestions}</div>
+        </DrawerContent>
+      </Drawer>
+      <div className='hidden md:block xl:block lg:block fixed left-[680px] top-0 p-4 w-[400px]'>
+        {createQuestions}
       </div>
       <div className='max-w-[700px] p-4'>
         <Form {...form}>
@@ -164,7 +191,7 @@ export default function Test() {
                                 id={item.id + '-' + (i + 1)}
                               />
 
-                              <Label htmlFor={item.id + '-' + (i + 1)}>
+                              <Label className='font-normal' htmlFor={item.id + '-' + (i + 1)}>
                                 {ABC_ARRAY[i]}.{m}
                               </Label>
                             </div>
@@ -223,11 +250,11 @@ export default function Test() {
                         >
                           <div className='flex items-center space-x-2 mt-2'>
                             <RadioGroupItem value='true' id={item.id + '-1'} />
-                            <Label htmlFor={item.id + '-1'}>正确</Label>
+                            <Label className='font-normal' htmlFor={item.id + '-1'}>正确</Label>
                           </div>
                           <div className='flex items-center space-x-2'>
                             <RadioGroupItem value='false' id={item.id + '-2'} />
-                            <Label htmlFor={item.id + '-2'}>错误</Label>
+                            <Label className='font-normal' htmlFor={item.id + '-2'}>错误</Label>
                           </div>
                         </RadioGroup>
                       </FormControl>
