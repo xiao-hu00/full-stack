@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev:three": "pnpm --filter=./packages/three-app run dev",
-    "dev:nest": "pnpm --filter=./packages/nest-app run dev",
+    "dev:nest": "pnpm --filter=./packages/nest-app run start:dev",
     "dev:next": "pnpm --filter=./packages/next-app run dev",
     "dev:admin": "pnpm --filter=./packages/admin-app run dev"
   }
